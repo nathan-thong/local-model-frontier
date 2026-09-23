@@ -26,7 +26,7 @@
   },
   "profiling": {
     "batch_size": 1,
-    "prompt_lengths": [32, 64, 96],
+    "prompt_lengths": [1, 32, 64, 96],
     "decode_tokens": 8,
     "warmup_steps": 1,
     "repeats": 3
