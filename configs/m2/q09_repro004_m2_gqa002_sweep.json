@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "name": "q09-repro004-m2-gqa-002",
+  "baseline": {
+    "id": "mha",
+    "config": "tinystories_v3_mha_gqa002.json"
+  },
+  "candidates": [
+    {
+      "id": "gqa",
+      "config": "tinystories_v3_gqa_gqa002.json"
+    }
+  ],
+  "seeds": [
+    17,
+    42,
+    123
+  ],
+  "output_root": "../../runs/q09-repro004-m2-gqa-002",
+  "total_compute_cap_flops": 85000000000000,
+  "total_runtime_cap_seconds": 3600
+}
