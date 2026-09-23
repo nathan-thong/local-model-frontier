@@ -2,7 +2,7 @@
   "schema_version": 1,
   "dataset": "English Wikipedia",
   "project": "local-model-frontier Q10.b",
-  "status": "candidate_titles_frozen_revision_metadata_pending",
+  "status": "revision_metadata_frozen_first_pass_rights_review_incomplete_body_gate_closed",
   "frozen_date": "2026-09-23",
   "purpose": "Bounded general-encyclopedia language-modeling diagnostic; not a broad capability benchmark.",
   "selection_rule": "Use every eligible title in the fixed candidate list. Do not select or remove pages based on model scores or body text. If fewer than 20 pages pass the predeclared metadata, size, licensing, and attribution rules, stop and record a new candidate-set decision before fetching any article body.",
@@ -10,14 +10,26 @@
   "metadata_query": {
     "endpoint": "https://en.wikipedia.org/w/api.php",
     "action": "query",
-    "properties": ["info", "revisions"],
-    "revision_properties": ["ids", "timestamp", "size", "sha1", "contentmodel", "comment"],
-    "revision_slots": ["main"],
+    "properties": [
+      "info",
+      "revisions"
+    ],
+    "revision_properties": [
+      "ids",
+      "timestamp",
+      "size",
+      "sha1",
+      "contentmodel",
+      "comment"
+    ],
+    "revision_slots": [
+      "main"
+    ],
     "revision_limit_per_title": 1,
     "format": "json",
     "formatversion": 2,
     "maxlag": 5,
-    "request_policy": "One request for all 24 titles where supported; otherwise serial batches. Use a descriptive User-Agent with repository/contact information. Never request rvprop=content during this stage."
+    "request_policy": "Latest revision metadata requested for all candidate titles in one query; pinned revids were then queried serially to confirm main-slot content model and metadata. Both requests used maxlag=5 and a descriptive User-Agent. Neither requested revision content."
   },
   "eligibility_rules": {
     "namespace": 0,
@@ -38,36 +50,704 @@
     "tokenizer_fit_split": "training only"
   },
   "candidates": [
-    {"title": "Algorithm", "stratum": "mathematics"},
-    {"title": "Prime number", "stratum": "mathematics"},
-    {"title": "Probability", "stratum": "mathematics"},
-    {"title": "Geometry", "stratum": "mathematics"},
-    {"title": "Water", "stratum": "physical-science"},
-    {"title": "Gravity", "stratum": "physical-science"},
-    {"title": "Energy", "stratum": "physical-science"},
-    {"title": "Moon", "stratum": "physical-science"},
-    {"title": "Photosynthesis", "stratum": "life-environment"},
-    {"title": "Ecosystem", "stratum": "life-environment"},
-    {"title": "Cell (biology)", "stratum": "life-environment"},
-    {"title": "Climate change", "stratum": "life-environment"},
-    {"title": "Computer", "stratum": "computing"},
-    {"title": "Internet", "stratum": "computing"},
-    {"title": "World Wide Web", "stratum": "computing"},
-    {"title": "Encryption", "stratum": "computing"},
-    {"title": "Democracy", "stratum": "society"},
-    {"title": "Education", "stratum": "society"},
-    {"title": "Agriculture", "stratum": "society"},
-    {"title": "Language", "stratum": "society"},
-    {"title": "Music", "stratum": "culture"},
-    {"title": "Printing press", "stratum": "culture"},
-    {"title": "Book", "stratum": "culture"},
-    {"title": "Geography", "stratum": "culture"}
+    {
+      "title": "Algorithm",
+      "stratum": "mathematics"
+    },
+    {
+      "title": "Prime number",
+      "stratum": "mathematics"
+    },
+    {
+      "title": "Probability",
+      "stratum": "mathematics"
+    },
+    {
+      "title": "Geometry",
+      "stratum": "mathematics"
+    },
+    {
+      "title": "Water",
+      "stratum": "physical-science"
+    },
+    {
+      "title": "Gravity",
+      "stratum": "physical-science"
+    },
+    {
+      "title": "Energy",
+      "stratum": "physical-science"
+    },
+    {
+      "title": "Moon",
+      "stratum": "physical-science"
+    },
+    {
+      "title": "Photosynthesis",
+      "stratum": "life-environment"
+    },
+    {
+      "title": "Ecosystem",
+      "stratum": "life-environment"
+    },
+    {
+      "title": "Cell (biology)",
+      "stratum": "life-environment"
+    },
+    {
+      "title": "Climate change",
+      "stratum": "life-environment"
+    },
+    {
+      "title": "Computer",
+      "stratum": "computing"
+    },
+    {
+      "title": "Internet",
+      "stratum": "computing"
+    },
+    {
+      "title": "World Wide Web",
+      "stratum": "computing"
+    },
+    {
+      "title": "Encryption",
+      "stratum": "computing"
+    },
+    {
+      "title": "Democracy",
+      "stratum": "society"
+    },
+    {
+      "title": "Education",
+      "stratum": "society"
+    },
+    {
+      "title": "Agriculture",
+      "stratum": "society"
+    },
+    {
+      "title": "Language",
+      "stratum": "society"
+    },
+    {
+      "title": "Music",
+      "stratum": "culture"
+    },
+    {
+      "title": "Printing press",
+      "stratum": "culture"
+    },
+    {
+      "title": "Book",
+      "stratum": "culture"
+    },
+    {
+      "title": "Geography",
+      "stratum": "culture"
+    }
   ],
-  "revisions": [],
+  "revisions": [
+    {
+      "title": "Algorithm",
+      "stratum": "mathematics",
+      "pageid": 775,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Algorithm",
+      "revision_id": 1376037819,
+      "timestamp": "2026-09-21T17:18:33Z",
+      "revision_bytes": 67103,
+      "revision_sha1": "d7d1a900d0359e6851e8285870359aa36b54a7df",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* Etymology */ Tag foreign text.",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1376037819",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Prime number",
+      "stratum": "mathematics",
+      "pageid": 23666,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Prime_number",
+      "revision_id": 1376022013,
+      "timestamp": "2026-09-21T15:01:53Z",
+      "revision_bytes": 128021,
+      "revision_sha1": "99162548c341f440f28d3fdd071743d5d2bf83f1",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* Definition and examples */ indent consistent with block math",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1376022013",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Probability",
+      "stratum": "mathematics",
+      "pageid": 22934,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Probability",
+      "revision_id": 1375744652,
+      "timestamp": "2026-09-19T20:00:31Z",
+      "revision_bytes": 39558,
+      "revision_sha1": "211150c181afcc128bd23ba5c561e3a3f91ef86a",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Changed formal word impetus to more common word motivation",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375744652",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Geometry",
+      "stratum": "mathematics",
+      "pageid": 18973446,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Geometry",
+      "revision_id": 1376029686,
+      "timestamp": "2026-09-21T16:06:33Z",
+      "revision_bytes": 110687,
+      "revision_sha1": "f2aeae2945dae697832e6d401f9f58122b03a795",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* Measures: length, area, and volume{{anchor|Measures}} */ wl",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1376029686",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Water",
+      "stratum": "physical-science",
+      "pageid": 33306,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Water",
+      "revision_id": 1375968588,
+      "timestamp": "2026-09-21T04:42:20Z",
+      "revision_bytes": 181441,
+      "revision_sha1": "73ac0935fc967b4f06c35a34735e2cb422f868d7",
+      "content_model": "wikitext",
+      "latest_edit_comment": "[[Wikipedia:OABOT|Open access bot]]: url-access=subscription updated in citation with #oabot.",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375968588",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Gravity",
+      "stratum": "physical-science",
+      "pageid": 38579,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Gravity",
+      "revision_id": 1374741444,
+      "timestamp": "2026-09-13T21:35:36Z",
+      "revision_bytes": 95018,
+      "revision_sha1": "efd087bd4c5eeff071eb40cdab2748e52adca30c",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Fixed typo",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1374741444",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Energy",
+      "stratum": "physical-science",
+      "pageid": 9649,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Energy",
+      "revision_id": 1375588191,
+      "timestamp": "2026-09-18T18:27:13Z",
+      "revision_bytes": 95380,
+      "revision_sha1": "60331ada42d5acfb68aaf21dc0c111a0dbb4a011",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Accessibility / semantics: Avoid misuse of desclist formatting to indent math by using the `display=block` option of <math> instead",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375588191",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Moon",
+      "stratum": "physical-science",
+      "pageid": 19331,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Moon",
+      "revision_id": 1376242862,
+      "timestamp": "2026-09-23T00:22:53Z",
+      "revision_bytes": 306810,
+      "revision_sha1": "25ee153fe7349e7e2373f8e088cfe97bd2b45787",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* Human interaction and presence */ rm babble",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1376242862",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Photosynthesis",
+      "stratum": "life-environment",
+      "pageid": 24544,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Photosynthesis",
+      "revision_id": 1371284103,
+      "timestamp": "2026-08-25T17:04:29Z",
+      "revision_bytes": 111066,
+      "revision_sha1": "5b28ad6ed9fda2ba8621ce90d3699f95a345ac47",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* Light-dependent reactions */",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1371284103",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Ecosystem",
+      "stratum": "life-environment",
+      "pageid": 9632,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Ecosystem",
+      "revision_id": 1369245800,
+      "timestamp": "2026-08-13T19:53:17Z",
+      "revision_bytes": 65010,
+      "revision_sha1": "78452dd0a91e2a89f76c8462a9a6667d70ec2ec7",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* Ecosystem goods and services */ removed deprecated |citeseerx= parameters;",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1369245800",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Cell (biology)",
+      "stratum": "life-environment",
+      "pageid": 4230,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Cell_(biology)",
+      "revision_id": 1375394448,
+      "timestamp": "2026-09-17T14:52:10Z",
+      "revision_bytes": 116412,
+      "revision_sha1": "2e7235234d761b5b9df80fe5c3c65c1aa3967278",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* Cytoskeleton */",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375394448",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Climate change",
+      "stratum": "life-environment",
+      "pageid": 5042951,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Climate_change",
+      "revision_id": 1376019004,
+      "timestamp": "2026-09-21T14:37:51Z",
+      "revision_bytes": 331340,
+      "revision_sha1": "a1c79ff2f69180e8ed55be1cde5a13977120a840",
+      "content_model": "wikitext",
+      "latest_edit_comment": "added \"largely\" as there are other contributors to climate change beyond human activity.",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1376019004",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Computer",
+      "stratum": "computing",
+      "pageid": 7878457,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Computer",
+      "revision_id": 1374584850,
+      "timestamp": "2026-09-12T23:16:48Z",
+      "revision_bytes": 140673,
+      "revision_sha1": "e037f2867e95a4d7028b3ef9a647837c353c0913",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* Networking and the Internet */ Removed passage unrelated to networking/internet",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1374584850",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Internet",
+      "stratum": "computing",
+      "pageid": 14539,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Internet",
+      "revision_id": 1375719813,
+      "timestamp": "2026-09-19T16:23:20Z",
+      "revision_bytes": 143868,
+      "revision_sha1": "04c79b18061f27ef8240efc7bc2108a115f3981e",
+      "content_model": "wikitext",
+      "latest_edit_comment": "/* 1960s */ define abbreviation",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375719813",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "World Wide Web",
+      "stratum": "computing",
+      "pageid": 33139,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/World_Wide_Web",
+      "revision_id": 1373777770,
+      "timestamp": "2026-09-07T21:58:29Z",
+      "revision_bytes": 112414,
+      "revision_sha1": "a5665a1b0b2a78ebf684f1be05365488ab6feb7c",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Reorganise page-level hatnotes to group the 'for' and 'redirect' entries.",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1373777770",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Encryption",
+      "stratum": "computing",
+      "pageid": 10294,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Encryption",
+      "revision_id": 1375690536,
+      "timestamp": "2026-09-19T11:09:28Z",
+      "revision_bytes": 37281,
+      "revision_sha1": "102ff170f97f6925a3770dda9df9bb0957c157e0",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Avoid implying that unauthorized decryption is merely difficult rather than [[computationally infeasible]]. Moreover, information-theoretically secure systems such as a correctly used one-time pad cannot be uniquely decrypted from ciphertext alone.",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375690536",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Democracy",
+      "stratum": "society",
+      "pageid": 7959,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Democracy",
+      "revision_id": 1375525570,
+      "timestamp": "2026-09-18T09:06:59Z",
+      "revision_bytes": 209076,
+      "revision_sha1": "87c1e725463525216eb2f6cc9cc6350fc9cb907b",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Merging references with [[User:Uglemat/RefMan|RefMan]]",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375525570",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Education",
+      "stratum": "society",
+      "pageid": 9252,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Education",
+      "revision_id": 1375869623,
+      "timestamp": "2026-09-20T15:58:26Z",
+      "revision_bytes": 231794,
+      "revision_sha1": "f8ff76638363efa2c82ee781725ef5b6d9d6550a",
+      "content_model": "wikitext",
+      "latest_edit_comment": "restore reference apparently removed by accident",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375869623",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Agriculture",
+      "stratum": "society",
+      "pageid": 627,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Agriculture",
+      "revision_id": 1376249568,
+      "timestamp": "2026-09-23T01:23:01Z",
+      "revision_bytes": 206238,
+      "revision_sha1": "10413736b14679f1bdfba86aba41542f7a19719c",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Typo fix: removed space before punctuation (, ; .)",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1376249568",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Language",
+      "stratum": "society",
+      "pageid": 17524,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Language",
+      "revision_id": 1374640745,
+      "timestamp": "2026-09-13T07:20:03Z",
+      "revision_bytes": 143526,
+      "revision_sha1": "1af32b9569c28da868dd0030285e3de6541beb5d",
+      "content_model": "wikitext",
+      "latest_edit_comment": "→ File has been renamed on Commons ([[:c:GR]])",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1374640745",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Music",
+      "stratum": "culture",
+      "pageid": 18839,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Music",
+      "revision_id": 1376294667,
+      "timestamp": "2026-09-23T07:43:29Z",
+      "revision_bytes": 143456,
+      "revision_sha1": "1c3a4de6a9c490f0d69191ad4743050cbfb795d1",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Undid revision [[Special:Diff/1376215571|1376215571]] by [[Special:Contributions/Guacpocalypse|Guacpocalypse]] ([[User talk:Guacpocalypse|talk]]) [[Help:Reverting|Reverting]] [[Wikipedia:Vandalism|vandalism]] or test edit",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1376294667",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Printing press",
+      "stratum": "culture",
+      "pageid": 23295,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Printing_press",
+      "revision_id": 1376068685,
+      "timestamp": "2026-09-21T21:27:20Z",
+      "revision_bytes": 64674,
+      "revision_sha1": "5318cdb9a7e0e2f0ef1547e72fae5e30b2276694",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Ce",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1376068685",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Book",
+      "stratum": "culture",
+      "pageid": 3778,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Book",
+      "revision_id": 1372807027,
+      "timestamp": "2026-09-02T10:40:08Z",
+      "revision_bytes": 104165,
+      "revision_sha1": "749ff4419c0d10c9881b2d98142cf195a940fe63",
+      "content_model": "wikitext",
+      "latest_edit_comment": "+ SVA",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1372807027",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    },
+    {
+      "title": "Geography",
+      "stratum": "culture",
+      "pageid": 18963910,
+      "namespace": 0,
+      "redirect": false,
+      "missing": false,
+      "canonical_page_url": "https://en.wikipedia.org/wiki/Geography",
+      "revision_id": 1375639475,
+      "timestamp": "2026-09-19T02:26:19Z",
+      "revision_bytes": 87422,
+      "revision_sha1": "3127884e4d5eb34a896c8e69779083405d324e9d",
+      "content_model": "wikitext",
+      "latest_edit_comment": "Rescuing orphaned refs (\"Tobler2\" → \"Tobler3\" from rev 1371563402)",
+      "oldid_permalink": "https://en.wikipedia.org/w/index.php?oldid=1375639475",
+      "metadata_eligible": true,
+      "license_review": "pending",
+      "attribution_review": "pending",
+      "body_fetched": false
+    }
+  ],
   "excluded_pages": [],
   "audit": {
-    "body_content_fetched": false,
+    "revision_body_content_field_requested": false,
+    "body_flag_definition": "Per-revision body_fetched=false means the raw revision content field was not requested from the API. Rendered exact-oldid pages were loaded to inspect footers and therefore included article HTML, but no article text was extracted, saved, or used as corpus data.",
+    "body_fetch_scope": "No raw article revision text was requested through the API or saved as corpus data. Rendered exact-oldid pages were opened to inspect the footer; those page responses included the rendered article, which was not extracted or retained.",
+    "rendered_oldid_pages_loaded_for_footer_review": 24,
+    "corpus_text_saved": false,
     "rights_review_complete": false,
-    "revision_inventory_sha256": null
+    "rights_pass_count": 0,
+    "history_review_scope": "For each pinned oldid, auditors reviewed the rendered footer, the newest 500 revision-history entries at or before the pinned revision, and current discussion-page material. The history window did not reach the beginning of every page history; no page is cleared under the current evidence standard.",
+    "history_rows_reviewed_per_page_max": 500,
+    "rights_review_completed_at_utc": "2026-09-23T09:17:59Z",
+    "revision_inventory_sha256": "150db1a04035428e84a298f02957fd685f724b3a29cbfe2692106e63fc1b0a7d",
+    "page_findings": [
+      {
+        "title": "Algorithm",
+        "status": "unresolved_source_attribution",
+        "summary": "History records text copied from Software patent debate and a merge from Algorithmics; the source-history attribution chain is not yet recorded."
+      },
+      {
+        "title": "Geometry",
+        "status": "pending_scope_check",
+        "summary": "History records an image and caption copied from Islamic art; the candidate extractor must exclude that material before it can be treated as out of scope."
+      },
+      {
+        "title": "Water",
+        "status": "unresolved_source_attribution",
+        "summary": "History records the first sentence copied from Water resources."
+      },
+      {
+        "title": "Gravity",
+        "status": "unresolved_source_attribution",
+        "summary": "History records text copied from Robert Hooke, including a part later suspended for inadequate citation."
+      },
+      {
+        "title": "Energy",
+        "status": "unresolved_source_attribution",
+        "summary": "History records text added from Energy level."
+      },
+      {
+        "title": "Moon",
+        "status": "pending_scope_check",
+        "summary": "History records attribution in a caption associated with First missions to the Moon; neither the exact source nor extraction scope is resolved."
+      },
+      {
+        "title": "Photosynthesis",
+        "status": "unresolved_source_attribution",
+        "summary": "History and discussion record a merge from History of C3:C4 photosynthesis research and an import from nost:Photosynthesis; the latter source is unresolved."
+      },
+      {
+        "title": "Ecosystem",
+        "status": "unresolved_source_attribution",
+        "summary": "History records text copied from Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services and Ecological classification."
+      },
+      {
+        "title": "Cell (biology)",
+        "status": "unresolved_source_attribution",
+        "summary": "History records copied prose from Vault (organelle), Protein targeting, Mitotic catastrophe, Multicellular organism, Endomembrane system, and Cell therapy; copied media and table material require exclusion."
+      },
+      {
+        "title": "Climate change",
+        "status": "unresolved_external_license_attribution",
+        "summary": "Page metadata and history show open-license text associated with FAO and World Resources Institute, including CC BY 4.0 and CC BY-SA 3.0 notices; exact source-work and credit mapping is incomplete."
+      },
+      {
+        "title": "Internet",
+        "status": "unresolved_source_attribution",
+        "summary": "History records multiple copied passages, including from Default router; that source page now redirects and its originating content history is unresolved. A free-content attribution notice also appears in the pinned revision."
+      },
+      {
+        "title": "Democracy",
+        "status": "unresolved_source_attribution",
+        "summary": "History records a merge from Varieties of democracy and an import from Socialist democracy; source-history records must be carried into the corpus metadata."
+      },
+      {
+        "title": "Education",
+        "status": "hold_suspected_generated_text",
+        "summary": "The current discussion includes an unresolved allegation of model-generated copyedits; the history indicates related wording was restored, but the text has not been reviewed."
+      },
+      {
+        "title": "Agriculture",
+        "status": "unresolved_external_license_attribution",
+        "summary": "History records open-license text from FAO and an incompatible CC BY-NC-SA 3.0 IGO passage that was reverted; exact current source and attribution mapping remains incomplete."
+      },
+      {
+        "title": "Printing press",
+        "status": "hold_suspected_generated_text",
+        "summary": "The pinned revision uses a maintenance notice for suspected model-generated text, and the discussion describes the article as suspected of that issue."
+      },
+      {
+        "title": "Book",
+        "status": "unresolved_source_attribution",
+        "summary": "History records copied sections from Hardcover, Paperback, Literary criticism, Conservation and restoration of books, manuscripts, documents, and ephemera, and Book censorship."
+      },
+      {
+        "title": "Geography",
+        "status": "unresolved_source_attribution",
+        "summary": "History records text copied from Scale (map)."
+      }
+    ],
+    "other_pages_without_a_positive_notice_in_the_reviewed_window": [
+      "Prime number",
+      "Probability",
+      "Computer",
+      "World Wide Web",
+      "Encryption",
+      "Language",
+      "Music"
+    ],
+    "other_pages_note": "Absence of a positive notice in the reviewed 500-entry window is not a rights pass because earlier history remains unchecked."
+  },
+  "metadata_query_completed_at_utc": "2026-09-23T08:55:57Z",
+  "metadata_summary": {
+    "candidate_count": 24,
+    "namespace_zero_count": 24,
+    "wikitext_count": 24,
+    "metadata_size_eligible_count": 24,
+    "maximum_revision_bytes": 331340,
+    "combined_revision_bytes": 3272433,
+    "source_body_requested": false
   }
 }
