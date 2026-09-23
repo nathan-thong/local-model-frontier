@@ -16,12 +16,14 @@ from .interface import (
     iter_state_tensors,
     register_sequence_module,
 )
+from .local_attention import LocalCausalSelfAttention
 
 __all__ = [
     "AttentionState",
     "CausalSelfAttention",
     "DecoderCache",
     "KVCache",
+    "LocalCausalSelfAttention",
     "RecurrentState",
     "SequenceCostDescriptor",
     "SequenceModule",

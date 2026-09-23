@@ -12,6 +12,7 @@ from frontier.models.normalization import RMSNorm
 from frontier.models.position import RotaryEmbedding
 from frontier.models.sequence import AttentionState, DecoderCache
 from frontier.models.sequence.attention import CausalSelfAttention
+from frontier.models.sequence.local_attention import LocalCausalSelfAttention
 from frontier.profiling.compute import estimate_training_compute
 
 
@@ -92,6 +93,46 @@ def _explicit_gqa_reference(attention, hidden_states, positions):
     scores = scores.masked_fill(~allowed[None, None], -torch.inf)
     probabilities = F.softmax(scores, dim=-1)
     attended = probabilities @ v
+    attended = attended.transpose(1, 2).contiguous().view(batch, time, width)
+    return attention.out_dropout(attention.out_proj(attended))
+
+
+def _slow_local_attention_reference(attention, hidden_states, positions):
+    batch, time, width = hidden_states.shape
+    q = (
+        attention.q_proj(hidden_states)
+        .view(batch, time, attention.query_heads, attention.head_dim)
+        .transpose(1, 2)
+    )
+    k = (
+        attention.k_proj(hidden_states)
+        .view(batch, time, attention.kv_heads, attention.head_dim)
+        .transpose(1, 2)
+    )
+    v = (
+        attention.v_proj(hidden_states)
+        .view(batch, time, attention.kv_heads, attention.head_dim)
+        .transpose(1, 2)
+    )
+    if attention.rope is not None:
+        q = attention.rope(q, positions)
+        k = attention.rope(k, positions)
+    k = k.repeat_interleave(attention.groups, dim=1)
+    v = v.repeat_interleave(attention.groups, dim=1)
+    outputs = []
+    for index, query_position in enumerate(positions.tolist()):
+        first_key_position = query_position - attention.window_size + 1
+        key_indices = [
+            key_index
+            for key_index, key_position in enumerate(positions.tolist())
+            if first_key_position <= key_position <= query_position
+        ]
+        query = q[:, :, index : index + 1]
+        query_keys = k[:, :, key_indices]
+        query_values = v[:, :, key_indices]
+        scores = (query @ query_keys.transpose(-2, -1)) / math.sqrt(attention.head_dim)
+        outputs.append(F.softmax(scores, dim=-1) @ query_values)
+    attended = torch.cat(outputs, dim=2)
     attended = attended.transpose(1, 2).contiguous().view(batch, time, width)
     return attention.out_dropout(attention.out_proj(attended))
 
@@ -283,6 +324,279 @@ def test_attention_emits_explicit_state_and_accepts_legacy_tuple_cache():
     assert isinstance(next_state, AttentionState)
     assert next_state.key_start_position == 0
     assert next_state.key.shape[2] == 3
+
+
+@pytest.mark.parametrize(("kv_heads", "window_size"), [(1, 1), (2, 3), (4, 5)])
+def test_local_attention_matches_slow_per_query_oracle_in_forward_and_backward(
+    kv_heads, window_size
+):
+    torch.manual_seed(41)
+    config = small_config(
+        layers=1,
+        kv_heads=kv_heads,
+        sequence_types=["local_attention_reference"],
+        window_size=window_size,
+    )
+    attention = LocalCausalSelfAttention(config).eval()
+    inputs = torch.randn(2, 7, 32, requires_grad=True)
+    positions = torch.arange(7)
+    weights = torch.randn_like(inputs)
+
+    actual = attention(inputs, positions)[0]
+    (actual * weights).sum().backward()
+    actual_input_gradient = inputs.grad.detach().clone()
+    actual_parameter_gradients = {
+        name: parameter.grad.detach().clone()
+        for name, parameter in attention.named_parameters()
+        if parameter.grad is not None
+    }
+
+    attention.zero_grad(set_to_none=True)
+    reference_inputs = inputs.detach().clone().requires_grad_(True)
+    reference = _slow_local_attention_reference(attention, reference_inputs, positions)
+    (reference * weights).sum().backward()
+
+    torch.testing.assert_close(actual, reference, atol=1e-6, rtol=1e-5)
+    torch.testing.assert_close(actual_input_gradient, reference_inputs.grad, atol=2e-6, rtol=1e-5)
+    for name, parameter in attention.named_parameters():
+        if name in actual_parameter_gradients:
+            torch.testing.assert_close(
+                actual_parameter_gradients[name], parameter.grad, atol=2e-6, rtol=1e-5
+            )
+
+
+def test_local_window_larger_than_input_matches_full_causal_attention():
+    config = small_config(layers=1, sequence_types=["attention"])
+    local_config = small_config(
+        layers=1,
+        sequence_types=["local_attention_reference"],
+        window_size=20,
+    )
+    full = CausalSelfAttention(config).eval()
+    local = LocalCausalSelfAttention(local_config).eval()
+    local.load_state_dict(full.state_dict())
+    inputs = torch.randn(2, 9, 32)
+    positions = torch.arange(9)
+
+    torch.testing.assert_close(local(inputs, positions)[0], full(inputs, positions)[0])
+
+
+@pytest.mark.parametrize(
+    ("window_size", "length", "chunks"),
+    [
+        (1, 1, [1]),
+        (1, 9, [3, 1, 5]),
+        (4, 3, [1, 2]),  # W - 1
+        (4, 4, [3, 1]),  # W, with the window ending at a chunk boundary
+        (4, 5, [2, 3]),  # W + 1
+        (4, 9, [3, 1, 5]),  # 2W + 1 with odd partitions
+        (4, 9, [4, 1, 4]),  # first chunk is exactly one full window
+        (20, 7, [1, 3, 3]),  # window larger than the input
+    ],
+)
+def test_local_attention_cached_chunks_match_full_and_bound_state(window_size, length, chunks):
+    torch.manual_seed(43)
+    model = DecoderLanguageModel(
+        small_config(
+            sequence_types=["local_attention_reference"] * 2,
+            window_size=window_size,
+        )
+    ).eval()
+    ids = torch.randint(0, 259, (2, length))
+    full_logits, _ = model(ids)
+
+    cached_logits = []
+    cache = None
+    cursor = 0
+    for chunk_length in chunks:
+        chunk_logits, cache = model(
+            ids[:, cursor : cursor + chunk_length], cache=cache, use_cache=True
+        )
+        cached_logits.append(chunk_logits)
+        cursor += chunk_length
+        assert cache is not None
+        for state in cache.states:
+            assert isinstance(state, AttentionState)
+            assert state.key.shape[2] <= window_size - 1
+            assert state.key_start_position + state.key.shape[2] == cache.position
+            assert state.key.is_contiguous()
+            assert state.value.is_contiguous()
+    assert cursor == length
+    torch.testing.assert_close(torch.cat(cached_logits, dim=1), full_logits, atol=1e-5, rtol=1e-5)
+
+    assert cache is not None
+    retained_tokens = min(length, window_size - 1)
+    expected_bytes = (
+        2
+        * model.config.layers
+        * ids.shape[0]
+        * retained_tokens
+        * model.config.kv_heads
+        * (model.config.width // model.config.query_heads)
+        * next(iter(cache.states[0])).element_size()
+    )
+    assert _cache_storage_bytes(cache) == expected_bytes
+    for state in cache.states:
+        assert state.key_start_position == length - retained_tokens
+
+
+def test_local_attention_cached_chunk_gradients_match_full_sequence():
+    torch.manual_seed(47)
+    attention = LocalCausalSelfAttention(
+        small_config(
+            layers=1,
+            sequence_types=["local_attention_reference"],
+            window_size=3,
+        )
+    ).eval()
+    inputs = torch.randn(2, 9, 32, requires_grad=True)
+    positions = torch.arange(9)
+    weights = torch.randn_like(inputs)
+
+    full = attention(inputs, positions)[0]
+    (full * weights).sum().backward()
+    full_input_gradient = inputs.grad.detach().clone()
+    full_parameter_gradients = {
+        name: parameter.grad.detach().clone()
+        for name, parameter in attention.named_parameters()
+        if parameter.grad is not None
+    }
+
+    attention.zero_grad(set_to_none=True)
+    chunk_inputs = inputs.detach().clone().requires_grad_(True)
+    chunks = []
+    state = None
+    start = 0
+    for chunk_length in (2, 3, 1, 3):
+        output, state = attention(
+            chunk_inputs[:, start : start + chunk_length],
+            positions[start : start + chunk_length],
+            state=state,
+            use_cache=True,
+            position_start=start,
+        )
+        chunks.append(output)
+        start += chunk_length
+    chunked = torch.cat(chunks, dim=1)
+    (chunked * weights).sum().backward()
+
+    torch.testing.assert_close(chunked, full.detach(), atol=1e-6, rtol=1e-5)
+    torch.testing.assert_close(chunk_inputs.grad, full_input_gradient, atol=2e-6, rtol=1e-5)
+    for name, parameter in attention.named_parameters():
+        if name in full_parameter_gradients:
+            torch.testing.assert_close(
+                parameter.grad, full_parameter_gradients[name], atol=2e-6, rtol=1e-5
+            )
+
+
+def test_local_attention_uses_absolute_positions_across_cache_chunks():
+    torch.manual_seed(51)
+    attention = LocalCausalSelfAttention(
+        small_config(
+            layers=1,
+            sequence_types=["local_attention_reference"],
+            window_size=4,
+        )
+    ).eval()
+    inputs = torch.randn(1, 9, 32)
+    positions = torch.arange(10, 19)
+    full = attention(inputs, positions, position_start=10)[0]
+
+    outputs = []
+    state = None
+    cursor = 0
+    for chunk_length in (3, 1, 5):
+        end = cursor + chunk_length
+        output, state = attention(
+            inputs[:, cursor:end],
+            positions[cursor:end],
+            state=state,
+            use_cache=True,
+            position_start=10 + cursor,
+        )
+        outputs.append(output)
+        cursor = end
+
+    torch.testing.assert_close(torch.cat(outputs, dim=1), full, atol=1e-5, rtol=1e-5)
+    assert state is not None
+    assert state.key_start_position + state.key.shape[2] == 19
+
+
+def test_local_attention_excludes_future_and_out_of_window_inputs():
+    torch.manual_seed(53)
+    attention = LocalCausalSelfAttention(
+        small_config(
+            layers=1,
+            sequence_types=["local_attention_reference"],
+            window_size=3,
+        )
+    ).eval()
+    inputs = torch.randn(1, 7, 32, requires_grad=True)
+    positions = torch.arange(7)
+    actual = attention(inputs, positions)[0]
+
+    future_changed = inputs.detach().clone()
+    future_changed[:, 5:] = torch.randn_like(future_changed[:, 5:])
+    future_output = attention(future_changed, positions)[0]
+    torch.testing.assert_close(actual[:, :5], future_output[:, :5], atol=0, rtol=0)
+
+    actual[:, -1].sum().backward()
+    assert torch.count_nonzero(inputs.grad[:, :4]) == 0
+
+
+@pytest.mark.parametrize("position", ["rope", "learned"])
+@pytest.mark.parametrize("normalization", ["rmsnorm", "layernorm"])
+@pytest.mark.parametrize("residual_topology", ["pre_norm", "post_norm"])
+def test_local_attention_model_cache_parity_for_supported_model_options(
+    position, normalization, residual_topology
+):
+    torch.manual_seed(59)
+    model = DecoderLanguageModel(
+        small_config(
+            position=position,
+            normalization=normalization,
+            residual_topology=residual_topology,
+            sequence_types=["local_attention_reference"] * 2,
+            window_size=4,
+        )
+    ).eval()
+    ids = torch.randint(0, 259, (1, 9))
+    full, _ = model(ids)
+    first, cache = model(ids[:, :3], use_cache=True)
+    second, cache = model(ids[:, 3:7], cache=cache, use_cache=True)
+    third, _ = model(ids[:, 7:], cache=cache, use_cache=True)
+    torch.testing.assert_close(torch.cat((first, second, third), dim=1), full, atol=1e-5, rtol=1e-5)
+
+
+def test_local_attention_window_configuration_is_module_specific():
+    with pytest.raises(ValueError, match="positive integer"):
+        small_config(
+            sequence_types=["local_attention_reference"] * 2,
+        ).validate()
+    with pytest.raises(ValueError, match="positive integer"):
+        small_config(
+            sequence_types=["local_attention_reference"] * 2,
+            window_size=0,
+        ).validate()
+    with pytest.raises(ValueError, match="only valid"):
+        small_config(window_size=4).validate()
+
+
+def test_local_attention_descriptor_keeps_dense_work_and_window_state_explicit():
+    attention = LocalCausalSelfAttention(
+        small_config(
+            layers=1,
+            sequence_types=["local_attention_reference"],
+            window_size=7,
+        )
+    )
+    descriptor = attention.sequence_descriptor()
+
+    assert descriptor.name == "local_attention_reference"
+    assert descriptor.cost.executed_work == "dense_masked_local_attention"
+    assert descriptor.cost.training_estimator == "decoder-module-mac-v1"
+    assert descriptor.state.growth == "bounded_by_window_size_minus_one"
+    assert ("window_size", 7) in descriptor.parameters
 
 
 def test_tied_embedding_is_counted_once():

@@ -32,6 +32,7 @@ def _attention_macs_per_token(config: ModelConfig, context_length: int) -> dict[
 
 
 register_sequence_mac_estimator("attention", _attention_macs_per_token)
+register_sequence_mac_estimator("local_attention_reference", _attention_macs_per_token)
 
 
 def estimate_training_compute(

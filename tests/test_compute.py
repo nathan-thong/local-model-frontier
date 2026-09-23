@@ -72,3 +72,16 @@ def test_gqa_projection_work_is_lower_than_mha_and_unknown_blocks_are_unpriced()
     assert unknown["status"] == "unavailable"
     assert unknown["estimated_flops"] is None
     assert unknown["unsupported_sequence_type"] == "experimental"
+
+
+def test_local_attention_reference_is_priced_at_dense_attention_work():
+    dense = estimate_training_compute(make_config(), input_tokens=8, context_length=4)
+    local_config = make_config(
+        sequence_types=["local_attention_reference", "local_attention_reference"],
+        window_size=2,
+    )
+    local = estimate_training_compute(local_config, input_tokens=8, context_length=4)
+
+    assert local["status"] == "estimated"
+    assert local["components"] == dense["components"]
+    assert local["estimated_flops"] == dense["estimated_flops"]

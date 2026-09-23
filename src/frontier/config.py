@@ -26,6 +26,7 @@ class ModelConfig:
     bias: bool = False
     tie_embeddings: bool = True
     rope_theta: float = 10000.0
+    window_size: int | None = None
 
     def validate(self) -> None:
         if self.vocab_size < 259:
@@ -54,6 +55,16 @@ class ModelConfig:
             self.sequence_types = ["attention"] * self.layers
         elif len(self.sequence_types) != self.layers:
             raise ValueError("sequence_types must be empty or contain one module name per layer")
+        has_local_attention = "local_attention_reference" in self.sequence_types
+        if has_local_attention:
+            if type(self.window_size) is not int or self.window_size <= 0:
+                raise ValueError(
+                    "window_size must be a positive integer when using local_attention_reference"
+                )
+        elif self.window_size is not None:
+            raise ValueError(
+                "window_size is only valid when sequence_types includes local_attention_reference"
+            )
 
 
 @dataclass
