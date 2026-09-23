@@ -17,9 +17,9 @@ The exporter, verifier, CLI, adversarial tests, sanitized six-run result bundle,
 
 **Q09 stop condition:** If the exporter cannot safely sanitize a field, omit it and record that omission. Do not widen the allowlist just to retain a convenient field. If comparison eligibility cannot be reconstructed from source artifacts, export it as ineligible/unknown rather than trusting a supplied boolean.
 
-## Q08 E08 CPU optimizer-step measurement: CPU scope complete
+## Q08 E08 CPU optimizer-step measurement: sampled CPU probe complete; CUDA open
 
-At clean revision `790a83a`, the fresh CPU worker ran one production update and persisted its sampled RSS/private-commit record. Baseline was 282,390,528 RSS and 797,462,528 private bytes; sampled increases were 9,011,200 RSS and 4,091,904 private bytes. There were only two samples: the 13.189 ms observed gap was as long as the 13.064 ms step. This verifies the current-memory reading path and scope wiring but leaves brief transient interior peaks unresolved. CUDA validation remains open because no suitable device was available. Do not turn this infrastructure probe into an architecture comparison.
+At clean revision `53e9ed0`, the fresh CPU worker ran one production update with 16 accumulation microbatches and persisted its sampled RSS/private-commit record. Baseline was 282,738,688 RSS and 797,708,288 private bytes; sampled increases were 8,982,528 RSS and 3,522,560 private bytes. There were 11 readings during the 0.151018 s step, with observed gaps of 9.457–17.097 ms. This resolves boundary-only sampling for this workload, but the maximum remains sampled and can miss shorter transients. CUDA validation remains open because no suitable device was available. Do not turn this infrastructure probe into an architecture comparison.
 
 ## Q10.b deterministic preparation: next bounded package
 
