@@ -151,8 +151,9 @@
     "exclusions": "feature-map, denominator epsilon, Python-loop, scalar and autograd-intermediate overhead are excluded; estimate is not an operation counter"
   },
   "validation": {
-    "code_revision": "502014799903fc9500cebf109acc05eed8ba2e5c",
-    "pytest": "169 passed in 31.47 seconds",
+    "code_revision": "9e2b1ac238f6d79656ff2ac88a20e9c07df20aa9",
+    "worktree_clean": true,
+    "pytest": "169 passed in 31.72 seconds",
     "pytest_command": ".\\.venv\\Scripts\\python.exe -m pytest",
     "focused_linear_attention_tests": "18 passed",
     "ruff_check": "passed: .\\.venv\\Scripts\\ruff.exe check src tests scripts",
