@@ -26,7 +26,8 @@ def _xml(prefix: str = "") -> bytes:
         prefix
         + """<article>
 <front><article-meta>
-<article-id pub-id-type="pmc">PMC123</article-id>
+<article-id pub-id-type="pmcid">PMC123</article-id>
+<article-id pub-id-type="pmcid-ver">PMC123.1</article-id>
 <article-id pub-id-type="doi">10.1000/example</article-id>
 <title-group><article-title>A <italic>title</italic></article-title></title-group>
 <abstract><p>Primary <italic>inline</italic> prose <xref>citation</xref>tail.</p></abstract>
@@ -195,3 +196,6 @@ def test_pmc_extractor_checks_frozen_hash_and_identity(tmp_path):
         extract_pmc_document(source, altered)
     with pytest.raises(ValueError, match="PMCID does not match"):
         extract_pmc_document(source, _source_record(xml, pmcid="PMC999"))
+    wrong_version = dict(record, cloud_version=2)
+    with pytest.raises(ValueError, match="PMCID.version does not match"):
+        extract_pmc_document(source, wrong_version)

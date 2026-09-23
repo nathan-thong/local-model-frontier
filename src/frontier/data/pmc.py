@@ -197,10 +197,19 @@ def _article_metadata(root: ET.Element, record: dict[str, Any]) -> ET.Element:
         (element.text or "").strip()
         for element in root.iter()
         if _local_name(element.tag) == "article-id"
-        and element.attrib.get("pub-id-type", "").casefold() == "pmc"
+        and element.attrib.get("pub-id-type", "").casefold() in {"pmc", "pmcid"}
     }
     if record["pmcid"].casefold() not in {value.casefold() for value in pmc_ids}:
         raise ValueError(f"XML PMCID does not match frozen record {record['pmcid']}")
+    versioned_ids = {
+        (element.text or "").strip().casefold()
+        for element in root.iter()
+        if _local_name(element.tag) == "article-id"
+        and element.attrib.get("pub-id-type", "").casefold() == "pmcid-ver"
+    }
+    expected_versioned_id = f"{record['pmcid']}.{record['cloud_version']}".casefold()
+    if expected_versioned_id not in versioned_ids:
+        raise ValueError(f"XML PMCID.version does not match frozen record {record['pmcid']}")
     front = _direct_child(root, "front")
     meta = _direct_child(front, "article-meta") if front is not None else None
     if meta is None:
