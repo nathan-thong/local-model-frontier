@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "name": "m2-gqa-001-confirm",
+  "baseline": {
+    "id": "mha",
+    "config": "tinystories_v3_mha.json"
+  },
+  "candidates": [
+    {
+      "id": "gqa",
+      "config": "tinystories_v3_gqa.json"
+    }
+  ],
+  "seeds": [17, 42, 123],
+  "output_root": "../../runs/m2-gqa-001-confirm",
+  "total_compute_cap_flops": 85000000000000
+}
