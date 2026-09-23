@@ -1,6 +1,6 @@
 # Post-confirmation research plan
 
-Status: conditional research execution plan, 23 September 2026. The first M2-GQA-001 full-budget attempt failed the comparator's warmup-fraction recipe gate and remains ineligible. The corrected M2-GQA-002 passed paired comparison eligibility on synthetic TinyStories: mean NLL delta -0.02307 nats/token, sample SD 0.02439, with exactly half the KV bytes and about 8.5% slower CPU decode. It is not a broad capability claim. Q08 is complete; Q09 portable evidence export is next. This plan defines future work and does not authorize paid compute or publication.
+Status: conditional research execution plan, 23 September 2026. The first M2-GQA-001 full-budget attempt failed the comparator's warmup-fraction recipe gate and remains ineligible. The corrected M2-GQA-002 passed paired comparison eligibility on synthetic TinyStories: mean NLL delta -0.02307 nats/token, sample SD 0.02439, with exactly half the KV bytes and about 8.5% slower CPU decode. It is not a broad capability claim. Q08 and Q09 are complete; Q09's bundle was verified from a detached clean checkout. Q10 corpus selection and Q11 evaluation freeze are next, before any new learning comparison. This plan defines future work and does not authorize paid compute or publication.
 
 ## Objective and working rules
 
