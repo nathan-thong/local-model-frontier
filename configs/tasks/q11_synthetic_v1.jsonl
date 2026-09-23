@@ -1,0 +1,4 @@
+{"id":"q11-v1-lookup-amber-01","prompt":"In toy table RQ-17, amber maps to vex, azure maps to qom, and umber maps to dax. Return the token for azure only.","target":"qom"}
+{"id":"q11-v1-order-px4-02","prompt":"For toy order PX-4, move the last label in [bim, kav, tul] to the first position and keep the others in order. Give the new first label only.","target":"tul"}
+{"id":"q11-v1-index-lm22-03","prompt":"Toy index LM-22 pairs N7 with fep, N8 with gok, and N9 with ruz. Return the token paired with N8 only.","target":"gok"}
+{"id":"q11-v1-record-ab31-04","prompt":"Toy record AB-31 pairs key D with 8, key J with 3, key M with 6, and key Q with 1. Return the value paired with key M only.","target":"6"}

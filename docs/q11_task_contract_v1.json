@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "experiment_id": "Q11-TASK-001",
+  "title": "Versioned synthetic instruction probe and scorer contract",
+  "status": "preregistered_pending_scorer_validation_and_contamination_audit",
+  "preregistered_at_utc": "2026-09-23T12:39:42Z",
+  "preregistration_parent_revision": "b7d46f55d3bb7bf119a1ea0d7d80e10f866c1f42",
+  "data_protocol": {
+    "experiment_id": "Q10-PREP-002",
+    "data_manifest_sha256": "d49a425f09b087c6b5a31b041349b470b1759701e4de0f21ee9b469f6a21b5d1",
+    "train_sha256": "e5aac508fb9c0cb6e78bdbed7a3453174000f0b630f4ba9d0c312d37fcea77a3",
+    "validation_sha256": "47faec7d07370d8148e4228351ff49e0136cfe02ecdb0ffe64412fd1c61293f5",
+    "test_sha256": "bfea9d78eb6b47e90ce9af367af62cac47f978e9d84a8f5b9ef16fc0147acdaa",
+    "tokenizer_sha256": "0570f7536d985403b6574b72f98355b1f12d0441641ff5e60cb1ede0eaa6bb33",
+    "test_set_rule": "Do not use test metrics for task selection, training, checkpoint selection, or tuning. This task contamination audit may scan test text by the frozen hashes/ngram rule. Reserve model test metrics for one final, preregistered evaluation after the sequence-campaign systems and analysis are frozen."
+  },
+  "task_set": {
+    "version": "q11-synthetic-instruction-v1",
+    "path": "configs/tasks/q11_synthetic_v1.jsonl",
+    "sha256": "b00cf0f6e599d3bd54600d3568e196a2628194ed7b21afebff4ea50cdd08bf6d",
+    "example_count": 4,
+    "source": "Original in-repository toy lookup and ordering examples; no external benchmark or corpus examples.",
+    "license": "Apache-2.0 under the repository license",
+    "scope": "Deterministic instruction-following/scorer smoke probe only; it is not a broad capability benchmark and is not a substitute for held-out language-model metrics.",
+    "template_version": "q11-template-v1",
+    "generation_max_new_tokens": 8
+  },
+  "scoring": {
+    "adapter": "jsonl-prompt-target-v1",
+    "primary_task_metric": {
+      "name": "exact_match",
+      "direction": "maximize",
+      "rule": "Greedy prediction and target are compared after stripping leading/trailing Unicode whitespace; comparison is case-sensitive and punctuation-sensitive. No other normalization is applied."
+    },
+    "secondary_task_metric": {
+      "name": "conditional_bits_per_utf8_byte",
+      "direction": "minimize",
+      "rule": "Teacher-forced target NLL includes EOS. Divide summed natural-log NLL by ln(2) and by the target UTF-8 byte count; BOS is not scored and EOS has zero byte coverage."
+    },
+    "target_construction": "Encode prompt with BOS and without EOS; encode target without BOS and with EOS. Score every target token exactly once.",
+    "generation": "Greedy decoding; at most eight new tokens; stop at EOS.",
+    "empty_target": "Prohibited in this task set.",
+    "per_example_record_fields": [
+      "example_id",
+      "prompt",
+      "target",
+      "prediction",
+      "exact_match",
+      "conditional_nll_sum",
+      "conditional_scored_tokens",
+      "conditional_scored_bytes",
+      "conditional_mean_nll",
+      "conditional_bits_per_utf8_byte"
+    ]
+  },
+  "hand_checked_examples": [
+    {
+      "id": "q11-v1-lookup-amber-01",
+      "reasoning": "The table maps azure to qom.",
+      "expected_target": "qom"
+    },
+    {
+      "id": "q11-v1-order-px4-02",
+      "reasoning": "Moving the final label tul to the front yields [tul, bim, kav].",
+      "expected_target": "tul"
+    },
+    {
+      "id": "q11-v1-index-lm22-03",
+      "reasoning": "The N8 row maps to gok.",
+      "expected_target": "gok"
+    },
+    {
+      "id": "q11-v1-record-ab31-04",
+      "reasoning": "Key M is paired with value 6.",
+      "expected_target": "6"
+    }
+  ],
+  "scorer_hand_checks": [
+    {
+      "prediction": "qom",
+      "target": "qom",
+      "expected_exact_match": true
+    },
+    {
+      "prediction": "  qom\n",
+      "target": "qom",
+      "expected_exact_match": true
+    },
+    {
+      "prediction": "QOM",
+      "target": "qom",
+      "expected_exact_match": false
+    },
+    {
+      "prediction": "qom.",
+      "target": "qom",
+      "expected_exact_match": false
+    }
+  ],
+  "contamination_check": {
+    "scope": "Scan each task prompt, target and concatenated prompt-target against all 21 normalized Q10 train/validation/test documents. The scan is mechanical and does not calculate model scores or use test text for task selection.",
+    "exact_identity": "Unicode NFC plus collapsed Unicode whitespace, matching the Q10 document identity policy.",
+    "phrase_overlap": "Casefold each whitespace-delimited token and require zero shared contiguous 13-token sequences between task strings and any Q10 document.",
+    "record": "Per-task exact-identity and shared-13-gram counts plus source/split hashes; do not store matched source text.",
+    "acceptance": "Zero exact identity matches and zero shared 13-token sequences in train, validation and test.",
+    "limitations": "This detects full-example identity and long exact phrase reuse, not semantic similarity or shorter/common phrase reuse."
+  },
+  "control": "The hand-computed toy mappings and scorer truth table above; existing jsonl-prompt-target-v1 behavior is the compatibility reference. This is an evaluator-validation control, not a capability comparison.",
+  "training_budget": {
+    "network_requests": 0,
+    "model_training_tokens": 0,
+    "optimizer_updates": 0,
+    "training_flops": 0
+  },
+  "evaluation_metrics": [
+    "task artifact SHA-256 and stable example IDs",
+    "hand-checked target answers and exact-match semantics",
+    "per-example target token and UTF-8 byte counts",
+    "conditional bits per UTF-8 byte with EOS zero-byte coverage",
+    "exact identity and shared 13-token overlap counts by Q10 split",
+    "deterministic repeated scorer output",
+    "validation bits per UTF-8 byte for conventional baselines"
+  ],
+  "hypothesis": "The four original toy examples have hand-verifiable targets, the scorer records exact-match and byte-normalized conditional likelihood per example, and no task string has exact identity or long-phrase overlap with Q10 train/validation/test content.",
+  "change": "Freeze a versioned task JSONL, exact-match and byte-normalized NLL contracts, hand-check table, and content-overlap audit before evaluator changes or baseline training.",
+  "result": "Pending. Scorer validation and the contamination scan have not been run.",
+  "interpretation": "Pending. The toy task set is a scorer smoke probe and cannot support a broad capability claim.",
+  "next_experiment": "Implement scorer byte normalization and deterministic task-contamination audit; then preregister a bounded three-seed conventional GQA baseline using Q10 data and tokenizer before training."
+}
