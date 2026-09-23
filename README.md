@@ -6,7 +6,7 @@ Repository code is licensed under [Apache-2.0](LICENSE). Dataset licenses and te
 
 ## Status
 
-Milestone 1 infrastructure is implemented and tested, and both conventional baselines have now trained on a pinned, bounded TinyStories subset with three matched seeds each. Their estimated training-FLOP budgets differ by 0.044%; the larger model has worse held-out perplexity on this setup. The corpus is synthetic short fiction, so this is infrastructure and narrow baseline evidence rather than broad capability evidence. All run artifacts and the matched comparison are recorded in [EXPERIMENTS.md](EXPERIMENTS.md). The comparison reports metric comparability but blocks improvement claims because this first run set has no pinned Git revision. The baseline uses a fixed UTF-8 byte tokenizer, an infrastructure choice rather than a modeling recommendation.
+Milestone 1 infrastructure is implemented and tested, and both conventional baselines have trained on a pinned, bounded TinyStories subset with three matched seeds each. Their estimated training-FLOP budgets differ by 0.044%; the larger model has worse held-out perplexity on this setup. The paired comparison passes its pinned-revision, clean-worktree and provenance checks, but no improvement is observed. The corpus is synthetic short fiction, so this is infrastructure and narrow baseline evidence rather than broad capability evidence. Run artifacts and results are recorded in [EXPERIMENTS.md](EXPERIMENTS.md). The baseline uses a fixed UTF-8 byte tokenizer, an infrastructure choice rather than a modeling recommendation.
 
 ## Quick start
 
@@ -76,4 +76,4 @@ frontier prepare-data --input data\tinystories-documents.txt --output data\tinys
 
 The converter discards a partial trailing story and records the source revision, selected byte range, hashes, license and normalization. The M1 validation split is held out from this training-file prefix; it is not the dataset's separate validation file.
 
-Use `frontier compare-seeds --baseline-runs ... --candidate-runs ... --output runs\seeded-comparison.json` for repeated-seed aggregation. An improvement claim requires at least three matched seeds, non-synthetic data, and all runs to report the same pinned Git revision; pairwise comparisons are metric-only.
+Use `frontier compare-seeds --baseline-runs ... --candidate-runs ... --output runs\seeded-comparison.json` for repeated-seed aggregation. An improvement claim requires at least three matched seeds, non-synthetic data, the same pinned Git revision, and clean Git worktrees recorded for every run; pairwise comparisons are metric-only.

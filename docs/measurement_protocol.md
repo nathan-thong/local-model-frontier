@@ -2,7 +2,7 @@
 
 ## Comparison contract
 
-There is no single notion of a matched baseline. For each result, state whether the control matches training FLOPs, training tokens, wall time, inference resident memory, or inference latency. An architecture/capability improvement claim requires at minimum a matched training-compute control, the same data/tokenizer/evaluation protocol, at least three seed-matched runs, and a shared non-null Git revision. Use frontier compare-seeds to aggregate paired means and sample standard deviations; a pairwise comparison is metric-only. A Pareto point at a fixed memory budget also reports the training-compute budget used to obtain it. Report teacher cost separately and cumulatively for distillation.
+There is no single notion of a matched baseline. For each result, state whether the control matches training FLOPs, training tokens, wall time, inference resident memory, or inference latency. An architecture/capability improvement claim requires at minimum a matched training-compute control, the same data/tokenizer/evaluation protocol, at least three seed-matched runs, and one shared non-null Git revision recorded from clean worktrees. Use frontier compare-seeds to aggregate paired means and sample standard deviations; a pairwise comparison is metric-only. A Pareto point at a fixed memory budget also reports the training-compute budget used to obtain it. Report teacher cost separately and cumulatively for distillation.
 
 ## Stored and resident memory
 

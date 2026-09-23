@@ -44,12 +44,32 @@ def _sync(device: torch.device) -> None:
 
 
 def _environment(device: torch.device) -> dict:
+    git_revision = None
+    git_worktree_clean = None
     try:
-        git_revision = subprocess.run(
-            ["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+        git_root = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            capture_output=True,
+            text=True,
+            check=True,
         ).stdout.strip()
+        git_revision = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=True,
+            cwd=git_root,
+        ).stdout.strip()
+        git_status = subprocess.run(
+            ["git", "status", "--porcelain"],
+            capture_output=True,
+            text=True,
+            check=True,
+            cwd=git_root,
+        ).stdout
+        git_worktree_clean = not git_status.strip()
     except (OSError, subprocess.CalledProcessError):
-        git_revision = None
+        pass
     try:
         numpy_version = importlib.metadata.version("numpy")
     except importlib.metadata.PackageNotFoundError:
@@ -68,6 +88,7 @@ def _environment(device: torch.device) -> dict:
         else platform.processor(),
         "cpu_count": __import__("os").cpu_count(),
         "git_revision": git_revision,
+        "git_worktree_clean": git_worktree_clean,
     }
 
 

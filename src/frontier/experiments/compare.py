@@ -67,10 +67,16 @@ def compare_runs(
             "device",
             "device_name",
             "git_revision",
+            "git_worktree_clean",
         )
-        same_environment = all(
-            baseline.get("environment", {}).get(key) == candidate.get("environment", {}).get(key)
-            for key in environment_keys
+        same_environment = (
+            all(
+                baseline.get("environment", {}).get(key)
+                == candidate.get("environment", {}).get(key)
+                for key in environment_keys
+            )
+            and baseline.get("environment", {}).get("git_worktree_clean") is True
+            and candidate.get("environment", {}).get("git_worktree_clean") is True
         )
         recipe_keys = (
             "batch_size",
@@ -229,6 +235,7 @@ def compare_seeded_runs(
         "device",
         "device_name",
         "git_revision",
+        "git_worktree_clean",
     )
     environments = [
         {key: run[1].get("environment", {}).get(key) for key in environment_keys}
@@ -240,6 +247,9 @@ def compare_seeded_runs(
         "same_tokenizer_across_all_runs": all_same(tokenizers),
         "same_evaluation_protocol_across_all_runs": all_same(protocols),
         "same_environment_across_all_runs": all_same(environments),
+        "all_source_worktrees_clean": all(
+            run[1].get("environment", {}).get("git_worktree_clean") is True for run in all_runs
+        ),
         "baseline_architecture_fixed_across_seeds": all_same(
             [model_signature(run) for run in baseline_runs]
         ),
@@ -273,12 +283,16 @@ def compare_seeded_runs(
     source_revision_pinned = all_same(git_revisions) and all(
         isinstance(revision, str) and revision for revision in git_revisions
     )
+    source_worktrees_clean = all(
+        run[1].get("environment", {}).get("git_worktree_clean") is True for run in all_runs
+    )
     metric_comparable = all(group_checks.values()) and pair_checks_pass
     claim_eligible = (
         metric_comparable
         and len(seeds) >= minimum_seeds
         and same_real_corpus
         and source_revision_pinned
+        and source_worktrees_clean
     )
 
     baseline_ppl = [
@@ -309,6 +323,7 @@ def compare_seeded_runs(
         "comparison_type": "paired multi-seed",
         "minimum_seeds_for_claim": minimum_seeds,
         "source_revision": git_revisions[0] if source_revision_pinned else None,
+        "source_worktrees_clean": source_worktrees_clean,
         "seeds": seeds,
         "baseline_runs": {str(seed): str(baseline_by_seed[seed][0]) for seed in seeds},
         "candidate_runs": {str(seed): str(candidate_by_seed[seed][0]) for seed in seeds},
@@ -333,6 +348,7 @@ def compare_seeded_runs(
                 if not source_revision_pinned
                 else []
             )
+            + (["all runs must use a clean Git working tree"] if not source_worktrees_clean else [])
         ),
         "group_checks": group_checks,
         "pairwise_results": pairwise_results,

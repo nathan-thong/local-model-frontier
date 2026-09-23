@@ -6,7 +6,14 @@ from frontier.experiments.compare import compare_runs, compare_seeded_runs
 
 
 def create_run(
-    root, flops, synthetic=False, seed=17, perplexity=10.0, width=128, revision="test-revision"
+    root,
+    flops,
+    synthetic=False,
+    seed=17,
+    perplexity=10.0,
+    width=128,
+    revision="test-revision",
+    worktree_clean=True,
 ):
     root.mkdir()
     summary = {
@@ -54,6 +61,7 @@ def create_run(
                 "device": "cpu",
                 "device_name": "test cpu",
                 "git_revision": revision,
+                "git_worktree_clean": worktree_clean,
             }
         ),
         encoding="utf-8",
@@ -139,6 +147,25 @@ def test_seeded_comparison_blocks_unpinned_source(tmp_path):
     assert report["comparable_for_metric_comparison"] is True
     assert report["comparable_for_improvement_claim"] is False
     assert "all runs must record one pinned git revision" in report["claim_blockers"]
+
+
+def test_seeded_comparison_blocks_dirty_source_worktrees(tmp_path):
+    baseline_runs = []
+    candidate_runs = []
+    for seed in (17, 42, 123):
+        baseline = tmp_path / f"baseline-{seed}"
+        candidate = tmp_path / f"candidate-{seed}"
+        create_run(baseline, 1_000, seed=seed, worktree_clean=False)
+        create_run(candidate, 1_005, seed=seed, width=256, worktree_clean=False)
+        baseline_runs.append(baseline)
+        candidate_runs.append(candidate)
+
+    report = compare_seeded_runs(baseline_runs, candidate_runs, tmp_path / "dirty-comparison.json")
+
+    assert report["comparable_for_metric_comparison"] is False
+    assert report["comparable_for_improvement_claim"] is False
+    assert report["group_checks"]["all_source_worktrees_clean"] is False
+    assert "all runs must use a clean Git working tree" in report["claim_blockers"]
 
 
 def test_comparison_keeps_unmeasured_profile_deltas_null(tmp_path):
