@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "experiment_id": "Q10-SOURCE-003",
-  "status": "preregistered_before_query",
   "as_of_date": "2026-09-23",
   "preregistration_parent_revision": "92ddd131336533412e2a7345e51672383ee8836e",
   "supersedes_failed_screen": "Q10-SOURCE-002",
@@ -28,12 +27,42 @@
     "base_query": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp] AND NOT \"author manuscript\"[filter] AND NOT preprint[filter]",
     "topic_field_note": "The frozen [mh] MeSH topic terms restrict retrieval to the MEDLINE-indexed subset of PMC.",
     "topic_strata_in_priority_order": [
-      {"name": "neurosciences", "mesh_descriptor_ui": "D009488", "mesh_term": "neurosciences[MeSH Terms]", "target": 8},
-      {"name": "microbiology", "mesh_descriptor_ui": "D008829", "mesh_term": "microbiology[MeSH Terms]", "target": 8},
-      {"name": "plants", "mesh_descriptor_ui": "D010944", "mesh_term": "plants[MeSH Terms]", "target": 8},
-      {"name": "ecology", "mesh_descriptor_ui": "D004463", "mesh_term": "ecology[MeSH Terms]", "target": 8},
-      {"name": "computational biology", "mesh_descriptor_ui": "D019295", "mesh_term": "computational biology[MeSH Terms]", "target": 8},
-      {"name": "public health", "mesh_descriptor_ui": "D011634", "mesh_term": "public health[MeSH Terms]", "target": 8}
+      {
+        "name": "neurosciences",
+        "mesh_descriptor_ui": "D009488",
+        "mesh_term": "neurosciences[MeSH Terms]",
+        "target": 8
+      },
+      {
+        "name": "microbiology",
+        "mesh_descriptor_ui": "D008829",
+        "mesh_term": "microbiology[MeSH Terms]",
+        "target": 8
+      },
+      {
+        "name": "plants",
+        "mesh_descriptor_ui": "D010944",
+        "mesh_term": "plants[MeSH Terms]",
+        "target": 8
+      },
+      {
+        "name": "ecology",
+        "mesh_descriptor_ui": "D004463",
+        "mesh_term": "ecology[MeSH Terms]",
+        "target": 8
+      },
+      {
+        "name": "computational biology",
+        "mesh_descriptor_ui": "D019295",
+        "mesh_term": "computational biology[MeSH Terms]",
+        "target": 8
+      },
+      {
+        "name": "public health",
+        "mesh_descriptor_ui": "D011634",
+        "mesh_term": "public health[MeSH Terms]",
+        "target": 8
+      }
     ],
     "esearch_max_ids_per_stratum": 1000,
     "ordering": "Run each frozen query once with retmax=1000. Sort each returned numeric PMCID list ascending; process strata in the listed order; take the first eight globally unique IDs for each stratum. Skip IDs already assigned to an earlier stratum and continue through that stratum's frozen result list. Do not replace a candidate after metadata screening. If fewer than 48 unique candidates are available across the six capped result lists, the candidate-selection gate fails.",
@@ -74,7 +103,122 @@
     "body_request_allowed_only_if": "all 48 candidate records are screened, at least 20 versions pass, and the sum of all eligible XML object sizes is at most 4194304 bytes",
     "after_xml_gate": "Retrieve eligible XML serially through an approved PMC service; inspect article-level rights and exclude separately licensed or untraceable content before deterministic preparation."
   },
-  "query_result_records": [],
+  "query_result_records": [
+    {
+      "stratum_name_and_descriptor_ui": "neurosciences (D009488)",
+      "query_timestamp_utc": "2026-09-23T10:32:41.147Z",
+      "full_query_string": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp] AND NOT \"author manuscript\"[filter] AND NOT preprint[filter] AND (neurosciences[MeSH Terms])",
+      "esearch_count": 0,
+      "retstart_and_retmax": "retstart=0; retmax=1000",
+      "returned_numeric_pmcid_list_in_original_api_order": [],
+      "sha256_of_returned_pmcid_list": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pmc_cloud_inventory_snapshot_and_manifest_identity": null,
+      "query_translation": "\"open access\"[Filter] AND \"cc by license\"[Filter] AND \"english\"[Language] AND 2018/01/01:2025/12/31[Date - Publication] AND \"author manuscript\"[Filter] AND \"preprint\"[Filter] AND \"neurosciences\"[MeSH Terms]",
+      "query_warnings": {
+        "phrasesignored": [],
+        "quotedphrasesnotfound": [],
+        "outputmessages": [
+          "NOT",
+          "No items found."
+        ]
+      }
+    },
+    {
+      "stratum_name_and_descriptor_ui": "microbiology (D008829)",
+      "query_timestamp_utc": "2026-09-23T10:32:42.549Z",
+      "full_query_string": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp] AND NOT \"author manuscript\"[filter] AND NOT preprint[filter] AND (microbiology[MeSH Terms])",
+      "esearch_count": 0,
+      "retstart_and_retmax": "retstart=0; retmax=1000",
+      "returned_numeric_pmcid_list_in_original_api_order": [],
+      "sha256_of_returned_pmcid_list": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pmc_cloud_inventory_snapshot_and_manifest_identity": null,
+      "query_translation": "\"open access\"[Filter] AND \"cc by license\"[Filter] AND \"english\"[Language] AND 2018/01/01:2025/12/31[Date - Publication] AND \"author manuscript\"[Filter] AND \"preprint\"[Filter] AND \"microbiology\"[MeSH Terms]",
+      "query_warnings": {
+        "phrasesignored": [],
+        "quotedphrasesnotfound": [],
+        "outputmessages": [
+          "NOT",
+          "No items found."
+        ]
+      }
+    },
+    {
+      "stratum_name_and_descriptor_ui": "plants (D010944)",
+      "query_timestamp_utc": "2026-09-23T10:32:43.8Z",
+      "full_query_string": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp] AND NOT \"author manuscript\"[filter] AND NOT preprint[filter] AND (plants[MeSH Terms])",
+      "esearch_count": 0,
+      "retstart_and_retmax": "retstart=0; retmax=1000",
+      "returned_numeric_pmcid_list_in_original_api_order": [],
+      "sha256_of_returned_pmcid_list": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pmc_cloud_inventory_snapshot_and_manifest_identity": null,
+      "query_translation": "\"open access\"[Filter] AND \"cc by license\"[Filter] AND \"english\"[Language] AND 2018/01/01:2025/12/31[Date - Publication] AND \"author manuscript\"[Filter] AND \"preprint\"[Filter] AND \"plants\"[MeSH Terms]",
+      "query_warnings": {
+        "phrasesignored": [],
+        "quotedphrasesnotfound": [],
+        "outputmessages": [
+          "NOT",
+          "No items found."
+        ]
+      }
+    },
+    {
+      "stratum_name_and_descriptor_ui": "ecology (D004463)",
+      "query_timestamp_utc": "2026-09-23T10:32:44.664Z",
+      "full_query_string": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp] AND NOT \"author manuscript\"[filter] AND NOT preprint[filter] AND (ecology[MeSH Terms])",
+      "esearch_count": 0,
+      "retstart_and_retmax": "retstart=0; retmax=1000",
+      "returned_numeric_pmcid_list_in_original_api_order": [],
+      "sha256_of_returned_pmcid_list": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pmc_cloud_inventory_snapshot_and_manifest_identity": null,
+      "query_translation": "\"open access\"[Filter] AND \"cc by license\"[Filter] AND \"english\"[Language] AND 2018/01/01:2025/12/31[Date - Publication] AND \"author manuscript\"[Filter] AND \"preprint\"[Filter] AND \"ecology\"[MeSH Terms]",
+      "query_warnings": {
+        "phrasesignored": [],
+        "quotedphrasesnotfound": [],
+        "outputmessages": [
+          "NOT",
+          "No items found."
+        ]
+      }
+    },
+    {
+      "stratum_name_and_descriptor_ui": "computational biology (D019295)",
+      "query_timestamp_utc": "2026-09-23T10:32:45.5Z",
+      "full_query_string": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp] AND NOT \"author manuscript\"[filter] AND NOT preprint[filter] AND (computational biology[MeSH Terms])",
+      "esearch_count": 0,
+      "retstart_and_retmax": "retstart=0; retmax=1000",
+      "returned_numeric_pmcid_list_in_original_api_order": [],
+      "sha256_of_returned_pmcid_list": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pmc_cloud_inventory_snapshot_and_manifest_identity": null,
+      "query_translation": "\"open access\"[Filter] AND \"cc by license\"[Filter] AND \"english\"[Language] AND 2018/01/01:2025/12/31[Date - Publication] AND \"author manuscript\"[Filter] AND \"preprint\"[Filter] AND \"computational biology\"[MeSH Terms]",
+      "query_warnings": {
+        "phrasesignored": [],
+        "quotedphrasesnotfound": [],
+        "outputmessages": [
+          "NOT",
+          "No items found."
+        ]
+      }
+    },
+    {
+      "stratum_name_and_descriptor_ui": "public health (D011634)",
+      "query_timestamp_utc": "2026-09-23T10:32:46.357Z",
+      "full_query_string": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp] AND NOT \"author manuscript\"[filter] AND NOT preprint[filter] AND (public health[MeSH Terms])",
+      "esearch_count": 0,
+      "retstart_and_retmax": "retstart=0; retmax=1000",
+      "returned_numeric_pmcid_list_in_original_api_order": [],
+      "sha256_of_returned_pmcid_list": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pmc_cloud_inventory_snapshot_and_manifest_identity": null,
+      "query_translation": "\"open access\"[Filter] AND \"cc by license\"[Filter] AND \"english\"[Language] AND 2018/01/01:2025/12/31[Date - Publication] AND \"author manuscript\"[Filter] AND \"preprint\"[Filter] AND \"public health\"[MeSH Terms]",
+      "query_warnings": {
+        "phrasesignored": [],
+        "quotedphrasesnotfound": [],
+        "outputmessages": [
+          "NOT",
+          "No items found."
+        ]
+      }
+    }
+  ],
   "query_result_record_fields": [
     "stratum_name_and_descriptor_ui",
     "query_timestamp_utc",
@@ -85,11 +229,9 @@
     "sha256_of_returned_pmcid_list",
     "pmc_cloud_inventory_snapshot_and_manifest_identity"
   ],
-  "metadata_query_results": [],
   "eligible_version_count": null,
   "combined_xml_bytes": null,
   "metadata_screened_count": 0,
-  "selection_inventory_sha256": null,
   "selection_inventory_sha256_encoding": "UTF-8 of one line per selected candidate in selection order as stratum_name<TAB>PMCID, LF separated, no trailing LF",
   "protocol_amendments": [
     {
@@ -99,5 +241,58 @@
       "query_result_sha256_encoding": "UTF-8 of the exact numeric ID strings in original API order joined by comma, no trailing comma"
     }
   ],
-  "content_or_model_training_used": false
+  "content_or_model_training_used": false,
+  "selection_stratum_summary": [
+    {
+      "stratum_name": "neurosciences",
+      "mesh_descriptor_ui": "D009488",
+      "unique_candidates_selected": 0,
+      "target": 8
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "unique_candidates_selected": 0,
+      "target": 8
+    },
+    {
+      "stratum_name": "plants",
+      "mesh_descriptor_ui": "D010944",
+      "unique_candidates_selected": 0,
+      "target": 8
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "unique_candidates_selected": 0,
+      "target": 8
+    },
+    {
+      "stratum_name": "computational biology",
+      "mesh_descriptor_ui": "D019295",
+      "unique_candidates_selected": 0,
+      "target": 8
+    },
+    {
+      "stratum_name": "public health",
+      "mesh_descriptor_ui": "D011634",
+      "unique_candidates_selected": 0,
+      "target": 8
+    }
+  ],
+  "status": "candidate_selection_gate_failed_query_syntax",
+  "selection_inventory_sha256": null,
+  "metadata_query_results": [],
+  "query_run_completed_at_utc": "2026-09-23T10:34:09.170Z",
+  "query_failure": {
+    "request_count": 6,
+    "zero_result_count": 6,
+    "candidate_ids_selected": 0,
+    "candidate_selection_gate_passed": false,
+    "query_translation_observation": "For all six strata, ESearch translated the intended NOT exclusions as positive AND terms: \"author manuscript\"[Filter] AND \"preprint\"[Filter]. The output warning list included NOT and No items found.",
+    "interpretation": "The explicit AND NOT construction was not parsed as intended. This is a query-syntax failure, not evidence that the PMC cohort lacks eligible published articles.",
+    "metadata_requests_made": false,
+    "article_xml_requested": false
+  },
+  "body_request_gate_failure": "The six ID queries returned zero IDs because ESearch did not parse the NOT exclusions as intended; no candidate metadata or article content was requested."
 }
