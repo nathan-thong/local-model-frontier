@@ -37,6 +37,7 @@
     ],
     "esearch_max_ids_per_stratum": 1000,
     "ordering": "Run each frozen query once with retmax=1000. Sort each returned numeric PMCID list ascending; process strata in the listed order; take the first eight globally unique IDs for each stratum. Skip IDs already assigned to an earlier stratum and continue through that stratum's frozen result list. Do not replace a candidate after metadata screening. If fewer than 48 unique candidates are available across the six capped result lists, the candidate-selection gate fails.",
+    "query_result_sha256_encoding": "UTF-8 of the exact numeric ID strings in original API order joined by comma, no trailing comma",
     "candidate_selection_sha256_encoding": "UTF-8 of one line per selected candidate in selection order as stratum_name<TAB>PMCID, LF separated, no trailing LF"
   },
   "screening_protocol": {
@@ -90,6 +91,13 @@
   "metadata_screened_count": 0,
   "selection_inventory_sha256": null,
   "selection_inventory_sha256_encoding": "UTF-8 of one line per selected candidate in selection order as stratum_name<TAB>PMCID, LF separated, no trailing LF",
-  "protocol_amendments": [],
+  "protocol_amendments": [
+    {
+      "amendment_id": "Q10-SOURCE-003-A1",
+      "recorded_before_any_query": true,
+      "reason": "Make the byte encoding for each returned E-Utilities ID-list hash explicit. Recomputing all six Q10-SOURCE-002 hashes confirmed that they use the same comma-separated, original-order representation.",
+      "query_result_sha256_encoding": "UTF-8 of the exact numeric ID strings in original API order joined by comma, no trailing comma"
+    }
+  ],
   "content_or_model_training_used": false
 }
