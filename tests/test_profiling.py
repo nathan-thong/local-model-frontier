@@ -1,8 +1,23 @@
 import pytest
+import torch
 
 from frontier.config import ModelConfig, ProfileConfig
 from frontier.models import DecoderLanguageModel
-from frontier.profiling.benchmark import profile_model
+from frontier.profiling.benchmark import profile_input_ids, profile_model
+
+
+def test_profile_input_ids_are_repeatable_and_report_their_identity():
+    generator_state = torch.random.get_rng_state().clone()
+    ids_a, hash_a = profile_input_ids(259, 1, 12, 17, torch.device("cpu"))
+    ids_b, hash_b = profile_input_ids(259, 1, 12, 17, torch.device("cpu"))
+    ids_c, hash_c = profile_input_ids(259, 1, 12, 42, torch.device("cpu"))
+
+    assert torch.equal(ids_a, ids_b)
+    assert hash_a == hash_b
+    assert not torch.equal(ids_a, ids_c)
+    assert hash_a != hash_c
+    assert len(hash_a) == 64
+    assert torch.equal(torch.random.get_rng_state(), generator_state)
 
 
 def test_profile_records_actual_and_analytic_kv_bytes():
@@ -91,7 +106,12 @@ def test_decode_timing_counts_exactly_the_reported_incremental_forwards(decode_t
     assert len(workload["decode_latency"]["repetitions_seconds"]) == 2
     assert workload["prefill_to_first_token_latency"]["sample_stddev_seconds"] is not None
     assert workload["decode_latency"]["sample_stddev_seconds"] is not None
-    assert profile["profile_schema_version"] == 4
+    assert profile["profile_schema_version"] == 5
+    assert profile["state_accounting_version"] == 2
+    assert profile["profile_input_seed"] == 0
+    assert profile["sequence_modules"][0]["name"] == "attention"
+    assert profile["sequence_modules"][0]["state"]["kind"] == "attention_kv"
+    assert len(workload["prompt_input_sha256"]) == 64
     assert workload["prefill_accelerator_memory_scope"].startswith("prefill warmup")
     assert "cached incremental decode" in workload["decode_accelerator_memory_scope"]
 

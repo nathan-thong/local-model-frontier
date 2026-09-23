@@ -1,6 +1,7 @@
 import math
 from pathlib import Path
 
+import pytest
 import torch
 from torch.nn import functional as F
 
@@ -9,6 +10,7 @@ from frontier.models import DecoderLanguageModel
 from frontier.models.feedforward import FeedForward
 from frontier.models.normalization import RMSNorm
 from frontier.models.position import RotaryEmbedding
+from frontier.models.sequence import AttentionState, DecoderCache
 from frontier.models.sequence.attention import CausalSelfAttention
 from frontier.profiling.compute import estimate_training_compute
 
@@ -190,12 +192,97 @@ def test_incremental_kv_logits_match_full_sequence():
     for position in ("rope", "learned"):
         model = DecoderLanguageModel(small_config(position=position)).eval()
         ids = torch.randint(0, 256, (2, 11))
-        full, _ = model(ids)
+        full, full_cache = model(ids)
+        assert full_cache is None
         first, cache = model(ids[:, :5], use_cache=True)
         second, cache = model(ids[:, 5:8], cache=cache, use_cache=True)
         third, _ = model(ids[:, 8:], cache=cache, use_cache=True)
         cached = torch.cat((first, second, third), dim=1)
         torch.testing.assert_close(cached, full, atol=1e-5, rtol=1e-5)
+
+
+def test_absolute_attention_offsets_survive_uneven_chunk_and_token_decode():
+    torch.manual_seed(23)
+    model = DecoderLanguageModel(small_config()).eval()
+    ids = torch.randint(0, 256, (1, 9))
+    _, prefix_cache = model(ids[:, :5], use_cache=True)
+
+    def trim_cache(cache):
+        states = [
+            AttentionState(
+                state.key[:, :, 2:, :].contiguous(),
+                state.value[:, :, 2:, :].contiguous(),
+                key_start_position=2,
+            )
+            for state in cache.states
+        ]
+        return DecoderCache(states=states, position=5)
+
+    chunk_logits, chunk_cache = model(ids[:, 5:7], cache=trim_cache(prefix_cache), use_cache=True)
+    first_logits, token_cache = model(ids[:, 5:6], cache=trim_cache(prefix_cache), use_cache=True)
+    second_logits, token_cache = model(ids[:, 6:7], cache=token_cache, use_cache=True)
+    torch.testing.assert_close(
+        chunk_logits,
+        torch.cat((first_logits, second_logits), dim=1),
+        atol=1e-5,
+        rtol=1e-5,
+    )
+    assert chunk_cache.position == token_cache.position == 7
+    for state in (*chunk_cache.states, *token_cache.states):
+        assert isinstance(state, AttentionState)
+        assert state.key_start_position == 2
+        assert state.key.shape[2] == 5
+
+
+def test_attention_cache_mismatches_fail_with_specific_errors():
+    attention = CausalSelfAttention(small_config()).eval()
+    hidden = torch.zeros(1, 2, 32)
+    positions = torch.arange(4, 6)
+
+    wrong_batch = AttentionState(torch.zeros(2, 2, 4, 8), torch.zeros(2, 2, 4, 8), 0)
+    with pytest.raises(ValueError, match="shape must match the input batch"):
+        attention(hidden, positions, wrong_batch, position_start=4)
+
+    wrong_dtype = AttentionState(
+        torch.zeros(1, 2, 4, 8, dtype=torch.float64),
+        torch.zeros(1, 2, 4, 8, dtype=torch.float64),
+        0,
+    )
+    with pytest.raises(ValueError, match="same dtype"):
+        attention(hidden, positions, wrong_dtype, position_start=4)
+
+    wrong_device = AttentionState(
+        torch.zeros(1, 2, 4, 8, device="meta"),
+        torch.zeros(1, 2, 4, 8, device="meta"),
+        0,
+    )
+    with pytest.raises(ValueError, match="same device"):
+        attention(hidden, positions, wrong_device, position_start=4)
+
+    wrong_offset = AttentionState(torch.zeros(1, 2, 4, 8), torch.zeros(1, 2, 4, 8), 0)
+    with pytest.raises(ValueError, match="end at position_start"):
+        attention(hidden, torch.arange(5, 7), wrong_offset, position_start=5)
+
+
+def test_attention_emits_explicit_state_and_accepts_legacy_tuple_cache():
+    attention = CausalSelfAttention(small_config()).eval()
+    first_hidden = torch.zeros(1, 2, 32)
+    first_positions = torch.arange(2)
+    _, state = attention(first_hidden, first_positions, use_cache=True)
+    assert isinstance(state, AttentionState)
+    assert state.key_start_position == 0
+
+    next_hidden = torch.zeros(1, 1, 32)
+    _, next_state = attention(
+        next_hidden,
+        torch.tensor([2]),
+        state=(state.key, state.value),
+        use_cache=True,
+        position_start=2,
+    )
+    assert isinstance(next_state, AttentionState)
+    assert next_state.key_start_position == 0
+    assert next_state.key.shape[2] == 3
 
 
 def test_tied_embedding_is_counted_once():

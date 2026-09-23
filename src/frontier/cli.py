@@ -19,7 +19,7 @@ from frontier.experiments.planning import plan_sweep
 from frontier.experiments.results import write_json, write_summary
 from frontier.experiments.runner import execute_sweep
 from frontier.models import DecoderLanguageModel
-from frontier.profiling.benchmark import profile_model
+from frontier.profiling.benchmark import profile_input_ids, profile_model
 from frontier.profiling.cpu_step_memory import profile_cpu_optimizer_step
 from frontier.tokenization import (
     build_tokenizer,
@@ -137,17 +137,25 @@ def _evaluate(run_dir: Path) -> dict:
 
 def _profile(run_dir: Path) -> dict:
     config, model, summary, checkpoint_path = _load_run(run_dir)
+    input_seed = config.seed % (2**63)
     profile = profile_model(
         model,
         config.profiling,
         checkpoint_path=checkpoint_path,
         weights_path=run_dir / "weights.pt",
+        input_seed=input_seed,
     )
     # Full sequence versus chunked cached inference checks causal cache semantics on this checkpoint.
     device = next(model.parameters()).device
     length = min(8, config.model.max_seq_len)
     if length >= 2:
-        ids = torch.randint(config.model.vocab_size - 3, (1, length), device=device)
+        ids, parity_input_sha256 = profile_input_ids(
+            config.model.vocab_size,
+            1,
+            length,
+            input_seed,
+            device,
+        )
         split = max(1, length // 2)
         full, _ = model(ids)
         first, cache = model(ids[:, :split], use_cache=True)
@@ -155,6 +163,8 @@ def _profile(run_dir: Path) -> dict:
         cached = torch.cat((first, second), dim=1)
         profile["cache_parity_max_abs_logit_error"] = float((full - cached).abs().max().item())
         profile["cache_parity_tokens"] = length
+        profile["cache_parity_input_seed"] = input_seed
+        profile["cache_parity_input_sha256"] = parity_input_sha256
     else:
         profile["cache_parity_max_abs_logit_error"] = None
         profile["cache_parity_tokens"] = length

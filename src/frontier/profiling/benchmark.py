@@ -2,17 +2,18 @@
 
 from __future__ import annotations
 
+import hashlib
 import statistics
 import time
 from collections import defaultdict
-from collections.abc import Iterable, Iterator, Mapping
-from dataclasses import fields, is_dataclass
+from dataclasses import asdict
 from pathlib import Path
 
 import torch
 
 from frontier.config import ProfileConfig
 from frontier.models import DecoderLanguageModel
+from frontier.models.sequence import describe_sequence_module, iter_state_tensors
 from frontier.profiling.memory import (
     accelerator_memory,
     isolated_process_peak,
@@ -26,18 +27,26 @@ def _sync(device: torch.device) -> None:
         torch.cuda.synchronize(device)
 
 
-def _state_tensors(state: object) -> Iterator[torch.Tensor]:
-    if isinstance(state, torch.Tensor):
-        yield state
-    elif isinstance(state, Mapping):
-        for value in state.values():
-            yield from _state_tensors(value)
-    elif isinstance(state, (tuple, list)):
-        for value in state:
-            yield from _state_tensors(value)
-    elif is_dataclass(state) and not isinstance(state, type):
-        for field in fields(state):
-            yield from _state_tensors(getattr(state, field.name))
+def profile_input_ids(
+    vocab_size: int,
+    batch_size: int,
+    prompt_length: int,
+    seed: int,
+    device: torch.device,
+) -> tuple[torch.Tensor, str]:
+    """Build and hash a repeatable random-token prompt before moving it to a device."""
+    if type(seed) is not int or not 0 <= seed < 2**63:
+        raise ValueError("profile input seed must be an integer in [0, 2**63)")
+    generator = torch.Generator(device="cpu")
+    generator.manual_seed(seed)
+    ids_cpu = torch.randint(
+        vocab_size - 3,
+        (batch_size, prompt_length),
+        generator=generator,
+        device="cpu",
+    )
+    digest = hashlib.sha256(ids_cpu.contiguous().numpy().tobytes()).hexdigest()
+    return ids_cpu.to(device), digest
 
 
 def _state_memory_accounting(
@@ -53,26 +62,15 @@ def _state_memory_accounting(
             module_state_tensors.append([])
             continue
         state_tensors = getattr(module, "state_tensors", None)
-        if callable(state_tensors):
-            tensors = state_tensors(state)
-            if isinstance(tensors, torch.Tensor):
-                tensor_list = [tensors]
-            elif not isinstance(tensors, Iterable):
-                raise TypeError("state_tensors must return an iterable of tensors")
-            else:
-                tensor_list = list(tensors)
-        else:
-            tensor_list = list(_state_tensors(state))
-            if not tensor_list and not isinstance(
-                state, (str, int, float, bool, Mapping, tuple, list)
-            ):
-                return {
-                    "allocated_bytes": None,
-                    "active_bytes": None,
-                    "status": f"{type(module).__name__} has opaque state without state_tensors",
-                }
-        if any(not isinstance(tensor, torch.Tensor) for tensor in tensor_list):
-            raise TypeError("state_tensors returned a non-tensor value")
+        try:
+            state_tree = state_tensors(state) if callable(state_tensors) else state
+            tensor_list = list(iter_state_tensors(state_tree))
+        except TypeError as error:
+            return {
+                "allocated_bytes": None,
+                "active_bytes": None,
+                "status": f"{type(module).__name__} state traversal unavailable: {error}",
+            }
         module_state_tensors.append(tensor_list)
         allocated_tensors.extend(tensor_list)
 
@@ -103,16 +101,16 @@ def _state_memory_accounting(
                 "active_bytes": None,
                 "status": f"{type(module).__name__} does not expose active state",
             }
-        tensors = active_state_tensors(state)
-        if isinstance(tensors, torch.Tensor):
-            active_tensor_list = [tensors]
-        elif not isinstance(tensors, Iterable):
-            raise TypeError("active_state_tensors must return an iterable of tensors")
-        else:
-            active_tensor_list = list(tensors)
+        try:
+            tensors = active_state_tensors(state)
+            active_tensor_list = list(iter_state_tensors(tensors))
+        except TypeError as error:
+            return {
+                "allocated_bytes": allocated_bytes,
+                "active_bytes": None,
+                "status": f"{type(module).__name__} active-state traversal unavailable: {error}",
+            }
         for tensor in active_tensor_list:
-            if not isinstance(tensor, torch.Tensor):
-                raise TypeError("active_state_tensors returned a non-tensor value")
             storage = tensor.untyped_storage()
             key = (str(tensor.device), storage.data_ptr())
             if key not in storage_sizes:
@@ -195,12 +193,15 @@ def profile_model(
     settings: ProfileConfig,
     checkpoint_path: str | Path | None = None,
     weights_path: str | Path | None = None,
+    input_seed: int = 0,
 ) -> dict:
     device = next(model.parameters()).device
     if settings.batch_size <= 0 or settings.decode_tokens <= 0 or settings.repeats <= 0:
         raise ValueError("profile batch size, decode token count and repeats must be positive")
     if settings.warmup_steps < 0:
         raise ValueError("profile warmup_steps must be non-negative")
+    if type(input_seed) is not int or not 0 <= input_seed < 2**63:
+        raise ValueError("profile input seed must be an integer in [0, 2**63)")
     for requested in settings.prompt_lengths:
         if requested <= 0 or requested + settings.decode_tokens > model.config.max_seq_len:
             raise ValueError(
@@ -213,7 +214,12 @@ def profile_model(
         torch.cuda.reset_peak_memory_stats(device)
     precision_dtype = next(model.parameters()).dtype
     result: dict = {
-        "profile_schema_version": 4,
+        "profile_schema_version": 5,
+        "state_accounting_version": 2,
+        "profile_input_seed": input_seed,
+        "sequence_modules": [
+            asdict(describe_sequence_module(block.sequence)) for block in model.blocks
+        ],
         "parameter_count": model.parameter_count(),
         "trainable_parameter_count": model.parameter_count(trainable_only=True),
         "model_tensor_bytes": unique_tensor_storage_bytes(model),
@@ -233,8 +239,12 @@ def profile_model(
     }
     for requested in settings.prompt_lengths:
         prompt_length = int(requested)
-        ids = torch.randint(
-            model.config.vocab_size - 3, (settings.batch_size, prompt_length), device=device
+        ids, prompt_input_sha256 = profile_input_ids(
+            model.config.vocab_size,
+            settings.batch_size,
+            prompt_length,
+            input_seed,
+            device,
         )
         if device.type == "cuda":
             _sync(device)
@@ -347,6 +357,7 @@ def profile_model(
                 "batch_size": settings.batch_size,
                 "requested_prompt_tokens": int(requested),
                 "prompt_tokens": prompt_length,
+                "prompt_input_sha256": prompt_input_sha256,
                 "first_token_from_prefill_logits": 1,
                 "generated_tokens_per_repeat": 1 + settings.decode_tokens,
                 "timed_decode_tokens": settings.decode_tokens,

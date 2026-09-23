@@ -60,9 +60,14 @@ class DecoderLanguageModel(nn.Module):
     ) -> tuple[torch.Tensor, DecoderCache | None]:
         if input_ids.ndim != 2:
             raise ValueError("input_ids must have shape [batch, time]")
-        _, time = input_ids.shape
-        if cache is not None and len(cache.states) != len(self.blocks):
-            raise ValueError("cache must contain one entry per sequence block")
+        batch, time = input_ids.shape
+        if batch <= 0 or time <= 0:
+            raise ValueError("input_ids batch and time dimensions must be positive")
+        if cache is not None:
+            if type(cache.position) is not int or cache.position < 0:
+                raise ValueError("cache.position must be a non-negative absolute token position")
+            if len(cache.states) != len(self.blocks):
+                raise ValueError("cache must contain one entry per sequence block")
         start = 0 if cache is None else cache.position
         if start + time > self.config.max_seq_len:
             raise ValueError("input plus cached context exceeds model.max_seq_len")
@@ -74,7 +79,7 @@ class DecoderLanguageModel(nn.Module):
         new_cache: list[SequenceState | None] = []
         for index, block in enumerate(self.blocks):
             prior = None if cache is None else cache.states[index]
-            x, state = block(x, positions, prior, use_cache)
+            x, state = block(x, positions, prior, use_cache, start)
             new_cache.append(state)
         logits = self.lm_head(self.final_norm(x))
         return logits, DecoderCache(new_cache, start + time) if use_cache else None

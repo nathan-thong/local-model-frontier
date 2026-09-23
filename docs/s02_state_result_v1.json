@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S02-STATE-001",
+  "date": "2026-09-23",
+  "status": "completed",
+  "environment": {
+    "os": "Windows 11",
+    "python": "3.12.14",
+    "pytorch": "2.14.0+cpu",
+    "device": "cpu",
+    "cuda_compiled": null,
+    "cuda_available": false,
+    "cuda_device_count": 0,
+    "nvidia_smi_available": false
+  },
+  "checkpoint": {
+    "run_id": "q11-baseline-001/seed-17",
+    "training_revision": "549ff8d26e12e529415efd7a8b858093965d0a48",
+    "last_pt_sha256": "4917aba59bcf64d2a4d0fbd8c55cdf8ff7f5e55fe956fe723136ce435d92aab7",
+    "parameter_count": 787584,
+    "model_tensor_bytes": 3150592,
+    "checkpoint_load": "passed without migration"
+  },
+  "source_revisions": {
+    "working_tree_before_change": "64ce7ca884ba2553f660c131eac1fc30d2e39f83",
+    "fixed_input_clean_clone_before_change": "790a83ac5c60b26ed0bd983d267ae28374488bad",
+    "model_source_diff_between_clone_and_prechange_head": "none for block.py, language_model.py, and models/sequence/*",
+    "after_change": "uncommitted S02 changes based on 64ce7ca884ba2553f660c131eac1fc30d2e39f83"
+  },
+  "commands": [
+    ".venv/Scripts/frontier.exe profile --run-dir runs/s02-state-before",
+    ".venv/Scripts/frontier.exe profile --run-dir runs/s02-state-after-seeded",
+    "python fixed-input parity probe: token_ids[i] = (29*i + 7) mod 509 for i=0..16; compare full, chunk sizes 4/7/6, and tokenwise cached logits"
+  ],
+  "profile_comparison": {
+    "before_profile_schema_version": 4,
+    "after_profile_schema_version": 5,
+    "after_state_accounting_version": 2,
+    "after_profile_input_seed": 17,
+    "after_cache_parity_input_sha256": "e1638ea11e23fe0e7b2372104b5c882b96b5294cd93d881acc77fff9dd0fd9c1",
+    "after_prompt_input_sha256_by_length": {
+      "32": "014f98861df3bfc2f42da347d906a0eacc526a044e2e8e15c4cd3d262841bbcf",
+      "64": "1877653783f11e699a63eb2de89fb42be15fad66a39cf5959793639bba8f5343",
+      "96": "8fc819a9abfcf5f082797c2ed530a93f5e29304de4e79127a0bd3d1867b2b9d9"
+    },
+    "before_cache_parity_max_abs_logit_error": 1.1920928955078125e-06,
+    "after_cache_parity_max_abs_logit_error": 1.1920928955078125e-06,
+    "before_allocated_state_bytes_after_decode": [81920, 147456, 212992],
+    "after_allocated_state_bytes_after_decode": [81920, 147456, 212992],
+    "before_active_state_bytes_after_decode": [81920, 147456, 212992],
+    "after_active_state_bytes_after_decode": [81920, 147456, 212992],
+    "prompts_tokens": [32, 64, 96],
+    "incremental_decode_forwards": 8,
+    "sequence_module_state_kind": "attention_kv",
+    "sequence_module_executed_work": "dense_full_causal_attention",
+    "before_cache_parity_error_is_paired": false,
+    "before_cache_parity_limitation": "Profile schema 4 used ambient random inputs and recorded no input identity."
+  },
+  "fixed_input_logits": {
+    "input_token_ids": [7, 36, 65, 94, 123, 152, 181, 210, 239, 268, 297, 326, 355, 384, 413, 442, 471],
+    "full_sha256_before_and_after": "3c2e68c5e2c780c66b701f2af3e112262829515e56744c6cfa65d5b512bb4430",
+    "chunked_sha256_before_and_after": "b90de9de19647fa85c1c180d2f6a0f08410f08b604454d13d76982356e470c0c",
+    "tokenwise_sha256_before_and_after": "71ad3367c76492157c506c77882a6d5af19d579c3c1ba4eeaf67a7368e27b3e0",
+    "full_vs_chunked_max_abs_before_and_after": 1.9073486328125e-06,
+    "full_vs_tokenwise_max_abs_before_and_after": 1.9073486328125e-06,
+    "allocated_cache_bytes_after_17_tokens_before_and_after": 34816
+  },
+  "offset_case": {
+    "initial_retained_key_positions": [2, 3, 4],
+    "decoder_cache_next_position": 5,
+    "chunk_partitions": [2, 1],
+    "final_decoder_cache_next_position": 7,
+    "final_retained_keys_per_layer": 5,
+    "chunk_and_token_logits_parity": "passed at atol=1e-5, rtol=1e-5"
+  },
+  "budget": {
+    "training_tokens": 0,
+    "optimizer_updates": 0,
+    "estimated_training_flops": 0,
+    "network_requests": 0,
+    "corpus_preparation": false
+  },
+  "validation": {
+    "focused_architecture_memory_profiling_tests": "passed after final focused fix",
+    "full_pytest": "123 passed in 28.89s",
+    "ruff_check": "passed after formatting",
+    "ruff_format_check": "passed after formatting"
+  },
+  "limitations": [
+    "CUDA could not be tested: PyTorch is CPU-only, reports zero CUDA devices, and nvidia-smi is unavailable.",
+    "CPU profiles are local measurements and do not establish CUDA resource behavior or an inference speed improvement.",
+    "The pre-refactor profile did not record its random-input identity, so its built-in cache-parity error is not treated as a paired scalar; the separately hashed fixed-input logits are paired exactly.",
+    "Q08 sampled CPU optimizer-step readings remain an approximation of transient peaks.",
+    "The independent M2-GQA-002 comparison rerun has not been performed; this contract check does not use its result as evidence."
+  ]
+}

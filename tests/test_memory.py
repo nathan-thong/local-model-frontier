@@ -2,6 +2,7 @@ import pytest
 import torch
 from torch import nn
 
+from frontier.models.sequence import RecurrentState, iter_state_tensors
 from frontier.profiling.benchmark import _state_memory_accounting
 from frontier.profiling.cpu_step_memory import _summarize_samples
 from frontier.profiling.memory import isolated_process_peak, maximum_accelerator_peaks
@@ -131,4 +132,40 @@ def test_opaque_state_without_tensor_contract_does_not_report_zero_bytes():
 
     assert measured["allocated_bytes"] is None
     assert measured["active_bytes"] is None
-    assert "opaque state without state_tensors" in measured["status"]
+    assert "state traversal unavailable" in measured["status"]
+
+
+def test_recursive_state_tree_visits_nested_shared_tensors_once_by_object():
+    backing = torch.zeros(16)
+    shared_view = backing[2:8]
+    state = RecurrentState(
+        {
+            "matrix": backing,
+            "nested": [shared_view, {"same_object": shared_view}],
+            "metadata": {"offset": 12},
+        }
+    )
+
+    tensors = list(iter_state_tensors(state))
+
+    assert len(tensors) == 2
+    assert tensors[0] is backing
+    assert tensors[1] is shared_view
+
+
+def test_recurrent_state_accounting_separates_capacity_from_active_regions():
+    backing = torch.zeros(16, dtype=torch.float32)
+    state = RecurrentState({"capacity": backing, "logical": backing[:4]})
+
+    class RecurrentViews(nn.Module):
+        def state_tensors(self, value):
+            return value
+
+        def active_state_tensors(self, value):
+            return {"first": value.values["logical"], "overlap": backing[2:6]}
+
+    measured = _state_memory_accounting([RecurrentViews()], [state])
+
+    assert measured["allocated_bytes"] == 16 * 4
+    assert measured["active_bytes"] == 6 * 4
+    assert measured["status"].startswith("exact union")

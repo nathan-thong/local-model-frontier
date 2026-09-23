@@ -29,13 +29,16 @@ class TransformerBlock(nn.Module):
         positions: torch.Tensor,
         state: SequenceState | None = None,
         use_cache: bool = False,
+        position_start: int | None = None,
     ) -> tuple[torch.Tensor, SequenceState | None]:
         if self.residual_topology == "pre_norm":
-            mixed, present = self.sequence(self.norm1(x), positions, state, use_cache)
+            mixed, present = self.sequence(
+                self.norm1(x), positions, state, use_cache, position_start
+            )
             x = x + self.residual_dropout(mixed)
             x = x + self.residual_dropout(self.ffn(self.norm2(x)))
         else:
-            mixed, present = self.sequence(x, positions, state, use_cache)
+            mixed, present = self.sequence(x, positions, state, use_cache, position_start)
             x = self.norm1(x + self.residual_dropout(mixed))
             x = self.norm2(x + self.residual_dropout(self.ffn(x)))
         return x, present

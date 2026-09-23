@@ -2,20 +2,34 @@
 
 from .attention import CausalSelfAttention
 from .interface import (
+    AttentionState,
     DecoderCache,
     KVCache,
+    RecurrentState,
+    SequenceCostDescriptor,
     SequenceModule,
+    SequenceModuleDescriptor,
     SequenceState,
+    SequenceStateDescriptor,
     build_sequence_module,
+    describe_sequence_module,
+    iter_state_tensors,
     register_sequence_module,
 )
 
 __all__ = [
+    "AttentionState",
     "CausalSelfAttention",
     "DecoderCache",
     "KVCache",
+    "RecurrentState",
+    "SequenceCostDescriptor",
     "SequenceModule",
+    "SequenceModuleDescriptor",
     "SequenceState",
+    "SequenceStateDescriptor",
     "build_sequence_module",
+    "describe_sequence_module",
+    "iter_state_tensors",
     "register_sequence_module",
 ]
