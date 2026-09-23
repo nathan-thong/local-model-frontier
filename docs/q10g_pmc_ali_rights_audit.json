@@ -2,7 +2,7 @@
   "schema_version": 1,
   "experiment_id": "Q10-SOURCE-007",
   "title": "PMC rights re-audit with NISO ALI license_ref support",
-  "status": "preregistered_pending_full_rights_review",
+  "status": "rights_gate_passed_minimum_documents",
   "preregistered_at_utc": "2026-09-23T11:34:51Z",
   "preregistered_commit": "0f2389bb1771c18f714d9256b292579699cf7c3b",
   "preregistered_parent_revision": "e3506d99ac653e4315f8ed0130f9458ad395c832",
@@ -28,7 +28,10 @@
     "corpus_text_extracted": false,
     "training_tokens": 0,
     "training_updates": 0,
-    "training_flops": 0
+    "training_flops": 0,
+    "body_prose_transiently_read_for_rights_review": true,
+    "article_prose_retained": false,
+    "corpus_prepared": false
   },
   "evaluation_metrics": [
     "XML identity match",
@@ -54,9 +57,28 @@
       "cloud_title": "Taking an educational psychology course improves neuroscience literacy but does not reduce belief in neuromyths",
       "doi": "10.1371/journal.pone.0192163",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": [
+          "One adapted-from mention is a methodological citation about survey items; no permission or rights notice."
+        ]
+      }
     },
     {
       "pmcid": "PMC5802623",
@@ -68,9 +90,26 @@
       "cloud_title": "Dopamine, psychosis and schizophrenia: the widening gap between basic and clinical neuroscience",
       "doi": "10.1038/s41398-017-0071-9",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC5809949",
@@ -82,9 +121,29 @@
       "cloud_title": "Evaluation of a multicomponent pathway to address inpatient delirium on a neurosciences ward",
       "doi": "10.1186/s12913-018-2906-3",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": [
+          "One licensed-copy mention concerns software use, not reused prose.",
+          "A second article-license URI points to CC0 terms explicitly scoped to data made available in the article; data are excluded from extraction."
+        ]
+      }
     },
     {
       "pmcid": "PMC5813180",
@@ -96,9 +155,26 @@
       "cloud_title": "The Caveats of observing Inter-Trial Phase-Coherence in Cognitive Neuroscience",
       "doi": "10.1038/s41598-018-20423-z",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC5825014",
@@ -110,9 +186,26 @@
       "cloud_title": "Quantitative 3-D morphometric analysis of individual dendritic spines",
       "doi": "10.1038/s41598-018-21753-8",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC11261691",
@@ -124,9 +217,26 @@
       "cloud_title": "Nocardioides agri sp. nov., isolated from garden soil",
       "doi": "10.1099/ijsem.0.006407",
       "prior_source006_href_gate": "ineligible_missing_explicit_href",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": false,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC11261710",
@@ -138,9 +248,26 @@
       "cloud_title": "Pengzhenrongella frigida sp. nov., isolated from a glacier",
       "doi": "10.1099/ijsem.0.006433",
       "prior_source006_href_gate": "ineligible_missing_explicit_href",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": false,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC11281480",
@@ -152,9 +279,26 @@
       "cloud_title": "Flavobacterium facile sp. nov., isolated from water system of Atlantic salmon (Salmo salar) fry cultured in Chile",
       "doi": "10.1099/ijsem.0.006468",
       "prior_source006_href_gate": "ineligible_missing_explicit_href",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": false,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC11281800",
@@ -166,9 +310,28 @@
       "cloud_title": "Pseudomonas beijingensis sp. nov., a novel species widely colonizing plant rhizosphere",
       "doi": "10.1099/ijsem.0.006473",
       "prior_source006_href_gate": "ineligible_missing_explicit_href",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": false,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": [
+          "The CC0 keyword occurs in a scientific strain designation, not a license or rights notice."
+        ]
+      }
     },
     {
       "pmcid": "PMC11288634",
@@ -180,9 +343,26 @@
       "cloud_title": "Collimonas rhizosphaerae sp. nov., a novel species isolated from the beech rhizosphere",
       "doi": "10.1099/ijsem.0.006481",
       "prior_source006_href_gate": "ineligible_missing_explicit_href",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": false,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC11316580",
@@ -194,9 +374,26 @@
       "cloud_title": "Chitinophaga pollutisoli sp. nov., isolated from contaminated sediment",
       "doi": "10.1099/ijsem.0.006447",
       "prior_source006_href_gate": "ineligible_missing_explicit_href",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": false,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC11349053",
@@ -208,9 +405,26 @@
       "cloud_title": "Mycovorax composti gen. nov., sp. nov., a member of the family Chitinophagaceae isolated from button mushroom compost",
       "doi": "10.1099/ijsem.0.006496",
       "prior_source006_href_gate": "ineligible_missing_explicit_href",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": false,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC11350378",
@@ -222,9 +436,26 @@
       "cloud_title": "Genomic evidence that Ornithinicoccus soli Jiang et al. 2020 is a later heterotypic synonym of Segeticoccus rhizosphaerae Lee and Whang 2020",
       "doi": "10.1099/ijsem.0.006503",
       "prior_source006_href_gate": "ineligible_missing_explicit_href",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": false,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC8233365",
@@ -236,9 +467,26 @@
       "cloud_title": "Multi-year presence of humpback whales in the Atlantic sector of the Southern Ocean but not during El Niño",
       "doi": "10.1038/s42003-021-02332-6",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC8238932",
@@ -250,9 +498,29 @@
       "cloud_title": "Storm surge and ponding explain mangrove dieback in southwest Florida following Hurricane Irma",
       "doi": "10.1038/s41467-021-24253-y",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": [
+          "One software license-agreement mention concerns method/software use, not reused prose.",
+          "Two adapted-from mentions are methodological citations; no permission or rights notice."
+        ]
+      }
     },
     {
       "pmcid": "PMC8248734",
@@ -264,9 +532,26 @@
       "cloud_title": "Mapping the potential aggregation values of ecotourism landscapes from stakeholder survey, structural equation modeling and GIS: Case study of Moc Chau site, Vietnam",
       "doi": "10.1371/journal.pone.0253908",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC8253789",
@@ -278,9 +563,28 @@
       "cloud_title": "Quantifying nitrogen fixation by heterotrophic bacteria in sinking marine particles",
       "doi": "10.1038/s41467-021-23875-6",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": [
+          "One adapted-from mention is a sensitivity-analysis methodology citation; no permission or rights notice."
+        ]
+      }
     },
     {
       "pmcid": "PMC8257505",
@@ -292,9 +596,26 @@
       "cloud_title": "Consequences of spatial patterns for coexistence in species-rich plant communities",
       "doi": "10.1038/s41559-021-01440-0",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC8260664",
@@ -306,9 +627,26 @@
       "cloud_title": "Artificial nighttime lighting impacts visual ecology links between flowers, pollinators and predators",
       "doi": "10.1038/s41467-021-24394-0",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     },
     {
       "pmcid": "PMC8262960",
@@ -320,9 +658,28 @@
       "cloud_title": "Generation of a Microsporidia Species Attribute Database and Analysis of the Extensive Ecological and Phenotypic Diversity of Microsporidia",
       "doi": "10.1128/mBio.01490-21",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": [
+          "Ten additional license/permissions nodes occur only within supplementary-material; all supplement content is excluded."
+        ]
+      }
     },
     {
       "pmcid": "PMC8270205",
@@ -334,12 +691,118 @@
       "cloud_title": "Composition Wheels: Visualizing dissolved organic matter using common composition metrics across a variety of Canadian ecozones",
       "doi": "10.1371/journal.pone.0253972",
       "prior_source006_href_gate": "not_cleared_minimum_gate_unattainable",
-      "current_rights_review_status": "pending",
-      "body_rights_review_status": "pending",
-      "exclusion_reasons": []
+      "current_rights_review_status": "passed_frozen_abstract_main_body_prose_scope",
+      "body_rights_review_status": "reviewed_no_unresolved_prose_rights_exception",
+      "exclusion_reasons": [],
+      "rights_review_evidence": {
+        "xml_object_size_md5_sha256_verified": true,
+        "pmcid_version_title_doi_exact": true,
+        "article_level_license_element_count": 1,
+        "niso_ali_license_ref": {
+          "present": true,
+          "namespace_uri": "http://www.niso.org/schemas/ali/1.0/",
+          "uri": "https://creativecommons.org/licenses/by/4.0/",
+          "exact": true
+        },
+        "permitted_xlink_href_present": true,
+        "frozen_oai_canonical_https_present": true,
+        "article_license_text_consistent_with_cc_by_4_0": true,
+        "no_unresolved_conflicting_terms_for_included_prose": true,
+        "body_rights_review_completed": true,
+        "body_rights_review_notes": []
+      }
     }
   ],
-  "result": "Pending",
-  "interpretation": "Pending. The authoritative JATS/NISO format evidence motivates this protocol change; it does not itself clear any article or establish that the corpus is suitable.",
-  "next_experiment": "After this revision is committed, perform only the frozen rights review on the 21 existing XML files. If fewer than 20 complete records pass, stop the source without substitutions. If at least 20 pass, preregister deterministic extraction, document duplicate policy, split/tokenizer freeze before preparing corpus text."
+  "result": "PASS: 21 of 21 frozen article versions satisfy the SOURCE-007 rights protocol for abstract/main-body prose; the minimum is 20.",
+  "interpretation": "The separately frozen NISO ALI-aware protocol passes the 20-document gate on all 21 exact, hash-verified XML versions. All 21 contain the exact, correctly namespaced canonical ALI license reference, matching OAI rights, and consistent CC BY 4.0 article-license wording. Body screening found no unresolved rights notice in the included prose scope. The 13/8 explicit-XLink versus ALI-only split and the SOURCE-005/006 failure remain unchanged. This clears only the preregistered restricted abstract/main-body extraction scope; excluded figures, tables, captions, supplements, media, back matter, references, acknowledgements, permissions, and non-prose markup are not cleared for reuse.",
+  "next_experiment": "Q10-PREP-002: before preparing corpus text, freeze a deterministic abstract/main-body extractor and exclusions, document-identity and normalized-duplicate policy, three-way train/validation/test split procedure and exact held-out document identities, plus train-only tokenizer fitting and hashes. Prepare the same frozen split twice and compare all document, text, split, and tokenizer hashes. Keep Q11 tasks, scorer validation, contamination checks, and conventional baselines ahead of any architecture training comparison.",
+  "rights_reviewed_at_utc": "2026-09-23T11:56:54Z",
+  "review_started_from_commit": "afd2a5c5700b266be05d6f80b6817f8a5b23646d",
+  "rights_review_result": {
+    "xml_parser": ".NET XmlReader",
+    "secure_parser_settings": {
+      "DtdProcessing": "Ignore",
+      "XmlResolver": null,
+      "MaxCharactersInDocument": 4000000
+    },
+    "frozen_input": {
+      "records": 21,
+      "total_bytes": 3153456,
+      "byte_length_matches": 21,
+      "md5_matches": 21,
+      "sha256_matches": 21,
+      "exact_xml_identity_matches": 21
+    },
+    "article_level_rights": {
+      "front_article_meta_permissions_license_count_exactly_one": 21,
+      "correctly_namespaced_niso_ali_license_ref": 21,
+      "exact_canonical_https_cc_by_4_0_ali_uri": 21,
+      "exact_cc_by_4_0_uri_in_frozen_oai_rights": 21,
+      "consistent_cc_by_4_0_article_license_statement": 21,
+      "permitted_explicit_xlink_href": 13,
+      "ali_license_ref_only": 8
+    },
+    "body_review": {
+      "scope": "Abstract and article/body prose. Text was loaded transiently in memory for this rights review and was not written or retained.",
+      "xml_element_and_uri_scan": "No rights, permission, license, copyright, or related URI elements/attributes in the included abstract/main-body scope.",
+      "keyword_classes": [
+        "copyright and all-rights-reserved",
+        "Creative Commons, CC BY, CC0",
+        "license/licensed",
+        "permission, reproduced, reprinted, courtesy",
+        "third-party, rights holder/owner, credit line",
+        "adapted from, modified from"
+      ],
+      "explicit_unresolved_body_rights_notices": 0,
+      "manually_reviewed_non_notice_matches": [
+        {
+          "pmcid": "PMC5798820",
+          "count": 1,
+          "classification": "methodology citation"
+        },
+        {
+          "pmcid": "PMC5809949",
+          "count": 1,
+          "classification": "licensed software use"
+        },
+        {
+          "pmcid": "PMC11281800",
+          "count": 1,
+          "classification": "CC0 substring in a scientific strain designation"
+        },
+        {
+          "pmcid": "PMC8238932",
+          "count": 3,
+          "classification": "one software license-agreement mention and two methodology citations"
+        },
+        {
+          "pmcid": "PMC8253789",
+          "count": 1,
+          "classification": "sensitivity-analysis methodology citation"
+        }
+      ]
+    },
+    "scoped_additional_rights_statements": [
+      {
+        "pmcid": "PMC5809949",
+        "finding": "The article-level CC0 link is explicitly limited to data made available in the article; the CC BY 4.0 article prose pointer remains exact.",
+        "extraction_effect": "Data and tables are excluded; no unresolved abstract/main-body prose restriction found."
+      },
+      {
+        "pmcid": "PMC8262960",
+        "finding": "Ten supplementary-material permissions/license nodes were found; all are within supplementary-material.",
+        "extraction_effect": "Supplementary materials are excluded."
+      }
+    ],
+    "complete_rights_cleared_documents": 21,
+    "minimum_complete_documents": 20,
+    "minimum_gate_passed": true,
+    "excluded_documents": 0,
+    "body_prose_transiently_read": true,
+    "article_prose_retained_or_corpus_prepared": false,
+    "additional_network_requests": 0,
+    "training_tokens": 0,
+    "training_updates": 0,
+    "training_flops": 0
+  }
 }
