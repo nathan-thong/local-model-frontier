@@ -1,0 +1,3113 @@
+{
+  "bundle_type": "frontier-portable-evidence-v1",
+  "comparison": {
+    "claim_blocker_count": 0,
+    "claim_checks": {
+      "known_nonfixture_scope": true,
+      "research_data_provenance_complete": true,
+      "tokenizer_artifacts_pinned": true
+    },
+    "claim_scope": "synthetic corpus metric",
+    "claim_scope_limitation": "synthetic-domain result; does not establish human-authored or broad language capability",
+    "comparable_for_human_corpus_claim": false,
+    "comparable_for_improvement_claim": true,
+    "comparable_for_metric_comparison": true,
+    "comparison_type": "paired multi-seed",
+    "eligibility_reconstruction": "verified",
+    "evidence_scope": "synthetic corpus metric",
+    "group_checks": {
+      "all_run_artifacts_valid": true,
+      "all_source_worktrees_clean": true,
+      "baseline_architecture_fixed_across_seeds": true,
+      "baseline_recipe_fixed_across_seeds": true,
+      "candidate_architecture_fixed_across_seeds": true,
+      "candidate_recipe_fixed_across_seeds": true,
+      "same_corpus_origin_across_all_runs": true,
+      "same_environment_across_all_runs": true,
+      "same_evaluation_protocol_across_all_runs": true,
+      "same_tokenizer_across_all_runs": true,
+      "same_training_data_across_all_runs": true,
+      "same_validation_data_across_all_runs": true
+    },
+    "human_corpus_claim_blocker_count": 1,
+    "improvement_claim_requires": null,
+    "metrics": {
+      "baseline_mean_nll": {
+        "mean": 1.5192847615606582,
+        "sample_std": 0.01920109539175372,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "baseline_perplexity": {
+        "mean": 4.569519148651687,
+        "sample_std": 0.08808674440059122,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "candidate_mean_nll": {
+        "mean": 1.4962110723964794,
+        "sample_std": 0.005208935750392503,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "candidate_perplexity": {
+        "mean": 4.464780763912512,
+        "sample_std": 0.023238859445986238,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "estimated_training_flop_relative_delta": {
+        "mean": 3.628453733286002e-05,
+        "sample_std": 0.0,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "paired_mean_nll_delta_candidate_minus_baseline": {
+        "mean": -0.023073689164178884,
+        "sample_std": 0.024392919766719208,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "paired_perplexity_delta_candidate_minus_baseline": {
+        "mean": -0.10473838473917556,
+        "sample_std": 0.11123999663265946,
+        "total_n": 3,
+        "valid_n": 3
+      }
+    },
+    "minimum_seeds_for_claim": 3,
+    "pairwise_results": [
+      {
+        "baseline_run_id": "m2-gqa-002-confirm-mha-seed-17-ec21463ca9",
+        "candidate_run_id": "m2-gqa-002-confirm-gqa-seed-17-faf1d78618",
+        "checks": {
+          "baseline_artifact_valid": true,
+          "both_runs_completed": true,
+          "candidate_artifact_valid": true,
+          "same_compute_estimator": true,
+          "same_data_kind": true,
+          "same_environment": true,
+          "same_evaluation_protocol": true,
+          "same_seed": true,
+          "same_tokenizer": true,
+          "same_training_data": true,
+          "same_training_recipe": true,
+          "same_validation_data": true,
+          "training_compute_within_1_percent": true
+        },
+        "comparable_for_improvement_claim": false,
+        "comparable_for_metric_comparison": true,
+        "eligibility_blocker_count": 0,
+        "estimated_training_flop_relative_delta": 3.628453733286002e-05,
+        "evidence_scope": "synthetic corpus metric",
+        "improvement_claim_requires": "At least three matched seeds, explicit corpus origin, a pinned clean revision, and equivalent disclosed training compute.",
+        "model_tensor_bytes_delta": -262144,
+        "parameter_count_delta": -65536,
+        "perplexity_delta_candidate_minus_baseline": -0.013135028724108544,
+        "seed": 17,
+        "training_recipe_warmup_fraction_relative_delta": 0.0041834862385320545
+      },
+      {
+        "baseline_run_id": "m2-gqa-002-confirm-mha-seed-42-ec21463ca9",
+        "candidate_run_id": "m2-gqa-002-confirm-gqa-seed-42-faf1d78618",
+        "checks": {
+          "baseline_artifact_valid": true,
+          "both_runs_completed": true,
+          "candidate_artifact_valid": true,
+          "same_compute_estimator": true,
+          "same_data_kind": true,
+          "same_environment": true,
+          "same_evaluation_protocol": true,
+          "same_seed": true,
+          "same_tokenizer": true,
+          "same_training_data": true,
+          "same_training_recipe": true,
+          "same_validation_data": true,
+          "training_compute_within_1_percent": true
+        },
+        "comparable_for_improvement_claim": false,
+        "comparable_for_metric_comparison": true,
+        "eligibility_blocker_count": 0,
+        "estimated_training_flop_relative_delta": 3.628453733286002e-05,
+        "evidence_scope": "synthetic corpus metric",
+        "improvement_claim_requires": "At least three matched seeds, explicit corpus origin, a pinned clean revision, and equivalent disclosed training compute.",
+        "model_tensor_bytes_delta": -262144,
+        "parameter_count_delta": -65536,
+        "perplexity_delta_candidate_minus_baseline": -0.2285205457274957,
+        "seed": 42,
+        "training_recipe_warmup_fraction_relative_delta": 0.0041834862385320545
+      },
+      {
+        "baseline_run_id": "m2-gqa-002-confirm-mha-seed-123-ec21463ca9",
+        "candidate_run_id": "m2-gqa-002-confirm-gqa-seed-123-faf1d78618",
+        "checks": {
+          "baseline_artifact_valid": true,
+          "both_runs_completed": true,
+          "candidate_artifact_valid": true,
+          "same_compute_estimator": true,
+          "same_data_kind": true,
+          "same_environment": true,
+          "same_evaluation_protocol": true,
+          "same_seed": true,
+          "same_tokenizer": true,
+          "same_training_data": true,
+          "same_training_recipe": true,
+          "same_validation_data": true,
+          "training_compute_within_1_percent": true
+        },
+        "comparable_for_improvement_claim": false,
+        "comparable_for_metric_comparison": true,
+        "eligibility_blocker_count": 0,
+        "estimated_training_flop_relative_delta": 3.628453733286002e-05,
+        "evidence_scope": "synthetic corpus metric",
+        "improvement_claim_requires": "At least three matched seeds, explicit corpus origin, a pinned clean revision, and equivalent disclosed training compute.",
+        "model_tensor_bytes_delta": -262144,
+        "parameter_count_delta": -65536,
+        "perplexity_delta_candidate_minus_baseline": -0.07255957976592242,
+        "seed": 123,
+        "training_recipe_warmup_fraction_relative_delta": 0.0041834862385320545
+      }
+    ],
+    "schema_version": 3,
+    "seeds": [
+      17,
+      42,
+      123
+    ],
+    "source_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+    "source_worktrees_clean": true
+  },
+  "reproduction": {
+    "commands": [
+      {
+        "evaluate": "frontier evaluate --run-dir runs/m2-gqa-002-confirm-gqa-seed-17-faf1d78618-reproduction",
+        "profile": "frontier profile --run-dir runs/m2-gqa-002-confirm-gqa-seed-17-faf1d78618-reproduction",
+        "run_id": "m2-gqa-002-confirm-gqa-seed-17-faf1d78618",
+        "train": "frontier train --config configs/m2-gqa-002-confirm-gqa-seed-17-faf1d78618.json"
+      },
+      {
+        "evaluate": "frontier evaluate --run-dir runs/m2-gqa-002-confirm-mha-seed-17-ec21463ca9-reproduction",
+        "profile": "frontier profile --run-dir runs/m2-gqa-002-confirm-mha-seed-17-ec21463ca9-reproduction",
+        "run_id": "m2-gqa-002-confirm-mha-seed-17-ec21463ca9",
+        "train": "frontier train --config configs/m2-gqa-002-confirm-mha-seed-17-ec21463ca9.json"
+      },
+      {
+        "evaluate": "frontier evaluate --run-dir runs/m2-gqa-002-confirm-gqa-seed-42-faf1d78618-reproduction",
+        "profile": "frontier profile --run-dir runs/m2-gqa-002-confirm-gqa-seed-42-faf1d78618-reproduction",
+        "run_id": "m2-gqa-002-confirm-gqa-seed-42-faf1d78618",
+        "train": "frontier train --config configs/m2-gqa-002-confirm-gqa-seed-42-faf1d78618.json"
+      },
+      {
+        "evaluate": "frontier evaluate --run-dir runs/m2-gqa-002-confirm-mha-seed-42-ec21463ca9-reproduction",
+        "profile": "frontier profile --run-dir runs/m2-gqa-002-confirm-mha-seed-42-ec21463ca9-reproduction",
+        "run_id": "m2-gqa-002-confirm-mha-seed-42-ec21463ca9",
+        "train": "frontier train --config configs/m2-gqa-002-confirm-mha-seed-42-ec21463ca9.json"
+      },
+      {
+        "evaluate": "frontier evaluate --run-dir runs/m2-gqa-002-confirm-gqa-seed-123-faf1d78618-reproduction",
+        "profile": "frontier profile --run-dir runs/m2-gqa-002-confirm-gqa-seed-123-faf1d78618-reproduction",
+        "run_id": "m2-gqa-002-confirm-gqa-seed-123-faf1d78618",
+        "train": "frontier train --config configs/m2-gqa-002-confirm-gqa-seed-123-faf1d78618.json"
+      },
+      {
+        "evaluate": "frontier evaluate --run-dir runs/m2-gqa-002-confirm-mha-seed-123-ec21463ca9-reproduction",
+        "profile": "frontier profile --run-dir runs/m2-gqa-002-confirm-mha-seed-123-ec21463ca9-reproduction",
+        "run_id": "m2-gqa-002-confirm-mha-seed-123-ec21463ca9",
+        "train": "frontier train --config configs/m2-gqa-002-confirm-mha-seed-123-ec21463ca9.json"
+      }
+    ],
+    "excluded_inputs": [
+      "corpus text",
+      "tokenizer files",
+      "checkpoints",
+      "model weights"
+    ],
+    "prerequisites": [
+      "Install this repository and its declared dependencies.",
+      "Place the matching prepared corpus at data/prepared-corpus and verify its manifest hash before training."
+    ]
+  },
+  "runs": [
+    {
+      "artifact_availability": {
+        "checkpoint": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 9124203,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "3d11e62367a1ef8cf4ddcf0a1d3b6cbb20d75ca67120910d1195e0eee85d3001",
+          "status": "available"
+        },
+        "evaluation_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 208132,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "1c9ccf6de2f6e8efff2c2edc2900ca0684bca79d7ffbb52d80ddc6475c881276",
+          "status": "available"
+        },
+        "exported_resolved_config": {
+          "available": true,
+          "bundle_file": "configs/m2-gqa-002-confirm-gqa-seed-17-faf1d78618.json",
+          "included": true,
+          "status": "available"
+        },
+        "inference_weights": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 3035253,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "9731bc8c873615504b0ab517189fc4caf02a4e43d606e84681d52419f5df3b93",
+          "status": "available"
+        },
+        "original_resolved_config": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 1682,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "bade702fe25b6d8e078457ee777a838d4e60a5e16fd5d766f154219330164e5d",
+          "status": "available"
+        },
+        "prepared_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+          "status": "available"
+        },
+        "profile_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 10488,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "e8c450751f066427de6c7ddfb8c59f5d5729180636bf1117d0cee92dcf618958",
+          "status": "available"
+        },
+        "run_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "included": false,
+          "semantic_match_with_prepared_manifest": true,
+          "sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "status": "available"
+        },
+        "summary": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 239447,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "517ef8930bd4f23d77000d5a405790a1a3e081b4b1994c64c9a0981c5b00cc77",
+          "status": "available"
+        },
+        "tokenizer_artifact": {
+          "artifact_hash_matches_summary": true,
+          "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+          "available": true,
+          "bundle_file": null,
+          "bytes": 505,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+          "status": "available"
+        },
+        "training_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 20222687,
+          "expected_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "included": false,
+          "sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "status": "available"
+        },
+        "validation_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 412074,
+          "expected_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "included": false,
+          "sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "status": "available"
+        }
+      },
+      "configuration_file": "configs/m2-gqa-002-confirm-gqa-seed-17-faf1d78618.json",
+      "data": {
+        "content_origin": "synthetic",
+        "is_test_fixture": false,
+        "manifest_file": "data-manifests/a49bcc046dc69aff.json",
+        "prepared_manifest_semantic_match": true,
+        "prepared_manifest_sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+        "run_manifest_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+        "source": "roneneldan/TinyStories",
+        "source_metadata": {
+          "complete_document_count": 23310,
+          "complete_document_delimiter": null,
+          "content_origin": "synthetic",
+          "dataset": "roneneldan/TinyStories",
+          "dataset_revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+          "discarded_trailing_incomplete_bytes": 117,
+          "license": "cdla-sharing-1.0",
+          "raw_prefix_sha256": "3232df12d6bdd8f83071f0d8196ad10128624168e228aaf9a23f6a1f8431ee8a",
+          "selected_range_bytes": 20971520,
+          "selected_range_end_byte_inclusive": 20971519,
+          "selected_range_start_byte": 0,
+          "upstream_file_size_bytes": 1924281556
+        },
+        "train_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+        "validation_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935"
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "cuda_runtime": null,
+        "device": "cpu",
+        "device_name": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+        "frontier": "0.1.0",
+        "git_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+        "git_worktree_clean": true,
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": null,
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "evaluation": {
+        "perplexity": {
+          "bits_per_byte": 2.150601484161745,
+          "byte_metric_status": "available",
+          "content_nll_sum": 612882.5360461473,
+          "mean_nll": 1.5008047124586084,
+          "nll_sum": 617743.2260856628,
+          "perplexity": 4.485296992843974,
+          "perplexity_overflow": false,
+          "schema_version": 2,
+          "scored_tokens": 411608,
+          "scored_utf8_bytes": 411142
+        },
+        "protocol": {
+          "byte_normalization": {},
+          "context_length": 256,
+          "dataset_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "document_boundary": "score within documents; no cross-document targets",
+          "metrics_schema_version": 2,
+          "stride": 128,
+          "tokenizer": "utf8-byte-v1",
+          "tokenizer_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687"
+        }
+      },
+      "original_config_sha256": "bade702fe25b6d8e078457ee777a838d4e60a5e16fd5d766f154219330164e5d",
+      "profiling": {
+        "accelerator_memory_after_load": {
+          "allocated_bytes": null,
+          "peak_allocated_bytes": null,
+          "peak_reserved_bytes": null,
+          "reserved_bytes": null
+        },
+        "cache_parity_max_abs_logit_error": 1.9073486328125e-06,
+        "cache_parity_tokens": 8,
+        "checkpoint_artifact_bytes": 9124203,
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "inference_dtype": "torch.float32",
+        "model_tensor_bytes": 3021056,
+        "model_weights_artifact_bytes": 3035253,
+        "parameter_count": 755200,
+        "process_memory_after_load": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 222662656,
+          "private_bytes": 727941120,
+          "rss_bytes": 222662656
+        },
+        "profile_schema_version": 3,
+        "trainable_parameter_count": 755200,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 131072,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 131072,
+            "actual_state_storage_bytes_after_decode": 131072,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.06323100000008708,
+              "median_seconds": 0.05420669999875827,
+              "min_seconds": 0.04949080000005779,
+              "repetitions_seconds": [
+                0.05569850000028964,
+                0.06323100000008708,
+                0.05249569999796222,
+                0.05420669999875827,
+                0.04949080000005779
+              ],
+              "sample_stddev_seconds": 0.0051353281352197345
+            },
+            "decode_latency_seconds_median": 0.05420669999875827,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0016939593749611959,
+            "decode_tokens_per_second": 590.3329293377578,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0022362999989127275,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.002693300000828458,
+              "median_seconds": 0.0022362999989127275,
+              "min_seconds": 0.002166300000681076,
+              "repetitions_seconds": [
+                0.002693300000828458,
+                0.0026728000011644326,
+                0.0022362999989127275,
+                0.002166300000681076,
+                0.002228800000011688
+              ],
+              "sample_stddev_seconds": 0.00026036815336966725
+            },
+            "prefill_tokens_per_second": 14309.350273021582,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 225366016,
+              "private_bytes": 704454656,
+              "rss_bytes": 219590656
+            },
+            "prompt_tokens": 32,
+            "requested_prompt_tokens": 32,
+            "state_position_tokens_after_decode": 64,
+            "theoretical_kv_bytes_after_decode_loop": 131072,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 64,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 327680,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 327680,
+            "actual_state_storage_bytes_after_decode": 327680,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.06254080000144313,
+              "median_seconds": 0.05235199999879114,
+              "min_seconds": 0.05083559999911813,
+              "repetitions_seconds": [
+                0.050948100000823615,
+                0.05287090000274475,
+                0.06254080000144313,
+                0.05235199999879114,
+                0.05083559999911813
+              ],
+              "sample_stddev_seconds": 0.004904655622251168
+            },
+            "decode_latency_seconds_median": 0.05235199999879114,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0016359999999622232,
+            "decode_tokens_per_second": 611.2469437793955,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0030798000007052906,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0036840000029769726,
+              "median_seconds": 0.0030798000007052906,
+              "min_seconds": 0.002751400003035087,
+              "repetitions_seconds": [
+                0.003661300001112977,
+                0.0036840000029769726,
+                0.0029080999993311707,
+                0.002751400003035087,
+                0.0030798000007052906
+              ],
+              "sample_stddev_seconds": 0.00043200632783676546
+            },
+            "prefill_tokens_per_second": 41561.140324270185,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 225366016,
+              "private_bytes": 706641920,
+              "rss_bytes": 221818880
+            },
+            "prompt_tokens": 128,
+            "requested_prompt_tokens": 128,
+            "state_position_tokens_after_decode": 160,
+            "theoretical_kv_bytes_after_decode_loop": 327680,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 160,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 524288,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 524288,
+            "actual_state_storage_bytes_after_decode": 524288,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05338040000060573,
+              "median_seconds": 0.0520399000015459,
+              "min_seconds": 0.051260000000183936,
+              "repetitions_seconds": [
+                0.0520399000015459,
+                0.05196339999747579,
+                0.05219389999911073,
+                0.05338040000060573,
+                0.051260000000183936
+              ],
+              "sample_stddev_seconds": 0.0007670264320289912
+            },
+            "decode_latency_seconds_median": 0.0520399000015459,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0016262468750483094,
+            "decode_tokens_per_second": 614.9127880539626,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0041412999999010935,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.004243499999574851,
+              "median_seconds": 0.0041412999999010935,
+              "min_seconds": 0.0035395000013522804,
+              "repetitions_seconds": [
+                0.0035395000013522804,
+                0.004064900000230409,
+                0.004243499999574851,
+                0.0041412999999010935,
+                0.0042135999974561855
+              ],
+              "sample_stddev_seconds": 0.0002885002554518881
+            },
+            "prefill_tokens_per_second": 54089.29563309825,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 225366016,
+              "private_bytes": 710336512,
+              "rss_bytes": 225337344
+            },
+            "prompt_tokens": 224,
+            "requested_prompt_tokens": 224,
+            "state_position_tokens_after_decode": 256,
+            "theoretical_kv_bytes_after_decode_loop": 524288,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 256,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          }
+        ]
+      },
+      "run_id": "m2-gqa-002-confirm-gqa-seed-17-faf1d78618",
+      "sanitized_config_sha256": "5c8d6748e74796b2b38ed5cb83847dd44e63f2f9df2701924568b7ce4447115f",
+      "seed": 17,
+      "source_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+      "source_worktree_clean": true,
+      "status": "completed",
+      "tokenizer": {
+        "artifact_file_sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+        "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+        "name": "utf8-byte-v1",
+        "vocab_size": 259
+      },
+      "training": {
+        "accelerator_memory_after_training": {},
+        "autocast_dtype": "torch.float32",
+        "compute_components": {},
+        "compute_estimator": "decoder-module-mac-v1",
+        "compute_status": "estimated",
+        "deterministic_algorithms": true,
+        "estimated_flops": 13610794352640,
+        "estimated_macs": 2268465725440,
+        "memory": {
+          "process_memory_after_training": {}
+        },
+        "optimizer_active_time_seconds": 77.60442320006041,
+        "optimizer_active_time_seconds_this_invocation": 77.60442320006041,
+        "optimizer_updates": 1090,
+        "precision_requested": "auto",
+        "process_memory_after_training": {},
+        "step": 1090,
+        "token_budget_overshoot": 0,
+        "token_budget_planned": 2232320,
+        "token_budget_requested": 2232320,
+        "tokens_per_second": 28765.370683127017,
+        "tokens_per_step": 2048,
+        "tokens_seen": 2232320,
+        "wall_time_seconds_this_invocation": 311.7419575000022
+      }
+    },
+    {
+      "artifact_availability": {
+        "checkpoint": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 9910635,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "fe106392b3656f08fbca4cf6ff13ed633affc44c99b970031de08044e442f7ca",
+          "status": "available"
+        },
+        "evaluation_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 208105,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "830953f4874ddd52a99523a6382b82a09b139d2d4a729bff11a1c7df050b8597",
+          "status": "available"
+        },
+        "exported_resolved_config": {
+          "available": true,
+          "bundle_file": "configs/m2-gqa-002-confirm-mha-seed-17-ec21463ca9.json",
+          "included": true,
+          "status": "available"
+        },
+        "inference_weights": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 3297397,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "889711ee6b165ffcb4036eaa060c43f244d0037ca49eb6217b44b19ee635fdaa",
+          "status": "available"
+        },
+        "original_resolved_config": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 1682,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "31910f09028ced8b8266cfc29f5f22ae7a3046f2e1caef814a322a65a2c7c4b0",
+          "status": "available"
+        },
+        "prepared_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+          "status": "available"
+        },
+        "profile_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 10491,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "8a1a2d1cc867f204c3842116b720518a2eeebcce787e73a756799d5ef9dfb944",
+          "status": "available"
+        },
+        "run_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "included": false,
+          "semantic_match_with_prepared_manifest": true,
+          "sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "status": "available"
+        },
+        "summary": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 239422,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "7e43d454a0f137fc1f48479ec8bae480d9d5e3efa183dffed3d3f7a5b88ac24a",
+          "status": "available"
+        },
+        "tokenizer_artifact": {
+          "artifact_hash_matches_summary": true,
+          "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+          "available": true,
+          "bundle_file": null,
+          "bytes": 505,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+          "status": "available"
+        },
+        "training_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 20222687,
+          "expected_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "included": false,
+          "sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "status": "available"
+        },
+        "validation_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 412074,
+          "expected_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "included": false,
+          "sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "status": "available"
+        }
+      },
+      "configuration_file": "configs/m2-gqa-002-confirm-mha-seed-17-ec21463ca9.json",
+      "data": {
+        "content_origin": "synthetic",
+        "is_test_fixture": false,
+        "manifest_file": "data-manifests/a49bcc046dc69aff.json",
+        "prepared_manifest_semantic_match": true,
+        "prepared_manifest_sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+        "run_manifest_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+        "source": "roneneldan/TinyStories",
+        "source_metadata": {
+          "complete_document_count": 23310,
+          "complete_document_delimiter": null,
+          "content_origin": "synthetic",
+          "dataset": "roneneldan/TinyStories",
+          "dataset_revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+          "discarded_trailing_incomplete_bytes": 117,
+          "license": "cdla-sharing-1.0",
+          "raw_prefix_sha256": "3232df12d6bdd8f83071f0d8196ad10128624168e228aaf9a23f6a1f8431ee8a",
+          "selected_range_bytes": 20971520,
+          "selected_range_end_byte_inclusive": 20971519,
+          "selected_range_start_byte": 0,
+          "upstream_file_size_bytes": 1924281556
+        },
+        "train_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+        "validation_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935"
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "cuda_runtime": null,
+        "device": "cpu",
+        "device_name": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+        "frontier": "0.1.0",
+        "git_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+        "git_worktree_clean": true,
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": null,
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "evaluation": {
+        "perplexity": {
+          "bits_per_byte": 2.1550612399020674,
+          "byte_metric_status": "available",
+          "content_nll_sum": 614153.4857913256,
+          "mean_nll": 1.5037288964055364,
+          "nll_sum": 618946.8435916901,
+          "perplexity": 4.498432021568083,
+          "perplexity_overflow": false,
+          "schema_version": 2,
+          "scored_tokens": 411608,
+          "scored_utf8_bytes": 411142
+        },
+        "protocol": {
+          "byte_normalization": {},
+          "context_length": 256,
+          "dataset_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "document_boundary": "score within documents; no cross-document targets",
+          "metrics_schema_version": 2,
+          "stride": 128,
+          "tokenizer": "utf8-byte-v1",
+          "tokenizer_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687"
+        }
+      },
+      "original_config_sha256": "31910f09028ced8b8266cfc29f5f22ae7a3046f2e1caef814a322a65a2c7c4b0",
+      "profiling": {
+        "accelerator_memory_after_load": {
+          "allocated_bytes": null,
+          "peak_allocated_bytes": null,
+          "peak_reserved_bytes": null,
+          "reserved_bytes": null
+        },
+        "cache_parity_max_abs_logit_error": 5.7220458984375e-06,
+        "cache_parity_tokens": 8,
+        "checkpoint_artifact_bytes": 9910635,
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "inference_dtype": "torch.float32",
+        "model_tensor_bytes": 3283200,
+        "model_weights_artifact_bytes": 3297397,
+        "parameter_count": 820736,
+        "process_memory_after_load": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 223596544,
+          "private_bytes": 709402624,
+          "rss_bytes": 223375360
+        },
+        "profile_schema_version": 3,
+        "trainable_parameter_count": 820736,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 262144,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 262144,
+            "actual_state_storage_bytes_after_decode": 262144,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05191079999713111,
+              "median_seconds": 0.05023599999913131,
+              "min_seconds": 0.04872990000149002,
+              "repetitions_seconds": [
+                0.04872990000149002,
+                0.048947200000839075,
+                0.05023599999913131,
+                0.05191079999713111,
+                0.05054810000001453
+              ],
+              "sample_stddev_seconds": 0.001294327169159507
+            },
+            "decode_latency_seconds_median": 0.05023599999913131,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0015698749999728534,
+            "decode_tokens_per_second": 636.9933912045814,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.00203479999981937,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0024016999996092636,
+              "median_seconds": 0.00203479999981937,
+              "min_seconds": 0.0019935999989684206,
+              "repetitions_seconds": [
+                0.00203479999981937,
+                0.0021421999990707263,
+                0.0019935999989684206,
+                0.0019952000002376735,
+                0.0024016999996092636
+              ],
+              "sample_stddev_seconds": 0.0001720810273831848
+            },
+            "prefill_tokens_per_second": 15726.361314547205,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226217984,
+              "private_bytes": 703639552,
+              "rss_bytes": 220119040
+            },
+            "prompt_tokens": 32,
+            "requested_prompt_tokens": 32,
+            "state_position_tokens_after_decode": 64,
+            "theoretical_kv_bytes_after_decode_loop": 262144,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 64,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 655360,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 655360,
+            "actual_state_storage_bytes_after_decode": 655360,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05339349999849219,
+              "median_seconds": 0.05223719999776222,
+              "min_seconds": 0.04912039999908302,
+              "repetitions_seconds": [
+                0.05112569999982952,
+                0.052927400000044145,
+                0.05223719999776222,
+                0.05339349999849219,
+                0.04912039999908302
+              ],
+              "sample_stddev_seconds": 0.001705042959144032
+            },
+            "decode_latency_seconds_median": 0.05223719999776222,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0016324124999300693,
+            "decode_tokens_per_second": 612.590261372563,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0030302000013762154,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.003482099997199839,
+              "median_seconds": 0.0030302000013762154,
+              "min_seconds": 0.0026644999998097774,
+              "repetitions_seconds": [
+                0.0030302000013762154,
+                0.003482099997199839,
+                0.0026644999998097774,
+                0.0027379000021028332,
+                0.0032998999995470513
+              ],
+              "sample_stddev_seconds": 0.0003518943321985301
+            },
+            "prefill_tokens_per_second": 42241.436189646454,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226217984,
+              "private_bytes": 706867200,
+              "rss_bytes": 223051776
+            },
+            "prompt_tokens": 128,
+            "requested_prompt_tokens": 128,
+            "state_position_tokens_after_decode": 160,
+            "theoretical_kv_bytes_after_decode_loop": 655360,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 160,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 1048576,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 1048576,
+            "actual_state_storage_bytes_after_decode": 1048576,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05291090000173426,
+              "median_seconds": 0.052109700001892634,
+              "min_seconds": 0.04851729999791132,
+              "repetitions_seconds": [
+                0.05219149999902584,
+                0.052109700001892634,
+                0.050178400000731926,
+                0.05291090000173426,
+                0.04851729999791132
+              ],
+              "sample_stddev_seconds": 0.0018011559378080582
+            },
+            "decode_latency_seconds_median": 0.052109700001892634,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0016284281250591448,
+            "decode_tokens_per_second": 614.0891234998044,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.004402099999424536,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0049450000005890615,
+              "median_seconds": 0.004402099999424536,
+              "min_seconds": 0.003893400000379188,
+              "repetitions_seconds": [
+                0.004180699997959891,
+                0.003893400000379188,
+                0.004402099999424536,
+                0.0049450000005890615,
+                0.004923700002109399
+              ],
+              "sample_stddev_seconds": 0.00046158313208345664
+            },
+            "prefill_tokens_per_second": 50884.80498609354,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226217984,
+              "private_bytes": 710021120,
+              "rss_bytes": 225230848
+            },
+            "prompt_tokens": 224,
+            "requested_prompt_tokens": 224,
+            "state_position_tokens_after_decode": 256,
+            "theoretical_kv_bytes_after_decode_loop": 1048576,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 256,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          }
+        ]
+      },
+      "run_id": "m2-gqa-002-confirm-mha-seed-17-ec21463ca9",
+      "sanitized_config_sha256": "41223b6713876e1d25808e0066f66384166d7132b0c91cec04097e046dfa0089",
+      "seed": 17,
+      "source_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+      "source_worktree_clean": true,
+      "status": "completed",
+      "tokenizer": {
+        "artifact_file_sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+        "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+        "name": "utf8-byte-v1",
+        "vocab_size": 259
+      },
+      "training": {
+        "accelerator_memory_after_training": {},
+        "autocast_dtype": "torch.float32",
+        "compute_components": {},
+        "compute_estimator": "decoder-module-mac-v1",
+        "compute_status": "estimated",
+        "deterministic_algorithms": true,
+        "estimated_flops": 13611288231936,
+        "estimated_macs": 2268548038656,
+        "memory": {
+          "process_memory_after_training": {}
+        },
+        "optimizer_active_time_seconds": 73.15103169997019,
+        "optimizer_active_time_seconds_this_invocation": 73.15103169997019,
+        "optimizer_updates": 1024,
+        "precision_requested": "auto",
+        "process_memory_after_training": {},
+        "step": 1024,
+        "token_budget_overshoot": 0,
+        "token_budget_planned": 2097152,
+        "token_budget_requested": 2097152,
+        "tokens_per_second": 28668.79593170324,
+        "tokens_per_step": 2048,
+        "tokens_seen": 2097152,
+        "wall_time_seconds_this_invocation": 306.0737110000009
+      }
+    },
+    {
+      "artifact_availability": {
+        "checkpoint": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 9124139,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "5c9d6f927674ec21e83b49430346981bfb882f800f923cdedc6fbeb65946b22d",
+          "status": "available"
+        },
+        "evaluation_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 208174,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "cc3c7042236559c4efb0bd4aa826a9335dc0a196c046ff8386660315acd12957",
+          "status": "available"
+        },
+        "exported_resolved_config": {
+          "available": true,
+          "bundle_file": "configs/m2-gqa-002-confirm-gqa-seed-42-faf1d78618.json",
+          "included": true,
+          "status": "available"
+        },
+        "inference_weights": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 3035253,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "9ae59800fb3fdafbfe7a28934a3981a8079006da03403795ed6e008c81ff391f",
+          "status": "available"
+        },
+        "original_resolved_config": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 1682,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "d5ce156cdf8e05c4068926309a0815565c83cb8e2406f37e6171f2c264938458",
+          "status": "available"
+        },
+        "prepared_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+          "status": "available"
+        },
+        "profile_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 10481,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "b75a3c7c984d3c967c2a9c8f1ade6ee639188a32dcba7a74627f0e36bd967ef3",
+          "status": "available"
+        },
+        "run_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "included": false,
+          "semantic_match_with_prepared_manifest": true,
+          "sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "status": "available"
+        },
+        "summary": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 239483,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "4eaa30719a9cd52a5a70d153cd0dd51a99055ae3197cc29471d17a39c642a9f5",
+          "status": "available"
+        },
+        "tokenizer_artifact": {
+          "artifact_hash_matches_summary": true,
+          "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+          "available": true,
+          "bundle_file": null,
+          "bytes": 505,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+          "status": "available"
+        },
+        "training_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 20222687,
+          "expected_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "included": false,
+          "sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "status": "available"
+        },
+        "validation_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 412074,
+          "expected_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "included": false,
+          "sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "status": "available"
+        }
+      },
+      "configuration_file": "configs/m2-gqa-002-confirm-gqa-seed-42-faf1d78618.json",
+      "data": {
+        "content_origin": "synthetic",
+        "is_test_fixture": false,
+        "manifest_file": "data-manifests/a49bcc046dc69aff.json",
+        "prepared_manifest_semantic_match": true,
+        "prepared_manifest_sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+        "run_manifest_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+        "source": "roneneldan/TinyStories",
+        "source_metadata": {
+          "complete_document_count": 23310,
+          "complete_document_delimiter": null,
+          "content_origin": "synthetic",
+          "dataset": "roneneldan/TinyStories",
+          "dataset_revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+          "discarded_trailing_incomplete_bytes": 117,
+          "license": "cdla-sharing-1.0",
+          "raw_prefix_sha256": "3232df12d6bdd8f83071f0d8196ad10128624168e228aaf9a23f6a1f8431ee8a",
+          "selected_range_bytes": 20971520,
+          "selected_range_end_byte_inclusive": 20971519,
+          "selected_range_start_byte": 0,
+          "upstream_file_size_bytes": 1924281556
+        },
+        "train_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+        "validation_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935"
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "cuda_runtime": null,
+        "device": "cpu",
+        "device_name": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+        "frontier": "0.1.0",
+        "git_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+        "git_worktree_clean": true,
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": null,
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "evaluation": {
+        "perplexity": {
+          "bits_per_byte": 2.134563228654305,
+          "byte_metric_status": "available",
+          "content_nll_sum": 608311.9232285023,
+          "mean_nll": 1.4905516841673823,
+          "nll_sum": 613522.9976167679,
+          "perplexity": 4.439544069701886,
+          "perplexity_overflow": false,
+          "schema_version": 2,
+          "scored_tokens": 411608,
+          "scored_utf8_bytes": 411142
+        },
+        "protocol": {
+          "byte_normalization": {},
+          "context_length": 256,
+          "dataset_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "document_boundary": "score within documents; no cross-document targets",
+          "metrics_schema_version": 2,
+          "stride": 128,
+          "tokenizer": "utf8-byte-v1",
+          "tokenizer_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687"
+        }
+      },
+      "original_config_sha256": "d5ce156cdf8e05c4068926309a0815565c83cb8e2406f37e6171f2c264938458",
+      "profiling": {
+        "accelerator_memory_after_load": {
+          "allocated_bytes": null,
+          "peak_allocated_bytes": null,
+          "peak_reserved_bytes": null,
+          "reserved_bytes": null
+        },
+        "cache_parity_max_abs_logit_error": 4.76837158203125e-06,
+        "cache_parity_tokens": 8,
+        "checkpoint_artifact_bytes": 9124139,
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "inference_dtype": "torch.float32",
+        "model_tensor_bytes": 3021056,
+        "model_weights_artifact_bytes": 3035253,
+        "parameter_count": 755200,
+        "process_memory_after_load": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 222375936,
+          "private_bytes": 708190208,
+          "rss_bytes": 222154752
+        },
+        "profile_schema_version": 3,
+        "trainable_parameter_count": 755200,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 131072,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 131072,
+            "actual_state_storage_bytes_after_decode": 131072,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05981909999900381,
+              "median_seconds": 0.05285369999910472,
+              "min_seconds": 0.04959020000023884,
+              "repetitions_seconds": [
+                0.05981909999900381,
+                0.05285369999910472,
+                0.04959020000023884,
+                0.051282399999763584,
+                0.05884169999990263
+              ],
+              "sample_stddev_seconds": 0.0045910245016387964
+            },
+            "decode_latency_seconds_median": 0.05285369999910472,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0016516781249720225,
+            "decode_tokens_per_second": 605.4448411472052,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0024948999998741783,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.002671600002940977,
+              "median_seconds": 0.0024948999998741783,
+              "min_seconds": 0.002176900001359172,
+              "repetitions_seconds": [
+                0.002397100000962382,
+                0.002671600002940977,
+                0.0026436000007379334,
+                0.0024948999998741783,
+                0.002176900001359172
+              ],
+              "sample_stddev_seconds": 0.00020148758548515732
+            },
+            "prefill_tokens_per_second": 12826.165378016678,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 225050624,
+              "private_bytes": 702844928,
+              "rss_bytes": 218546176
+            },
+            "prompt_tokens": 32,
+            "requested_prompt_tokens": 32,
+            "state_position_tokens_after_decode": 64,
+            "theoretical_kv_bytes_after_decode_loop": 131072,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 64,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 327680,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 327680,
+            "actual_state_storage_bytes_after_decode": 327680,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.052099600001383806,
+              "median_seconds": 0.05167770000116434,
+              "min_seconds": 0.05105140000159736,
+              "repetitions_seconds": [
+                0.05180350000227918,
+                0.05105140000159736,
+                0.05137530000138213,
+                0.05167770000116434,
+                0.052099600001383806
+              ],
+              "sample_stddev_seconds": 0.000402644539294305
+            },
+            "decode_latency_seconds_median": 0.05167770000116434,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0016149281250363856,
+            "decode_tokens_per_second": 619.2226047072338,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.003097900000284426,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0031501999983447604,
+              "median_seconds": 0.003097900000284426,
+              "min_seconds": 0.002949500001705019,
+              "repetitions_seconds": [
+                0.002949500001705019,
+                0.0029654999998456333,
+                0.003097900000284426,
+                0.003137200001219753,
+                0.0031501999983447604
+              ],
+              "sample_stddev_seconds": 9.575068088985368e-05
+            },
+            "prefill_tokens_per_second": 41318.312401384166,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 225050624,
+              "private_bytes": 705028096,
+              "rss_bytes": 220921856
+            },
+            "prompt_tokens": 128,
+            "requested_prompt_tokens": 128,
+            "state_position_tokens_after_decode": 160,
+            "theoretical_kv_bytes_after_decode_loop": 327680,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 160,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 524288,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 524288,
+            "actual_state_storage_bytes_after_decode": 524288,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.060328700001264224,
+              "median_seconds": 0.0548672999975679,
+              "min_seconds": 0.05249790000016219,
+              "repetitions_seconds": [
+                0.05735189999904833,
+                0.060328700001264224,
+                0.0548672999975679,
+                0.05249790000016219,
+                0.05446950000259676
+              ],
+              "sample_stddev_seconds": 0.003016970104132651
+            },
+            "decode_latency_seconds_median": 0.0548672999975679,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0017146031249239968,
+            "decode_tokens_per_second": 583.2253455413054,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.003755300000193529,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.004004599999461789,
+              "median_seconds": 0.003755300000193529,
+              "min_seconds": 0.003563199999916833,
+              "repetitions_seconds": [
+                0.003600799998821458,
+                0.003755300000193529,
+                0.003811499998846557,
+                0.004004599999461789,
+                0.003563199999916833
+              ],
+              "sample_stddev_seconds": 0.00017730182454838943
+            },
+            "prefill_tokens_per_second": 59649.02936874716,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 225079296,
+              "private_bytes": 709808128,
+              "rss_bytes": 225079296
+            },
+            "prompt_tokens": 224,
+            "requested_prompt_tokens": 224,
+            "state_position_tokens_after_decode": 256,
+            "theoretical_kv_bytes_after_decode_loop": 524288,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 256,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          }
+        ]
+      },
+      "run_id": "m2-gqa-002-confirm-gqa-seed-42-faf1d78618",
+      "sanitized_config_sha256": "aec462eb47df0237793023e65f7f59e2c6f0cd915eb62aa285aa33f2a4f9316d",
+      "seed": 42,
+      "source_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+      "source_worktree_clean": true,
+      "status": "completed",
+      "tokenizer": {
+        "artifact_file_sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+        "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+        "name": "utf8-byte-v1",
+        "vocab_size": 259
+      },
+      "training": {
+        "accelerator_memory_after_training": {},
+        "autocast_dtype": "torch.float32",
+        "compute_components": {},
+        "compute_estimator": "decoder-module-mac-v1",
+        "compute_status": "estimated",
+        "deterministic_algorithms": true,
+        "estimated_flops": 13610794352640,
+        "estimated_macs": 2268465725440,
+        "memory": {
+          "process_memory_after_training": {}
+        },
+        "optimizer_active_time_seconds": 76.61295769998105,
+        "optimizer_active_time_seconds_this_invocation": 76.61295769998105,
+        "optimizer_updates": 1090,
+        "precision_requested": "auto",
+        "process_memory_after_training": {},
+        "step": 1090,
+        "token_budget_overshoot": 0,
+        "token_budget_planned": 2232320,
+        "token_budget_requested": 2232320,
+        "tokens_per_second": 29137.629808548067,
+        "tokens_per_step": 2048,
+        "tokens_seen": 2232320,
+        "wall_time_seconds_this_invocation": 310.31316570000126
+      }
+    },
+    {
+      "artifact_availability": {
+        "checkpoint": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 9910571,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "f9794153920f09477bdbd64a87bd26ca93941cebc00a43a8a2c1574981630b23",
+          "status": "available"
+        },
+        "evaluation_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 208187,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "8fbf742fc701bd580a395af5511e28cb55689006b3657c624eca8b46e829f27d",
+          "status": "available"
+        },
+        "exported_resolved_config": {
+          "available": true,
+          "bundle_file": "configs/m2-gqa-002-confirm-mha-seed-42-ec21463ca9.json",
+          "included": true,
+          "status": "available"
+        },
+        "inference_weights": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 3297397,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "2d3fe6816222a962e5b0ddc646658c8a1b0cbfa56bb99bf15b3ddc94ee6d59a8",
+          "status": "available"
+        },
+        "original_resolved_config": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 1682,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "1d272872eb5369ac706123a2a7551b7b84aa3dd86cbcd545dad49e5b8d3c28e0",
+          "status": "available"
+        },
+        "prepared_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+          "status": "available"
+        },
+        "profile_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 10508,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "44c5579af460230b6a9917a5fc6d6a6fc3c50c5d055c659fa47824f3fe7a46d3",
+          "status": "available"
+        },
+        "run_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "included": false,
+          "semantic_match_with_prepared_manifest": true,
+          "sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "status": "available"
+        },
+        "summary": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 239521,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "89d6e88d827ab07708c2e840f582ac9cf19f93afd10690d8c89020c48453930c",
+          "status": "available"
+        },
+        "tokenizer_artifact": {
+          "artifact_hash_matches_summary": true,
+          "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+          "available": true,
+          "bundle_file": null,
+          "bytes": 505,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+          "status": "available"
+        },
+        "training_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 20222687,
+          "expected_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "included": false,
+          "sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "status": "available"
+        },
+        "validation_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 412074,
+          "expected_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "included": false,
+          "sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "status": "available"
+        }
+      },
+      "configuration_file": "configs/m2-gqa-002-confirm-mha-seed-42-ec21463ca9.json",
+      "data": {
+        "content_origin": "synthetic",
+        "is_test_fixture": false,
+        "manifest_file": "data-manifests/a49bcc046dc69aff.json",
+        "prepared_manifest_semantic_match": true,
+        "prepared_manifest_sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+        "run_manifest_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+        "source": "roneneldan/TinyStories",
+        "source_metadata": {
+          "complete_document_count": 23310,
+          "complete_document_delimiter": null,
+          "content_origin": "synthetic",
+          "dataset": "roneneldan/TinyStories",
+          "dataset_revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+          "discarded_trailing_incomplete_bytes": 117,
+          "license": "cdla-sharing-1.0",
+          "raw_prefix_sha256": "3232df12d6bdd8f83071f0d8196ad10128624168e228aaf9a23f6a1f8431ee8a",
+          "selected_range_bytes": 20971520,
+          "selected_range_end_byte_inclusive": 20971519,
+          "selected_range_start_byte": 0,
+          "upstream_file_size_bytes": 1924281556
+        },
+        "train_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+        "validation_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935"
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "cuda_runtime": null,
+        "device": "cpu",
+        "device_name": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+        "frontier": "0.1.0",
+        "git_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+        "git_worktree_clean": true,
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": null,
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "evaluation": {
+        "perplexity": {
+          "bits_per_byte": 2.2068443271119222,
+          "byte_metric_status": "available",
+          "content_nll_sum": 628910.7293100357,
+          "mean_nll": 1.5407445565370292,
+          "nll_sum": 634182.7854270935,
+          "perplexity": 4.6680646154293814,
+          "perplexity_overflow": false,
+          "schema_version": 2,
+          "scored_tokens": 411608,
+          "scored_utf8_bytes": 411142
+        },
+        "protocol": {
+          "byte_normalization": {},
+          "context_length": 256,
+          "dataset_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "document_boundary": "score within documents; no cross-document targets",
+          "metrics_schema_version": 2,
+          "stride": 128,
+          "tokenizer": "utf8-byte-v1",
+          "tokenizer_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687"
+        }
+      },
+      "original_config_sha256": "1d272872eb5369ac706123a2a7551b7b84aa3dd86cbcd545dad49e5b8d3c28e0",
+      "profiling": {
+        "accelerator_memory_after_load": {
+          "allocated_bytes": null,
+          "peak_allocated_bytes": null,
+          "peak_reserved_bytes": null,
+          "reserved_bytes": null
+        },
+        "cache_parity_max_abs_logit_error": 5.7220458984375e-06,
+        "cache_parity_tokens": 8,
+        "checkpoint_artifact_bytes": 9910571,
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "inference_dtype": "torch.float32",
+        "model_tensor_bytes": 3283200,
+        "model_weights_artifact_bytes": 3297397,
+        "parameter_count": 820736,
+        "process_memory_after_load": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 224264192,
+          "private_bytes": 710246400,
+          "rss_bytes": 224043008
+        },
+        "profile_schema_version": 3,
+        "trainable_parameter_count": 820736,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 262144,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 262144,
+            "actual_state_storage_bytes_after_decode": 262144,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05294370000046911,
+              "median_seconds": 0.04811110000082408,
+              "min_seconds": 0.04760560000067926,
+              "repetitions_seconds": [
+                0.04829999999856227,
+                0.05294370000046911,
+                0.04760560000067926,
+                0.04811110000082408,
+                0.047764200000528945
+              ],
+              "sample_stddev_seconds": 0.0022521821012721926
+            },
+            "decode_latency_seconds_median": 0.04811110000082408,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0015034718750257525,
+            "decode_tokens_per_second": 665.1271743828738,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0020465999987209216,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0021338000005926006,
+              "median_seconds": 0.0020465999987209216,
+              "min_seconds": 0.0019978999989689328,
+              "repetitions_seconds": [
+                0.0020465999987209216,
+                0.002014900001086062,
+                0.0019978999989689328,
+                0.0021338000005926006,
+                0.0021301000015228055
+              ],
+              "sample_stddev_seconds": 6.387850255961143e-05
+            },
+            "prefill_tokens_per_second": 15635.688468679406,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226889728,
+              "private_bytes": 704475136,
+              "rss_bytes": 220790784
+            },
+            "prompt_tokens": 32,
+            "requested_prompt_tokens": 32,
+            "state_position_tokens_after_decode": 64,
+            "theoretical_kv_bytes_after_decode_loop": 262144,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 64,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 655360,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 655360,
+            "actual_state_storage_bytes_after_decode": 655360,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.056253900002047885,
+              "median_seconds": 0.050737599998683436,
+              "min_seconds": 0.04946449999988545,
+              "repetitions_seconds": [
+                0.056253900002047885,
+                0.05000819999986561,
+                0.052678200001537334,
+                0.050737599998683436,
+                0.04946449999988545
+              ],
+              "sample_stddev_seconds": 0.002756728413021556
+            },
+            "decode_latency_seconds_median": 0.050737599998683436,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0015855499999588574,
+            "decode_tokens_per_second": 630.695973022578,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0027350000018486753,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.002805099997203797,
+              "median_seconds": 0.0027350000018486753,
+              "min_seconds": 0.0026757000014185905,
+              "repetitions_seconds": [
+                0.0027182999983779155,
+                0.002805099997203797,
+                0.0026757000014185905,
+                0.0027794999987236224,
+                0.0027350000018486753
+              ],
+              "sample_stddev_seconds": 5.096971507127196e-05
+            },
+            "prefill_tokens_per_second": 46800.731229791825,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226889728,
+              "private_bytes": 707706880,
+              "rss_bytes": 223715328
+            },
+            "prompt_tokens": 128,
+            "requested_prompt_tokens": 128,
+            "state_position_tokens_after_decode": 160,
+            "theoretical_kv_bytes_after_decode_loop": 655360,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 160,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 1048576,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 1048576,
+            "actual_state_storage_bytes_after_decode": 1048576,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05437539999911678,
+              "median_seconds": 0.053017199999885634,
+              "min_seconds": 0.050455099997634534,
+              "repetitions_seconds": [
+                0.05437539999911678,
+                0.05141689999800292,
+                0.053017199999885634,
+                0.054023100001359126,
+                0.050455099997634534
+              ],
+              "sample_stddev_seconds": 0.0016833806750086331
+            },
+            "decode_latency_seconds_median": 0.053017199999885634,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.001656787499996426,
+            "decode_tokens_per_second": 603.5777068586992,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0035628000005090144,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0035927999997511506,
+              "median_seconds": 0.0035628000005090144,
+              "min_seconds": 0.003511599999910686,
+              "repetitions_seconds": [
+                0.0035628000005090144,
+                0.0035145999972883146,
+                0.0035688999996636994,
+                0.003511599999910686,
+                0.0035927999997511506
+              ],
+              "sample_stddev_seconds": 3.563885582713525e-05
+            },
+            "prefill_tokens_per_second": 62871.898497809954,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226889728,
+              "private_bytes": 711073792,
+              "rss_bytes": 225980416
+            },
+            "prompt_tokens": 224,
+            "requested_prompt_tokens": 224,
+            "state_position_tokens_after_decode": 256,
+            "theoretical_kv_bytes_after_decode_loop": 1048576,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 256,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          }
+        ]
+      },
+      "run_id": "m2-gqa-002-confirm-mha-seed-42-ec21463ca9",
+      "sanitized_config_sha256": "aa53da3fe1341d096563aa5591d33869f47f256d544eeee84ad60276810df557",
+      "seed": 42,
+      "source_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+      "source_worktree_clean": true,
+      "status": "completed",
+      "tokenizer": {
+        "artifact_file_sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+        "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+        "name": "utf8-byte-v1",
+        "vocab_size": 259
+      },
+      "training": {
+        "accelerator_memory_after_training": {},
+        "autocast_dtype": "torch.float32",
+        "compute_components": {},
+        "compute_estimator": "decoder-module-mac-v1",
+        "compute_status": "estimated",
+        "deterministic_algorithms": true,
+        "estimated_flops": 13611288231936,
+        "estimated_macs": 2268548038656,
+        "memory": {
+          "process_memory_after_training": {}
+        },
+        "optimizer_active_time_seconds": 72.95632009995825,
+        "optimizer_active_time_seconds_this_invocation": 72.95632009995825,
+        "optimizer_updates": 1024,
+        "precision_requested": "auto",
+        "process_memory_after_training": {},
+        "step": 1024,
+        "token_budget_overshoot": 0,
+        "token_budget_planned": 2097152,
+        "token_budget_requested": 2097152,
+        "tokens_per_second": 28745.30948280655,
+        "tokens_per_step": 2048,
+        "tokens_seen": 2097152,
+        "wall_time_seconds_this_invocation": 305.6968145999999
+      }
+    },
+    {
+      "artifact_availability": {
+        "checkpoint": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 9124203,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "a866b0907b4455cb86c6ddeffd2c09cbbe4d3f327084cce2a6613ffa793739c0",
+          "status": "available"
+        },
+        "evaluation_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 208143,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "365f245a5f9ba60179d7b5d5d8b195b2c53e824a27aa6d9cc16be70bab459821",
+          "status": "available"
+        },
+        "exported_resolved_config": {
+          "available": true,
+          "bundle_file": "configs/m2-gqa-002-confirm-gqa-seed-123-faf1d78618.json",
+          "included": true,
+          "status": "available"
+        },
+        "inference_weights": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 3035253,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "7dd71e818b757eb029e31dffc07fad9f1fd64a393052eb69fd29a81e90285003",
+          "status": "available"
+        },
+        "original_resolved_config": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 1684,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "38f6f56ab079f839566667dd62c1b5327effd3e29e3b46e9d476efb245cc1b03",
+          "status": "available"
+        },
+        "prepared_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+          "status": "available"
+        },
+        "profile_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 10495,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "ae8510c8460c1b6dadbd1329eb653894f48dd7ae8091cc2a4204a8c5acb8b3da",
+          "status": "available"
+        },
+        "run_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "included": false,
+          "semantic_match_with_prepared_manifest": true,
+          "sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "status": "available"
+        },
+        "summary": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 239468,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "5a5d353abe9e6d6ceebf1bab45b75ef31aefe71cc5d69793dca1e1157ca83c51",
+          "status": "available"
+        },
+        "tokenizer_artifact": {
+          "artifact_hash_matches_summary": true,
+          "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+          "available": true,
+          "bundle_file": null,
+          "bytes": 505,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+          "status": "available"
+        },
+        "training_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 20222687,
+          "expected_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "included": false,
+          "sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "status": "available"
+        },
+        "validation_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 412074,
+          "expected_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "included": false,
+          "sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "status": "available"
+        }
+      },
+      "configuration_file": "configs/m2-gqa-002-confirm-gqa-seed-123-faf1d78618.json",
+      "data": {
+        "content_origin": "synthetic",
+        "is_test_fixture": false,
+        "manifest_file": "data-manifests/a49bcc046dc69aff.json",
+        "prepared_manifest_semantic_match": true,
+        "prepared_manifest_sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+        "run_manifest_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+        "source": "roneneldan/TinyStories",
+        "source_metadata": {
+          "complete_document_count": 23310,
+          "complete_document_delimiter": null,
+          "content_origin": "synthetic",
+          "dataset": "roneneldan/TinyStories",
+          "dataset_revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+          "discarded_trailing_incomplete_bytes": 117,
+          "license": "cdla-sharing-1.0",
+          "raw_prefix_sha256": "3232df12d6bdd8f83071f0d8196ad10128624168e228aaf9a23f6a1f8431ee8a",
+          "selected_range_bytes": 20971520,
+          "selected_range_end_byte_inclusive": 20971519,
+          "selected_range_start_byte": 0,
+          "upstream_file_size_bytes": 1924281556
+        },
+        "train_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+        "validation_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935"
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "cuda_runtime": null,
+        "device": "cpu",
+        "device_name": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+        "frontier": "0.1.0",
+        "git_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+        "git_worktree_clean": true,
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": null,
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "evaluation": {
+        "perplexity": {
+          "bits_per_byte": 2.14155178896197,
+          "byte_metric_status": "available",
+          "content_nll_sum": 610303.5365498066,
+          "mean_nll": 1.497276820563447,
+          "nll_sum": 616291.1175584793,
+          "perplexity": 4.469501229191676,
+          "perplexity_overflow": false,
+          "schema_version": 2,
+          "scored_tokens": 411608,
+          "scored_utf8_bytes": 411142
+        },
+        "protocol": {
+          "byte_normalization": {},
+          "context_length": 256,
+          "dataset_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "document_boundary": "score within documents; no cross-document targets",
+          "metrics_schema_version": 2,
+          "stride": 128,
+          "tokenizer": "utf8-byte-v1",
+          "tokenizer_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687"
+        }
+      },
+      "original_config_sha256": "38f6f56ab079f839566667dd62c1b5327effd3e29e3b46e9d476efb245cc1b03",
+      "profiling": {
+        "accelerator_memory_after_load": {
+          "allocated_bytes": null,
+          "peak_allocated_bytes": null,
+          "peak_reserved_bytes": null,
+          "reserved_bytes": null
+        },
+        "cache_parity_max_abs_logit_error": 2.86102294921875e-06,
+        "cache_parity_tokens": 8,
+        "checkpoint_artifact_bytes": 9124203,
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "inference_dtype": "torch.float32",
+        "model_tensor_bytes": 3021056,
+        "model_weights_artifact_bytes": 3035253,
+        "parameter_count": 755200,
+        "process_memory_after_load": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 223662080,
+          "private_bytes": 728748032,
+          "rss_bytes": 223662080
+        },
+        "profile_schema_version": 3,
+        "trainable_parameter_count": 755200,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 131072,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 131072,
+            "actual_state_storage_bytes_after_decode": 131072,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.06062219999876106,
+              "median_seconds": 0.05517099999997299,
+              "min_seconds": 0.04976479999822914,
+              "repetitions_seconds": [
+                0.04976479999822914,
+                0.05517099999997299,
+                0.05607439999948838,
+                0.05396409999957541,
+                0.06062219999876106
+              ],
+              "sample_stddev_seconds": 0.003911583905700143
+            },
+            "decode_latency_seconds_median": 0.05517099999997299,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.001724093749999156,
+            "decode_tokens_per_second": 580.0148628811453,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0022126999974716455,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0023080999999365304,
+              "median_seconds": 0.0022126999974716455,
+              "min_seconds": 0.0021558000007644296,
+              "repetitions_seconds": [
+                0.0022467000017059036,
+                0.0022126999974716455,
+                0.0021558000007644296,
+                0.0023080999999365304,
+                0.0021670000023732428
+              ],
+              "sample_stddev_seconds": 6.212811717702017e-05
+            },
+            "prefill_tokens_per_second": 14461.969556001712,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226418688,
+              "private_bytes": 704196608,
+              "rss_bytes": 220258304
+            },
+            "prompt_tokens": 32,
+            "requested_prompt_tokens": 32,
+            "state_position_tokens_after_decode": 64,
+            "theoretical_kv_bytes_after_decode_loop": 131072,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 64,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 327680,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 327680,
+            "actual_state_storage_bytes_after_decode": 327680,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.054683700000168756,
+              "median_seconds": 0.05249739999999292,
+              "min_seconds": 0.050876099998276914,
+              "repetitions_seconds": [
+                0.054119800002808915,
+                0.054683700000168756,
+                0.05249739999999292,
+                0.05103339999914169,
+                0.050876099998276914
+              ],
+              "sample_stddev_seconds": 0.0017377670762964792
+            },
+            "decode_latency_seconds_median": 0.05249739999999292,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0016405437499997788,
+            "decode_tokens_per_second": 609.5539969599316,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.003154799996991642,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0032591999988653697,
+              "median_seconds": 0.003154799996991642,
+              "min_seconds": 0.0029471000016201288,
+              "repetitions_seconds": [
+                0.0032109000021591783,
+                0.003154799996991642,
+                0.0029471000016201288,
+                0.0032591999988653697,
+                0.0029816999995091464
+              ],
+              "sample_stddev_seconds": 0.00013914295834408888
+            },
+            "prefill_tokens_per_second": 40573.09500509015,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226418688,
+              "private_bytes": 706379776,
+              "rss_bytes": 222531584
+            },
+            "prompt_tokens": 128,
+            "requested_prompt_tokens": 128,
+            "state_position_tokens_after_decode": 160,
+            "theoretical_kv_bytes_after_decode_loop": 327680,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 160,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 524288,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 524288,
+            "actual_state_storage_bytes_after_decode": 524288,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.059910100000706734,
+              "median_seconds": 0.05555839999942691,
+              "min_seconds": 0.051330400001461385,
+              "repetitions_seconds": [
+                0.051330400001461385,
+                0.05150169999978971,
+                0.059910100000706734,
+                0.05798819999836269,
+                0.05555839999942691
+              ],
+              "sample_stddev_seconds": 0.0038315172503654202
+            },
+            "decode_latency_seconds_median": 0.05555839999942691,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.001736199999982091,
+            "decode_tokens_per_second": 575.9705103158133,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.004146200000832323,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.004211899999063462,
+              "median_seconds": 0.004146200000832323,
+              "min_seconds": 0.0037206999986665323,
+              "repetitions_seconds": [
+                0.004204300003038952,
+                0.0037206999986665323,
+                0.004211899999063462,
+                0.004146200000832323,
+                0.004038600000058068
+              ],
+              "sample_stddev_seconds": 0.0002042148461939145
+            },
+            "prefill_tokens_per_second": 54025.37261951508,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226418688,
+              "private_bytes": 711348224,
+              "rss_bytes": 226340864
+            },
+            "prompt_tokens": 224,
+            "requested_prompt_tokens": 224,
+            "state_position_tokens_after_decode": 256,
+            "theoretical_kv_bytes_after_decode_loop": 524288,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 256,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          }
+        ]
+      },
+      "run_id": "m2-gqa-002-confirm-gqa-seed-123-faf1d78618",
+      "sanitized_config_sha256": "7f40ebccf43d23230847bd049c5d0731c6ebf21a92dda9f7660bffea7b21b274",
+      "seed": 123,
+      "source_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+      "source_worktree_clean": true,
+      "status": "completed",
+      "tokenizer": {
+        "artifact_file_sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+        "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+        "name": "utf8-byte-v1",
+        "vocab_size": 259
+      },
+      "training": {
+        "accelerator_memory_after_training": {},
+        "autocast_dtype": "torch.float32",
+        "compute_components": {},
+        "compute_estimator": "decoder-module-mac-v1",
+        "compute_status": "estimated",
+        "deterministic_algorithms": true,
+        "estimated_flops": 13610794352640,
+        "estimated_macs": 2268465725440,
+        "memory": {
+          "process_memory_after_training": {}
+        },
+        "optimizer_active_time_seconds": 76.20165419994373,
+        "optimizer_active_time_seconds_this_invocation": 76.20165419994373,
+        "optimizer_updates": 1090,
+        "precision_requested": "auto",
+        "process_memory_after_training": {},
+        "step": 1090,
+        "token_budget_overshoot": 0,
+        "token_budget_planned": 2232320,
+        "token_budget_requested": 2232320,
+        "tokens_per_second": 29294.90210465337,
+        "tokens_per_step": 2048,
+        "tokens_seen": 2232320,
+        "wall_time_seconds_this_invocation": 309.84202509999886
+      }
+    },
+    {
+      "artifact_availability": {
+        "checkpoint": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 9910635,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "d9d3b13b0dd71da556f2dc9258de767b6add484b4369a3f06145aa64f68ba296",
+          "status": "available"
+        },
+        "evaluation_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 208173,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "d37c8e0fbf8ee1e9892b569e6be446e4e2ce7b2b4dbbbaacc5ccbb7d294bfb21",
+          "status": "available"
+        },
+        "exported_resolved_config": {
+          "available": true,
+          "bundle_file": "configs/m2-gqa-002-confirm-mha-seed-123-ec21463ca9.json",
+          "included": true,
+          "status": "available"
+        },
+        "inference_weights": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 3297397,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "6b8174ae35ea42981c16e12ae96293b81c857adaa0d7d58c7efcff829eea2f56",
+          "status": "available"
+        },
+        "original_resolved_config": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 1684,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "17d329025d2f87f531b696c97dedd2a209267073d52ce3d078d4d4c69ed858cc",
+          "status": "available"
+        },
+        "prepared_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+          "status": "available"
+        },
+        "profile_sidecar": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 10491,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "2a18a991fdd64bd04ad3f0b79c878af3004fb1d81d4a2cec22aa0e33f3d42308",
+          "status": "available"
+        },
+        "run_data_manifest": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 2277,
+          "expected_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "included": false,
+          "semantic_match_with_prepared_manifest": true,
+          "sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+          "status": "available"
+        },
+        "summary": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 239493,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "b69c177cabc178030bb29cb920af1828984729dff22e5ea2515df4c310d03b7b",
+          "status": "available"
+        },
+        "tokenizer_artifact": {
+          "artifact_hash_matches_summary": true,
+          "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+          "available": true,
+          "bundle_file": null,
+          "bytes": 505,
+          "expected_sha256": null,
+          "included": false,
+          "sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+          "status": "available"
+        },
+        "training_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 20222687,
+          "expected_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "included": false,
+          "sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+          "status": "available"
+        },
+        "validation_corpus": {
+          "available": true,
+          "bundle_file": null,
+          "bytes": 412074,
+          "expected_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "included": false,
+          "sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "status": "available"
+        }
+      },
+      "configuration_file": "configs/m2-gqa-002-confirm-mha-seed-123-ec21463ca9.json",
+      "data": {
+        "content_origin": "synthetic",
+        "is_test_fixture": false,
+        "manifest_file": "data-manifests/a49bcc046dc69aff.json",
+        "prepared_manifest_semantic_match": true,
+        "prepared_manifest_sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+        "run_manifest_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+        "source": "roneneldan/TinyStories",
+        "source_metadata": {
+          "complete_document_count": 23310,
+          "complete_document_delimiter": null,
+          "content_origin": "synthetic",
+          "dataset": "roneneldan/TinyStories",
+          "dataset_revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+          "discarded_trailing_incomplete_bytes": 117,
+          "license": "cdla-sharing-1.0",
+          "raw_prefix_sha256": "3232df12d6bdd8f83071f0d8196ad10128624168e228aaf9a23f6a1f8431ee8a",
+          "selected_range_bytes": 20971520,
+          "selected_range_end_byte_inclusive": 20971519,
+          "selected_range_start_byte": 0,
+          "upstream_file_size_bytes": 1924281556
+        },
+        "train_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+        "validation_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935"
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "cuda_runtime": null,
+        "device": "cpu",
+        "device_name": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+        "frontier": "0.1.0",
+        "git_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+        "git_worktree_clean": true,
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": null,
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "evaluation": {
+        "perplexity": {
+          "bits_per_byte": 2.1655960230930016,
+          "byte_metric_status": "available",
+          "content_nll_sum": 617155.7085119486,
+          "mean_nll": 1.5133808317394086,
+          "nll_sum": 622919.6573905945,
+          "perplexity": 4.542060808957598,
+          "perplexity_overflow": false,
+          "schema_version": 2,
+          "scored_tokens": 411608,
+          "scored_utf8_bytes": 411142
+        },
+        "protocol": {
+          "byte_normalization": {},
+          "context_length": 256,
+          "dataset_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935",
+          "document_boundary": "score within documents; no cross-document targets",
+          "metrics_schema_version": 2,
+          "stride": 128,
+          "tokenizer": "utf8-byte-v1",
+          "tokenizer_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687"
+        }
+      },
+      "original_config_sha256": "17d329025d2f87f531b696c97dedd2a209267073d52ce3d078d4d4c69ed858cc",
+      "profiling": {
+        "accelerator_memory_after_load": {
+          "allocated_bytes": null,
+          "peak_allocated_bytes": null,
+          "peak_reserved_bytes": null,
+          "reserved_bytes": null
+        },
+        "cache_parity_max_abs_logit_error": 4.291534423828125e-06,
+        "cache_parity_tokens": 8,
+        "checkpoint_artifact_bytes": 9910635,
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "inference_dtype": "torch.float32",
+        "model_tensor_bytes": 3283200,
+        "model_weights_artifact_bytes": 3297397,
+        "parameter_count": 820736,
+        "process_memory_after_load": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 223748096,
+          "private_bytes": 709693440,
+          "rss_bytes": 223526912
+        },
+        "profile_schema_version": 3,
+        "trainable_parameter_count": 820736,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 262144,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 262144,
+            "actual_state_storage_bytes_after_decode": 262144,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05724779999945895,
+              "median_seconds": 0.05007370000021183,
+              "min_seconds": 0.04931629999919096,
+              "repetitions_seconds": [
+                0.05007370000021183,
+                0.05724779999945895,
+                0.05073859999902197,
+                0.04931629999919096,
+                0.04962040000100387
+              ],
+              "sample_stddev_seconds": 0.0033129317185161353
+            },
+            "decode_latency_seconds_median": 0.05007370000021183,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0015648031250066197,
+            "decode_tokens_per_second": 639.0580284633376,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.002591300002677599,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.0026753999991342425,
+              "median_seconds": 0.002591300002677599,
+              "min_seconds": 0.00257430000056047,
+              "repetitions_seconds": [
+                0.0026753999991342425,
+                0.002591300002677599,
+                0.0025825999982771464,
+                0.00257430000056047,
+                0.0025956999998015817
+              ],
+              "sample_stddev_seconds": 4.082919253495312e-05
+            },
+            "prefill_tokens_per_second": 12349.013995652489,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226230272,
+              "private_bytes": 703725568,
+              "rss_bytes": 220090368
+            },
+            "prompt_tokens": 32,
+            "requested_prompt_tokens": 32,
+            "state_position_tokens_after_decode": 64,
+            "theoretical_kv_bytes_after_decode_loop": 262144,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 64,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 655360,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 655360,
+            "actual_state_storage_bytes_after_decode": 655360,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.05247420000159764,
+              "median_seconds": 0.04892380000092089,
+              "min_seconds": 0.048296200002369005,
+              "repetitions_seconds": [
+                0.05247420000159764,
+                0.05122969999865745,
+                0.04892380000092089,
+                0.048296200002369005,
+                0.048748900000646245
+              ],
+              "sample_stddev_seconds": 0.0018192586295989262
+            },
+            "decode_latency_seconds_median": 0.04892380000092089,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0015288687500287779,
+            "decode_tokens_per_second": 654.0783831059252,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0026932000000670087,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.002729900003032526,
+              "median_seconds": 0.0026932000000670087,
+              "min_seconds": 0.0026633999987097923,
+              "repetitions_seconds": [
+                0.002729900003032526,
+                0.002674999999726424,
+                0.0026932000000670087,
+                0.0026633999987097923,
+                0.0027031999998143874
+              ],
+              "sample_stddev_seconds": 2.5815849329587176e-05
+            },
+            "prefill_tokens_per_second": 47527.105301060175,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226230272,
+              "private_bytes": 706953216,
+              "rss_bytes": 223039488
+            },
+            "prompt_tokens": 128,
+            "requested_prompt_tokens": 128,
+            "state_position_tokens_after_decode": 160,
+            "theoretical_kv_bytes_after_decode_loop": 655360,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 160,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          },
+          {
+            "active_state_bytes_after_decode": 1048576,
+            "active_state_bytes_status": "exact for dense attention cache",
+            "actual_kv_bytes_after_decode": 1048576,
+            "actual_state_storage_bytes_after_decode": 1048576,
+            "batch_size": 1,
+            "decode_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "decode_latency": {
+              "max_seconds": 0.04947830000310205,
+              "median_seconds": 0.04930919999969774,
+              "min_seconds": 0.0489540999988094,
+              "repetitions_seconds": [
+                0.0489540999988094,
+                0.049390299998776754,
+                0.04930919999969774,
+                0.04947830000310205,
+                0.04924609999943641
+              ],
+              "sample_stddev_seconds": 0.00019975287341829134
+            },
+            "decode_latency_seconds_median": 0.04930919999969774,
+            "decode_repeats": 5,
+            "decode_seconds_per_token": 0.0015409124999905544,
+            "decode_tokens_per_second": 648.966115860654,
+            "first_token_from_prefill_logits": 1,
+            "generated_tokens_per_repeat": 33,
+            "kv_cache_accounting_dtype": "torch.float32",
+            "persistent_state_bytes_after_decode": null,
+            "prefill_accelerator_memory": {
+              "allocated_bytes": null,
+              "peak_allocated_bytes": null,
+              "peak_reserved_bytes": null,
+              "reserved_bytes": null
+            },
+            "prefill_latency_seconds_median": 0.0036572000026353635,
+            "prefill_to_first_token_latency": {
+              "max_seconds": 0.00380589999986114,
+              "median_seconds": 0.0036572000026353635,
+              "min_seconds": 0.003569100001186598,
+              "repetitions_seconds": [
+                0.0036572000026353635,
+                0.0035967000003438443,
+                0.003747599999769591,
+                0.003569100001186598,
+                0.00380589999986114
+              ],
+              "sample_stddev_seconds": 0.00010008453867721857
+            },
+            "prefill_tokens_per_second": 61249.04293956757,
+            "process_memory_snapshot_after_workload": {
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 226230272,
+              "private_bytes": 710336512,
+              "rss_bytes": 225288192
+            },
+            "prompt_tokens": 224,
+            "requested_prompt_tokens": 224,
+            "state_position_tokens_after_decode": 256,
+            "theoretical_kv_bytes_after_decode_loop": 1048576,
+            "theoretical_kv_bytes_status": "all sequence blocks use standard attention",
+            "theoretical_kv_cache_tokens_after_decode_loop": 256,
+            "timed_decode_forwards_per_repeat": 32,
+            "timed_decode_tokens": 32
+          }
+        ]
+      },
+      "run_id": "m2-gqa-002-confirm-mha-seed-123-ec21463ca9",
+      "sanitized_config_sha256": "9b1f2cc5c831b5860bd2eefa7d6baa20c2e65b0dd22c384a820807cee28faf36",
+      "seed": 123,
+      "source_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+      "source_worktree_clean": true,
+      "status": "completed",
+      "tokenizer": {
+        "artifact_file_sha256": "b42fe286ded79406e40f53f360b0dc6480a19b6ce0c0e80a346c0718250aa9d5",
+        "artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+        "name": "utf8-byte-v1",
+        "vocab_size": 259
+      },
+      "training": {
+        "accelerator_memory_after_training": {},
+        "autocast_dtype": "torch.float32",
+        "compute_components": {},
+        "compute_estimator": "decoder-module-mac-v1",
+        "compute_status": "estimated",
+        "deterministic_algorithms": true,
+        "estimated_flops": 13611288231936,
+        "estimated_macs": 2268548038656,
+        "memory": {
+          "process_memory_after_training": {}
+        },
+        "optimizer_active_time_seconds": 73.85264720005216,
+        "optimizer_active_time_seconds_this_invocation": 73.85264720005216,
+        "optimizer_updates": 1024,
+        "precision_requested": "auto",
+        "process_memory_after_training": {},
+        "step": 1024,
+        "token_budget_overshoot": 0,
+        "token_budget_planned": 2097152,
+        "token_budget_requested": 2097152,
+        "tokens_per_second": 28396.43641099596,
+        "tokens_per_step": 2048,
+        "tokens_seen": 2097152,
+        "wall_time_seconds_this_invocation": 306.6747117999985
+      }
+    }
+  ],
+  "schema_version": 1,
+  "source_artifacts": {
+    "comparison": {
+      "available": true,
+      "bundle_file": null,
+      "bytes": 7692,
+      "expected_sha256": null,
+      "included": false,
+      "sha256": "28fec3e5f0d583784e73cd0f792d14d9cb86790b9a0487628027d4914a1f4d25",
+      "status": "available"
+    },
+    "sweep_plan": {
+      "available": true,
+      "bundle_file": null,
+      "bytes": 19359,
+      "expected_sha256": null,
+      "included": false,
+      "sha256": "35038a3ec148cee0a44b4a086dc00d20a96fcbf0b2b5ce53a97c9ce82da0caaf",
+      "status": "available"
+    },
+    "sweep_plan_context": {
+      "available": true,
+      "bundle_file": null,
+      "bytes": 1458,
+      "expected_sha256": null,
+      "included": false,
+      "sha256": "c96f74084c7cdd2a4109338d5c67d143c76413f1d760be9af90bd6a72eeada61",
+      "status": "available"
+    }
+  },
+  "sweep_plan": {
+    "arms": [
+      {
+        "arm_id": "mha",
+        "compute_assumptions": "two FLOPs per MAC and 3x forward MACs for forward plus backward; charges full dense causal attention matrices at configured context; embedding table lookups, softmax, normalization, activations, loss, optimizer, dropout and scalar work are excluded; tied embedding weights are counted as vocabulary-head compute once",
+        "compute_estimator": "decoder-module-mac-v1",
+        "estimated_flops_per_seed": 13611288231936,
+        "estimated_macs_per_seed": 2268548038656,
+        "planned_optimizer_steps_per_seed": 1024,
+        "planned_tokens_per_seed": 2097152,
+        "resolved_config_sha256": "ec21463ca92f34f545cde5b88b471af4c4b6e9abb3f2d4849d799846a269ac25",
+        "role": "baseline"
+      },
+      {
+        "arm_id": "gqa",
+        "compute_assumptions": "two FLOPs per MAC and 3x forward MACs for forward plus backward; charges full dense causal attention matrices at configured context; embedding table lookups, softmax, normalization, activations, loss, optimizer, dropout and scalar work are excluded; tied embedding weights are counted as vocabulary-head compute once",
+        "compute_estimator": "decoder-module-mac-v1",
+        "estimated_flops_per_seed": 13610794352640,
+        "estimated_macs_per_seed": 2268465725440,
+        "planned_optimizer_steps_per_seed": 1090,
+        "planned_tokens_per_seed": 2232320,
+        "resolved_config_sha256": "faf1d7861881c71c5c91c82d929a83c5fcaddb5785cab81f4ba3d2fa25a08147",
+        "role": "candidate"
+      }
+    ],
+    "candidate_compute_deltas_vs_baseline": {
+      "gqa": {
+        "relative_flop_delta_percent": -0.0036284537332860016,
+        "within_one_percent": true
+      }
+    },
+    "context": {
+      "corpus_manifest_sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+      "estimated_flop_delta_candidate_percent": -0.0036284537332860016,
+      "git_worktree_clean": true,
+      "gqa_config_sha256": "43fb5ed8fc10c63f7dcec1e92cda61df02419c5d2360de59110c417a0293081c",
+      "mha_config_sha256": "3bfbf0c64c8443afc105e3e327f3c430d8e7274c53faee372ecdd105e001d5dd",
+      "plan_sha256": "4f7ab8d7fe88d68617df089d720f2fcded60e0a823b5f4fc62e5928c50ebedf1",
+      "planned_jobs": 6,
+      "record_type": "frontier-preregistration-context-v1",
+      "recorded_date": "2026-09-23",
+      "source_revision": "73bde6e9dfa139f75a77fe7dae3bf710c3514678",
+      "tokenizer_artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+      "total_compute_cap_flops": 85000000000000,
+      "total_estimated_flops": 81666247753728,
+      "warmup_fraction_gate": 0.05,
+      "warmup_fraction_relative_gap": 0.004183486238532951
+    },
+    "hardware": {
+      "cpu_count": 16,
+      "cuda_available": false,
+      "cuda_runtime": null,
+      "device": null,
+      "device_name": null,
+      "frontier": null,
+      "git_revision": null,
+      "git_worktree_clean": null,
+      "numpy": null,
+      "platform": "Windows-11-10.0.26200-SP0",
+      "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+      "python": "3.12.14",
+      "torch": "2.14.0+cpu"
+    },
+    "jobs": [
+      {
+        "arm_id": "mha",
+        "config_sha256": "9748b2af76684067d9685834af618897aaf9a6a0b9c47550e75ae4f41a1e380b",
+        "estimated_flops": 13611288231936,
+        "job_id": "m2-gqa-002-confirm-mha-seed-17-ec21463ca9",
+        "planned_optimizer_steps": 1024,
+        "planned_tokens": 2097152,
+        "role": "baseline",
+        "run_id": "m2-gqa-002-confirm-mha-seed-17-ec21463ca9",
+        "seed": 17
+      },
+      {
+        "arm_id": "mha",
+        "config_sha256": "bb0bb0d3f536dbf8af58cb4954e86b12fb2ea3014be6d663cbd0c05214d746cb",
+        "estimated_flops": 13611288231936,
+        "job_id": "m2-gqa-002-confirm-mha-seed-42-ec21463ca9",
+        "planned_optimizer_steps": 1024,
+        "planned_tokens": 2097152,
+        "role": "baseline",
+        "run_id": "m2-gqa-002-confirm-mha-seed-42-ec21463ca9",
+        "seed": 42
+      },
+      {
+        "arm_id": "mha",
+        "config_sha256": "b75d268550f215e1335928dc3918a14d9e3a46f144c4ab1e43b17cefe52a662b",
+        "estimated_flops": 13611288231936,
+        "job_id": "m2-gqa-002-confirm-mha-seed-123-ec21463ca9",
+        "planned_optimizer_steps": 1024,
+        "planned_tokens": 2097152,
+        "role": "baseline",
+        "run_id": "m2-gqa-002-confirm-mha-seed-123-ec21463ca9",
+        "seed": 123
+      },
+      {
+        "arm_id": "gqa",
+        "config_sha256": "1f29da2b5a360cc027a4b2d03eed81eb19d50a451ba31217e5da541a3b0155d5",
+        "estimated_flops": 13610794352640,
+        "job_id": "m2-gqa-002-confirm-gqa-seed-17-faf1d78618",
+        "planned_optimizer_steps": 1090,
+        "planned_tokens": 2232320,
+        "role": "candidate",
+        "run_id": "m2-gqa-002-confirm-gqa-seed-17-faf1d78618",
+        "seed": 17
+      },
+      {
+        "arm_id": "gqa",
+        "config_sha256": "b8c10422174b8d20308c0a100d8ca662205139e84caa82617384826469f5840e",
+        "estimated_flops": 13610794352640,
+        "job_id": "m2-gqa-002-confirm-gqa-seed-42-faf1d78618",
+        "planned_optimizer_steps": 1090,
+        "planned_tokens": 2232320,
+        "role": "candidate",
+        "run_id": "m2-gqa-002-confirm-gqa-seed-42-faf1d78618",
+        "seed": 42
+      },
+      {
+        "arm_id": "gqa",
+        "config_sha256": "1d258e74ac6f0505d9c4d1cc8b3f995ac30d86d0a0e9d1d1154712cad9fd6fcf",
+        "estimated_flops": 13610794352640,
+        "job_id": "m2-gqa-002-confirm-gqa-seed-123-faf1d78618",
+        "planned_optimizer_steps": 1090,
+        "planned_tokens": 2232320,
+        "role": "candidate",
+        "run_id": "m2-gqa-002-confirm-gqa-seed-123-faf1d78618",
+        "seed": 123
+      }
+    ],
+    "name": "m2-gqa-002-confirm",
+    "plan_sha256": "4f7ab8d7fe88d68617df089d720f2fcded60e0a823b5f4fc62e5928c50ebedf1",
+    "plan_type": "frontier-sweep-plan-v1",
+    "schema_version": 1,
+    "seeds": [
+      17,
+      42,
+      123
+    ],
+    "source_spec_sha256": "6023b478e7f62174ea84ef08f181af3c7faeda4e5b3c5605494f18dc3a92d88b",
+    "total_compute_cap_flops": 85000000000000,
+    "total_estimated_flops": 81666247753728,
+    "total_runtime_cap_seconds": null
+  }
+}

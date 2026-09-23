@@ -1,0 +1,64 @@
+{
+  "baseline_run": null,
+  "data_dir": "data/prepared-corpus",
+  "evaluation": {
+    "generation_max_tokens": 64,
+    "max_validation_documents": null,
+    "stride": 128,
+    "tasks_path": null
+  },
+  "model": {
+    "bias": false,
+    "dropout": 0.0,
+    "ffn": "gelu",
+    "ffn_width": 512,
+    "kv_heads": 2,
+    "layers": 4,
+    "max_seq_len": 256,
+    "normalization": "rmsnorm",
+    "position": "rope",
+    "query_heads": 4,
+    "residual_topology": "pre_norm",
+    "rope_theta": 10000.0,
+    "sequence_types": [
+      "attention",
+      "attention",
+      "attention",
+      "attention"
+    ],
+    "tie_embeddings": true,
+    "vocab_size": 259,
+    "width": 128
+  },
+  "output_dir": "runs/m2-gqa-002-confirm-gqa-seed-17-faf1d78618-reproduction",
+  "profiling": {
+    "batch_size": 1,
+    "decode_tokens": 32,
+    "prompt_lengths": [
+      32,
+      128,
+      224
+    ],
+    "repeats": 5,
+    "warmup_steps": 2
+  },
+  "seed": 17,
+  "tokenizer": "utf8-byte-v1",
+  "train": {
+    "batch_size": 8,
+    "checkpoint_interval": 100,
+    "context_length": 256,
+    "deterministic": true,
+    "eval_interval": 100,
+    "grad_clip": 1.0,
+    "gradient_accumulation": 1,
+    "learning_rate": 0.0003,
+    "max_steps": null,
+    "max_tokens": 2232320,
+    "min_learning_rate": 3e-05,
+    "mixed_precision": "auto",
+    "resume": false,
+    "warmup_steps": 106,
+    "weight_decay": 0.1
+  }
+}

@@ -14,6 +14,7 @@ from frontier.data.corpus import encode_documents, load_split, prepare_split
 from frontier.evaluation.perplexity import evaluate_perplexity
 from frontier.evaluation.tasks import evaluate_tasks
 from frontier.experiments.compare import compare_runs, compare_seeded_runs
+from frontier.experiments.evidence import export_evidence_bundle, verify_evidence_bundle
 from frontier.experiments.planning import plan_sweep
 from frontier.experiments.results import write_json, write_summary
 from frontier.experiments.runner import execute_sweep
@@ -226,6 +227,19 @@ def build_parser() -> argparse.ArgumentParser:
     execute_parser.add_argument("--plan", required=True, type=Path)
     execute_parser.add_argument("--status", type=Path)
     execute_parser.add_argument("--max-runtime-seconds", type=float)
+
+    export_parser = commands.add_parser(
+        "export-evidence", help="write a sanitized, checksummed evidence bundle"
+    )
+    export_parser.add_argument("--run-dirs", nargs="+", required=True, type=Path)
+    export_parser.add_argument("--output-dir", required=True, type=Path)
+    export_parser.add_argument("--comparison", type=Path)
+    export_parser.add_argument("--sweep-plan", type=Path)
+
+    verify_parser = commands.add_parser(
+        "verify-evidence", help="verify hashes and inventory in a portable evidence bundle"
+    )
+    verify_parser.add_argument("--bundle-dir", required=True, type=Path)
     return parser
 
 
@@ -281,6 +295,17 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(status, indent=2))
             if status["status"] == "failed":
                 return 1
+        elif args.command == "export-evidence":
+            report = export_evidence_bundle(
+                args.run_dirs,
+                args.output_dir,
+                args.comparison,
+                args.sweep_plan,
+            )
+            print(json.dumps(report, indent=2))
+        elif args.command == "verify-evidence":
+            report = verify_evidence_bundle(args.bundle_dir)
+            print(json.dumps(report, indent=2))
         return 0
     except (ValueError, TypeError, FileNotFoundError, FileExistsError, FloatingPointError) as error:
         parser.error(str(error))

@@ -4,7 +4,7 @@ Status: planning only, 23 September 2026. This document specifies future work; n
 
 ## Read and execute in this order
 
-Start with the ordered [implementation queue](docs/implementation_queue.md) for the current blockers and handoff-sized packages. Read `AGENTS.md`, `RESEARCH.md`, `EXPERIMENTS.md`, and the measurement and reproducibility protocols before implementation. Use these work packages for the detailed designs and acceptance tests:
+Start with the ordered [implementation queue](docs/implementation_queue.md) for the current blockers and handoff-sized packages. The [next execution plan](docs/next-execution-plan.md) tracks Q09's portable-evidence closeout and sequences later milestones into owner-sized handoffs with explicit gates. Read `AGENTS.md`, `RESEARCH.md`, `EXPERIMENTS.md`, and the measurement and reproducibility protocols before implementation. Use these work packages for the detailed designs and acceptance tests:
 
 1. [Evidence and measurement](docs/roadmap-measurement.md): experiment eligibility, artifact access, data, evaluation, compute, profiling, and statistics.
 2. [Sequence modules](docs/roadmap-sequence.md): conventional GQA, bounded local attention, one recurrent or linear reference, and hybrids.
