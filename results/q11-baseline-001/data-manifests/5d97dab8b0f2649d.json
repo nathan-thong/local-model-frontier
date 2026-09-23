@@ -1,0 +1,35 @@
+{
+  "content_origin": "human",
+  "document_count": 21,
+  "is_test_fixture": false,
+  "prepared_manifest_file_sha256": "d49a425f09b087c6b5a31b041349b470b1759701e4de0f21ee9b469f6a21b5d1",
+  "prepared_manifest_semantic_match": true,
+  "preprocessing": {
+    "duplicate_identity": "Unicode NFC then collapse internal Unicode whitespace to ASCII spaces",
+    "input_format": "UTF-8 text with one document per non-empty line",
+    "line_handling": "strip leading and trailing Unicode whitespace",
+    "schema_version": 2,
+    "split_unit": "normalized document identity"
+  },
+  "preprocessing_sha256": "eae864b6fee8dadd5dc6188ea8b874db0d8127bbe37255af9a17f96ed7e117b7",
+  "run_manifest_file_sha256": "6beda7b27234299a75528f109250966dad2a757fea846b0deb50af7397591060",
+  "schema_version": 4,
+  "source": "PMC Open Access Subset, restricted abstract and main-body prose",
+  "source_metadata": {
+    "content_origin": "human",
+    "dataset": "PMC Open Access Subset, restricted abstract and main-body prose",
+    "license": "CC BY 4.0 for the restricted abstract/main-body prose scope cleared by Q10-SOURCE-007"
+  },
+  "source_metadata_sha256": "bab26a2d2028a843678d0c1d81218077e8fea78acd953b6b2fcb6443ea28e472",
+  "source_sha256": "1f237edeeb131455e90b611a9be653fb254f8241bc2c473b2b18bb8a3981b8a7",
+  "split_seed": 17,
+  "split_unit": "normalized document identity",
+  "train_document_count": 17,
+  "train_sha256": "e5aac508fb9c0cb6e78bdbed7a3453174000f0b630f4ba9d0c312d37fcea77a3",
+  "train_utf8_bytes": 481019,
+  "unique_document_count": 21,
+  "validation_document_count": 2,
+  "validation_fraction_requested": 0.05,
+  "validation_sha256": "47faec7d07370d8148e4228351ff49e0136cfe02ecdb0ffe64412fd1c61293f5",
+  "validation_utf8_bytes": 42966
+}

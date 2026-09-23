@@ -1,0 +1,27 @@
+{
+  "file_count": 5,
+  "files": {
+    "bundle.json": {
+      "bytes": 63483,
+      "sha256": "367a82ff08b8a8a3f25407f5f6ad15cd31c513dee3c231a289d91b7e4a32947e"
+    },
+    "configs/seed-123.json": {
+      "bytes": 1424,
+      "sha256": "6e64726d4cc6aa6cc47ccd84293d4df449237d31daef0734a97d6a91c1602c38"
+    },
+    "configs/seed-17.json": {
+      "bytes": 1422,
+      "sha256": "d2d9b26653df1be53850817769b122484aaafc5ad5218198187de944408811ef"
+    },
+    "configs/seed-42.json": {
+      "bytes": 1422,
+      "sha256": "0bb5cfc7168ed56fc7e0c88c6cd49205bd608eda305bee2c6b566f5955c1bd88"
+    },
+    "data-manifests/5d97dab8b0f2649d.json": {
+      "bytes": 1772,
+      "sha256": "796befc2ea0cf90cefae429e2f52dda6bd9e176c53eef933c0ba07044ca8e43e"
+    }
+  },
+  "manifest_type": "frontier-evidence-manifest-v1",
+  "schema_version": 1
+}

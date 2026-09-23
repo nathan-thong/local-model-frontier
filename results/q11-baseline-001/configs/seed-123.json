@@ -1,0 +1,64 @@
+{
+  "baseline_run": null,
+  "data_dir": "data/prepared-corpus",
+  "evaluation": {
+    "generation_max_tokens": 8,
+    "max_validation_documents": null,
+    "stride": 128,
+    "tasks_path": "data/tasks.jsonl"
+  },
+  "model": {
+    "bias": false,
+    "dropout": 0.0,
+    "ffn": "gelu",
+    "ffn_width": 512,
+    "kv_heads": 2,
+    "layers": 4,
+    "max_seq_len": 128,
+    "normalization": "rmsnorm",
+    "position": "rope",
+    "query_heads": 4,
+    "residual_topology": "pre_norm",
+    "rope_theta": 10000.0,
+    "sequence_types": [
+      "attention",
+      "attention",
+      "attention",
+      "attention"
+    ],
+    "tie_embeddings": true,
+    "vocab_size": 512,
+    "width": 128
+  },
+  "output_dir": "runs/seed-123-reproduction",
+  "profiling": {
+    "batch_size": 1,
+    "decode_tokens": 8,
+    "prompt_lengths": [
+      32,
+      64,
+      96
+    ],
+    "repeats": 3,
+    "warmup_steps": 1
+  },
+  "seed": 123,
+  "tokenizer": "byte-bpe-v1",
+  "train": {
+    "batch_size": 4,
+    "checkpoint_interval": 64,
+    "context_length": 128,
+    "deterministic": true,
+    "eval_interval": 256,
+    "grad_clip": 1.0,
+    "gradient_accumulation": 1,
+    "learning_rate": 0.0003,
+    "max_steps": null,
+    "max_tokens": 131072,
+    "min_learning_rate": 3e-05,
+    "mixed_precision": "fp32",
+    "resume": false,
+    "warmup_steps": 10,
+    "weight_decay": 0.1
+  }
+}

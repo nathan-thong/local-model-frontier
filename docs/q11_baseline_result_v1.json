@@ -1,0 +1,870 @@
+{
+  "across_seed_descriptive_statistics": {
+    "optimizer_active_time_seconds": {
+      "mean": 6.063139133373625,
+      "per_seed": {
+        "17": 6.036489200028882,
+        "42": 6.100094900029944,
+        "123": 6.052833300062048
+      },
+      "sample_sd": 0.03303148374416129
+    },
+    "task_conditional_bits_per_utf8_byte": {
+      "mean": 11.194125516180645,
+      "per_seed": {
+        "17": 11.324137658513013,
+        "42": 11.007188905032255,
+        "123": 11.251049984996664
+      },
+      "sample_sd": 0.16596513021035836
+    },
+    "task_exact_match": {
+      "mean": 0.0,
+      "per_seed": {
+        "17": 0.0,
+        "42": 0.0,
+        "123": 0.0
+      },
+      "sample_sd": 0.0
+    },
+    "tokens_per_second": {
+      "mean": 21618.271440904675,
+      "per_seed": {
+        "17": 21713.283277202398,
+        "42": 21486.878835172975,
+        "123": 21654.65221033865
+      },
+      "sample_sd": 117.50494938988588
+    },
+    "validation_bits_per_byte": {
+      "mean": 3.6976868096105866,
+      "per_seed": {
+        "17": 3.708785913883506,
+        "42": 3.6951538389665286,
+        "123": 3.6891206759817248
+      },
+      "sample_sd": 0.010074341201595128
+    },
+    "wall_time_seconds_this_invocation": {
+      "mean": 7.615400833332387,
+      "per_seed": {
+        "17": 7.582491000001028,
+        "42": 7.662253000002238,
+        "123": 7.601458499993896
+      },
+      "sample_sd": 0.04166876114356494
+    }
+  },
+  "budget": {
+    "actual_training_flops_status": "estimated from consumed tokens using decoder-module-mac-v1; not directly measured",
+    "estimated_training_flops": 2164663517184,
+    "planned_and_consumed_optimizer_updates": 768,
+    "planned_and_consumed_tokens": 393216
+  },
+  "data_and_task": {
+    "data_manifest_sha256": "d49a425f09b087c6b5a31b041349b470b1759701e4de0f21ee9b469f6a21b5d1",
+    "task_sha256": "b00cf0f6e599d3bd54600d3568e196a2628194ed7b21afebff4ea50cdd08bf6d",
+    "test_documents": 2,
+    "test_model_metrics_calculated": false,
+    "test_sha256": "bfea9d78eb6b47e90ce9af367af62cac47f978e9d84a8f5b9ef16fc0147acdaa",
+    "tokenizer_sha256": "0570f7536d985403b6574b72f98355b1f12d0441641ff5e60cb1ede0eaa6bb33",
+    "train_documents": 17,
+    "train_sha256": "e5aac508fb9c0cb6e78bdbed7a3453174000f0b630f4ba9d0c312d37fcea77a3",
+    "validation_document_utf8_bytes_scored": 42964,
+    "validation_documents": 2,
+    "validation_file_bytes_including_lf_separators": 42966,
+    "validation_sha256": "47faec7d07370d8148e4228351ff49e0136cfe02ecdb0ffe64412fd1c61293f5"
+  },
+  "environment": {
+    "cpu_count": 16,
+    "cuda_available": false,
+    "device": "cpu",
+    "git_worktree_clean_at_each_run_start": true,
+    "numpy": "2.5.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14",
+    "torch": "2.14.0+cpu"
+  },
+  "experiment_id": "Q11-BASELINE-001",
+  "failure_accounting": {
+    "completed_runs": 3,
+    "failed_runs": 0,
+    "interrupted_runs": 0,
+    "network_requests": 0,
+    "planned_runs": 3,
+    "retry_runs": 0,
+    "training_failure_events": 0
+  },
+  "interpretation": "All three fresh conventional GQA controls completed the exact preregistered budget and produced finite validation/task records. Mean validation loss was 3.69769 conditional bits per UTF-8 byte (sample SD 0.01007) over only two held-out documents. Task exact match was 0/12 across the three seeds; mean task conditional score was 11.19413 bits per UTF-8 byte (sample SD 0.16597). This is a descriptive baseline for a 21-document corpus and a four-example scorer probe, not a capability or efficiency improvement.",
+  "limitations": [
+    "Validation contains only two documents; seed variability does not characterize document-sampling uncertainty.",
+    "The toy Q11 task suite is not a broad capability benchmark; all twelve generated answers failed exact match.",
+    "CPU timing profiles use three repeats per workload and are host-specific; CUDA and energy were unavailable.",
+    "Training FLOPs are estimator-based and omit scalar work, optimizer operations, validation, task scoring and inference profiling.",
+    "Training RSS after each run is a Windows process high-water observation; isolated prefill/decode phase RSS and cache storage are measured separately in the recorded profiles.",
+    "Q10 test model metrics remain uncomputed and sealed for the final sequence-campaign evaluation."
+  ],
+  "next_experiment": "Begin sequence correctness S02: explicit per-layer cache/state contract, full/chunk/token parity, offsets and state-byte accounting. No sequence-module training until correctness stages and a fresh matched control/candidate plan pass.",
+  "portable_evidence_bundle": {
+    "bundle_sha256": "367a82ff08b8a8a3f25407f5f6ad15cd31c513dee3c231a289d91b7e4a32947e",
+    "contains_checkpoint_weights_or_corpus_text": false,
+    "contains_validation_bits_per_byte_and_cpu_profiles": true,
+    "indexed_file_count": 5,
+    "path": "results/q11-baseline-001",
+    "task_per_example_metrics_in": "this result inventory; raw evaluation sidecars remain in ignored runs/",
+    "verification_status": "verified"
+  },
+  "preregistration": {
+    "canonical_sha256": "8f017476232e71834ceeee2b88306115b380b92064f3a4c67c86e8b3b8463e73",
+    "config_sha256": {
+      "configs/q11/q11_baseline_seed_123.json": "c645e05ff23de9b8509c49f647f38313c1b6e73c311b2d68e049119f448cc9f1",
+      "configs/q11/q11_baseline_seed_17.json": "c7b8ec1795c898c642ce1931c9c6621dd73a4465ccefbb932ad13a778a8b9198",
+      "configs/q11/q11_baseline_seed_42.json": "093de397349a9e0a1a2eee89a7bb3bf721dc6ef6c5785c5d6fbcc68b7112c3e6"
+    },
+    "config_sha256_algorithm": "SHA-256 over parsed config JSON serialized with sorted keys and compact separators; insensitive to JSON whitespace and line endings.",
+    "parent_revision": "4fb40bfbef5ca2f9c4dfa2270d5e8c15aa62ac19",
+    "path": "docs/q11_baseline_prereg_v1.json",
+    "training_source_revision": "549ff8d26e12e529415efd7a8b858093965d0a48"
+  },
+  "recorded_date": "2026-09-23",
+  "runs": [
+    {
+      "artifact_checksums": {
+        "checkpoint": {
+          "bytes": 9512619,
+          "included_in_portable_bundle": false,
+          "sha256": "4917aba59bcf64d2a4d0fbd8c55cdf8ff7f5e55fe956fe723136ce435d92aab7",
+          "tracked_in_git": false
+        },
+        "data_manifest": {
+          "bytes": 23943,
+          "included_in_portable_bundle": false,
+          "sha256": "6beda7b27234299a75528f109250966dad2a757fea846b0deb50af7397591060",
+          "tracked_in_git": false
+        },
+        "evaluation": {
+          "bytes": 6323,
+          "included_in_portable_bundle": false,
+          "sha256": "ce8e271bd8af62d52febd08079383acbfb05d9d868aa12a54b8ecd42412c9873",
+          "tracked_in_git": false
+        },
+        "metrics": {
+          "bytes": 86028,
+          "included_in_portable_bundle": false,
+          "sha256": "3f57d166a62d2ad0608632d261f01ee57973be7698b7273c0617c92ae7db7042",
+          "tracked_in_git": false
+        },
+        "profile": {
+          "bytes": 12921,
+          "included_in_portable_bundle": false,
+          "sha256": "ca7ca1182093708ca37fee3ca253b2da161f1375df9636c34125c3b610244b1f",
+          "tracked_in_git": false
+        },
+        "resolved_config": {
+          "bytes": 1445,
+          "included_in_portable_bundle": false,
+          "sha256": "eaf3a750a61e67dc61fe9ba520dbae116ce0a7bcc9b423e630b2e84aa4a3280a",
+          "tracked_in_git": false
+        },
+        "summary": {
+          "bytes": 48295,
+          "included_in_portable_bundle": false,
+          "sha256": "b26dd7398c443f3f3628bb94fe174336cc6bdbe4153dd4321cb81b554e7286c3",
+          "tracked_in_git": false
+        },
+        "tokenizer": {
+          "bytes": 11519,
+          "included_in_portable_bundle": false,
+          "sha256": "953a83f5ed990e6ab39ae3d11da22460599714fc28e1d8250273608400274c00",
+          "tracked_in_git": false
+        }
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "device": "cpu",
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "git_worktree_clean": true,
+      "inference_profile": {
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "model_tensor_bytes": 3150592,
+        "parameter_count": 787584,
+        "profile_schema_version": 4,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 81920,
+            "actual_kv_bytes_after_decode": 81920,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207732736,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214278144,
+              "peak_rss_increase_bytes": 6545408,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.0157480999987456,
+            "decode_sample_sd_seconds": 0.0001185418235238934,
+            "decode_seconds_per_token": 0.0019685124998432,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 507.9977902500766,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207613952,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 215003136,
+              "peak_rss_increase_bytes": 7389184,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.00211719999788329,
+            "prefill_sample_sd_seconds": 9.21552181527513e-05,
+            "prompt_tokens": 32,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          },
+          {
+            "active_state_bytes_after_decode": 147456,
+            "actual_kv_bytes_after_decode": 147456,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207417344,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214482944,
+              "peak_rss_increase_bytes": 7065600,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.01592279999749735,
+            "decode_sample_sd_seconds": 0.00014094517913278097,
+            "decode_seconds_per_token": 0.0019903499996871687,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 502.42419682828347,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207519744,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 215498752,
+              "peak_rss_increase_bytes": 7979008,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.003031100000953302,
+            "prefill_sample_sd_seconds": 5.071590486070351e-05,
+            "prompt_tokens": 64,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          },
+          {
+            "active_state_bytes_after_decode": 212992,
+            "actual_kv_bytes_after_decode": 212992,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207069184,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214265856,
+              "peak_rss_increase_bytes": 7196672,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.015861400002904702,
+            "decode_sample_sd_seconds": 2.523595088722736e-05,
+            "decode_seconds_per_token": 0.0019826750003630877,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 504.3690972130429,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207577088,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 216379392,
+              "peak_rss_increase_bytes": 8802304,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.0033022999996319413,
+            "prefill_sample_sd_seconds": 0.0003548192389779159,
+            "prompt_tokens": 96,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          }
+        ]
+      },
+      "run_directory": "runs/q11-baseline-001/seed-17",
+      "run_id": "seed-17",
+      "seed": 17,
+      "source_revision": "549ff8d26e12e529415efd7a8b858093965d0a48",
+      "status": "completed",
+      "tasks": {
+        "conditional_bits_per_utf8_byte": 11.324137658513013,
+        "exact_match": 0.0,
+        "example_count": 4,
+        "per_example": [
+          {
+            "conditional_bits_per_utf8_byte": 10.543218007807988,
+            "conditional_nll_sum": 21.92400550842285,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 3,
+            "exact_match": false,
+            "example_id": "q11-v1-lookup-amber-01",
+            "prediction": "01 se the se"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 9.085715031369537,
+            "conditional_nll_sum": 18.893213272094727,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 3,
+            "exact_match": false,
+            "example_id": "q11-v1-order-px4-02",
+            "prediction": "01 se the to"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 11.563336541053756,
+            "conditional_nll_sum": 24.0452823638916,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 4,
+            "exact_match": false,
+            "example_id": "q11-v1-index-lm22-03",
+            "prediction": "01 1 1 1"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 19.6645678444363,
+            "conditional_nll_sum": 13.630439758300781,
+            "conditional_scored_bytes": 1,
+            "conditional_scored_tokens": 2,
+            "exact_match": false,
+            "example_id": "q11-v1-record-ab31-04",
+            "prediction": "1 1 1 1"
+          }
+        ]
+      },
+      "training": {
+        "compute_estimator": "decoder-module-mac-v1",
+        "estimated_flops": 721554505728,
+        "failure_events": 0,
+        "optimizer_active_time_seconds": 6.036489200028882,
+        "optimizer_updates": 256,
+        "process_memory_after_training": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 344621056,
+          "private_bytes": 828395520,
+          "rss_bytes": 344608768
+        },
+        "tokens_per_second": 21713.283277202398,
+        "tokens_seen": 131072,
+        "wall_time_seconds_this_invocation": 7.582491000001028
+      },
+      "validation": {
+        "bits_per_byte": 3.708785913883506,
+        "per_document": [
+          {
+            "bits_per_byte": 3.794529774296524,
+            "content_nll_sum": 52342.96569824219,
+            "document_index": 0,
+            "nll_sum": 52352.09408569336,
+            "scored_tokens": 10678,
+            "scored_utf8_bytes": 19901,
+            "status": "scored"
+          },
+          {
+            "bits_per_byte": 3.634797769839823,
+            "content_nll_sum": 58106.071338653564,
+            "document_index": 1,
+            "nll_sum": 58115.23575210571,
+            "scored_tokens": 11909,
+            "scored_utf8_bytes": 23063,
+            "status": "scored"
+          }
+        ],
+        "scored_tokens": 22587,
+        "scored_utf8_bytes": 42964
+      }
+    },
+    {
+      "artifact_checksums": {
+        "checkpoint": {
+          "bytes": 9512555,
+          "included_in_portable_bundle": false,
+          "sha256": "db26af1c0b50e01a6762d44247fc478ce6bff375b88764a7d88bf1501b891071",
+          "tracked_in_git": false
+        },
+        "data_manifest": {
+          "bytes": 23943,
+          "included_in_portable_bundle": false,
+          "sha256": "6beda7b27234299a75528f109250966dad2a757fea846b0deb50af7397591060",
+          "tracked_in_git": false
+        },
+        "evaluation": {
+          "bytes": 6323,
+          "included_in_portable_bundle": false,
+          "sha256": "79765132a6620082b379dd1a35a019b5befe4ab0b7879e2f8b35625d37ce1f63",
+          "tracked_in_git": false
+        },
+        "metrics": {
+          "bytes": 86046,
+          "included_in_portable_bundle": false,
+          "sha256": "c5c1b0164a0c655b09558f844cb6703375b8d6b6d74ec9e89474b3d91f17926b",
+          "tracked_in_git": false
+        },
+        "profile": {
+          "bytes": 12936,
+          "included_in_portable_bundle": false,
+          "sha256": "d5c3070bbcb9ce90644c3f45215647854999fb62f584ece24d588a50c6281dd2",
+          "tracked_in_git": false
+        },
+        "resolved_config": {
+          "bytes": 1445,
+          "included_in_portable_bundle": false,
+          "sha256": "f1d5e40573ffcf6565fdf3281b29dff3ff4c52bfb1acabded0351a9cf937ab40",
+          "tracked_in_git": false
+        },
+        "summary": {
+          "bytes": 48310,
+          "included_in_portable_bundle": false,
+          "sha256": "cbfc8f993df1998ede7309d8d4472d9c18a4f1e86a2899b8a07740354515e6fd",
+          "tracked_in_git": false
+        },
+        "tokenizer": {
+          "bytes": 11519,
+          "included_in_portable_bundle": false,
+          "sha256": "953a83f5ed990e6ab39ae3d11da22460599714fc28e1d8250273608400274c00",
+          "tracked_in_git": false
+        }
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "device": "cpu",
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "git_worktree_clean": true,
+      "inference_profile": {
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "model_tensor_bytes": 3150592,
+        "parameter_count": 787584,
+        "profile_schema_version": 4,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 81920,
+            "actual_kv_bytes_after_decode": 81920,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207138816,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 213721088,
+              "peak_rss_increase_bytes": 6582272,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.01563929999974789,
+            "decode_sample_sd_seconds": 6.330647992028364e-05,
+            "decode_seconds_per_token": 0.0019549124999684864,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 511.5318460627369,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207216640,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214650880,
+              "peak_rss_increase_bytes": 7434240,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.002130000000761356,
+            "prefill_sample_sd_seconds": 2.7366588954628246e-05,
+            "prompt_tokens": 32,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          },
+          {
+            "active_state_bytes_after_decode": 147456,
+            "actual_kv_bytes_after_decode": 147456,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207773696,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214839296,
+              "peak_rss_increase_bytes": 7065600,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.015703800003393553,
+            "decode_sample_sd_seconds": 1.6804860267890327e-05,
+            "decode_seconds_per_token": 0.001962975000424194,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 509.43083828571554,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207347712,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 215285760,
+              "peak_rss_increase_bytes": 7938048,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.002888900002290029,
+            "prefill_sample_sd_seconds": 0.00014759276181259957,
+            "prompt_tokens": 64,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          },
+          {
+            "active_state_bytes_after_decode": 212992,
+            "actual_kv_bytes_after_decode": 212992,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207601664,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214745088,
+              "peak_rss_increase_bytes": 7143424,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.01578480000171112,
+            "decode_sample_sd_seconds": 1.0156939708105015e-05,
+            "decode_seconds_per_token": 0.00197310000021389,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 506.8166843503102,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207413248,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 216031232,
+              "peak_rss_increase_bytes": 8617984,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.0032976999937091023,
+            "prefill_sample_sd_seconds": 0.00020032634427648587,
+            "prompt_tokens": 96,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          }
+        ]
+      },
+      "run_directory": "runs/q11-baseline-001/seed-42",
+      "run_id": "seed-42",
+      "seed": 42,
+      "source_revision": "549ff8d26e12e529415efd7a8b858093965d0a48",
+      "status": "completed",
+      "tasks": {
+        "conditional_bits_per_utf8_byte": 11.007188905032255,
+        "exact_match": 0.0,
+        "example_count": 4,
+        "per_example": [
+          {
+            "conditional_bits_per_utf8_byte": 10.407740623727522,
+            "conditional_nll_sum": 21.642288208007812,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 3,
+            "exact_match": false,
+            "example_id": "q11-v1-lookup-amber-01",
+            "prediction": "1 1 1 1"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 9.00123440154331,
+            "conditional_nll_sum": 18.717540740966797,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 3,
+            "exact_match": false,
+            "example_id": "q11-v1-order-px4-02",
+            "prediction": "1 1 1 1"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 11.48682489933791,
+            "conditional_nll_sum": 23.886180877685547,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 4,
+            "exact_match": false,
+            "example_id": "q11-v1-index-lm22-03",
+            "prediction": "1 1 1 1"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 17.38448927649632,
+            "conditional_nll_sum": 12.050009727478027,
+            "conditional_scored_bytes": 1,
+            "conditional_scored_tokens": 2,
+            "exact_match": false,
+            "example_id": "q11-v1-record-ab31-04",
+            "prediction": "1 1 1 1"
+          }
+        ]
+      },
+      "training": {
+        "compute_estimator": "decoder-module-mac-v1",
+        "estimated_flops": 721554505728,
+        "failure_events": 0,
+        "optimizer_active_time_seconds": 6.100094900029944,
+        "optimizer_updates": 256,
+        "process_memory_after_training": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 345194496,
+          "private_bytes": 828870656,
+          "rss_bytes": 345194496
+        },
+        "tokens_per_second": 21486.878835172975,
+        "tokens_seen": 131072,
+        "wall_time_seconds_this_invocation": 7.662253000002238
+      },
+      "validation": {
+        "bits_per_byte": 3.6951538389665286,
+        "per_document": [
+          {
+            "bits_per_byte": 3.781490139272861,
+            "content_nll_sum": 52163.0927734375,
+            "document_index": 0,
+            "nll_sum": 52171.435943603516,
+            "scored_tokens": 10678,
+            "scored_utf8_bytes": 19901,
+            "status": "scored"
+          },
+          {
+            "bits_per_byte": 3.6206544801495353,
+            "content_nll_sum": 57879.975954055786,
+            "document_index": 1,
+            "nll_sum": 57888.29559135437,
+            "scored_tokens": 11909,
+            "scored_utf8_bytes": 23063,
+            "status": "scored"
+          }
+        ],
+        "scored_tokens": 22587,
+        "scored_utf8_bytes": 42964
+      }
+    },
+    {
+      "artifact_checksums": {
+        "checkpoint": {
+          "bytes": 9512619,
+          "included_in_portable_bundle": false,
+          "sha256": "08ea91031395dc069f9bafa60f607b8de485a016b443ae8727d6389836a340aa",
+          "tracked_in_git": false
+        },
+        "data_manifest": {
+          "bytes": 23943,
+          "included_in_portable_bundle": false,
+          "sha256": "6beda7b27234299a75528f109250966dad2a757fea846b0deb50af7397591060",
+          "tracked_in_git": false
+        },
+        "evaluation": {
+          "bytes": 6328,
+          "included_in_portable_bundle": false,
+          "sha256": "368a5d83ae6b499291388670d7a039f4604511b1ddaf05c6a243894772d93cd1",
+          "tracked_in_git": false
+        },
+        "metrics": {
+          "bytes": 86016,
+          "included_in_portable_bundle": false,
+          "sha256": "11d892b5dd584030091adafe1757c8b4702d42801da4e2fc6f3af7cd345f70a1",
+          "tracked_in_git": false
+        },
+        "profile": {
+          "bytes": 12937,
+          "included_in_portable_bundle": false,
+          "sha256": "e4422dcd9f31223b81b1d5e1f88f59006db467b67db5e381b49f2c9b558ac3b8",
+          "tracked_in_git": false
+        },
+        "resolved_config": {
+          "bytes": 1447,
+          "included_in_portable_bundle": false,
+          "sha256": "d475975e6e8f69382238c411a95d9b58078cc4df14e486caa618935544ea9f5f",
+          "tracked_in_git": false
+        },
+        "summary": {
+          "bytes": 48318,
+          "included_in_portable_bundle": false,
+          "sha256": "d4c7de5ce40b441b1cdfa32430ef91034e9069c525eaa72cbe5b9c75db6b1aee",
+          "tracked_in_git": false
+        },
+        "tokenizer": {
+          "bytes": 11519,
+          "included_in_portable_bundle": false,
+          "sha256": "953a83f5ed990e6ab39ae3d11da22460599714fc28e1d8250273608400274c00",
+          "tracked_in_git": false
+        }
+      },
+      "environment": {
+        "cpu_count": 16,
+        "cuda_available": false,
+        "device": "cpu",
+        "numpy": "2.5.3",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14",
+        "torch": "2.14.0+cpu"
+      },
+      "git_worktree_clean": true,
+      "inference_profile": {
+        "device": "cpu",
+        "energy_measurement_status": "unavailable; no supported energy sensor configured",
+        "energy_per_token_joules": null,
+        "model_tensor_bytes": 3150592,
+        "parameter_count": 787584,
+        "profile_schema_version": 4,
+        "workloads": [
+          {
+            "active_state_bytes_after_decode": 81920,
+            "actual_kv_bytes_after_decode": 81920,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207818752,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214347776,
+              "peak_rss_increase_bytes": 6529024,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.015841799999179784,
+            "decode_sample_sd_seconds": 0.0011413005035581642,
+            "decode_seconds_per_token": 0.001980224999897473,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 504.99311949489345,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207106048,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214433792,
+              "peak_rss_increase_bytes": 7327744,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.0022148999996716157,
+            "prefill_sample_sd_seconds": 4.799763875450934e-05,
+            "prompt_tokens": 32,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          },
+          {
+            "active_state_bytes_after_decode": 147456,
+            "actual_kv_bytes_after_decode": 147456,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207802368,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214630400,
+              "peak_rss_increase_bytes": 6828032,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.015911800001049414,
+            "decode_sample_sd_seconds": 0.00019442223096215072,
+            "decode_seconds_per_token": 0.001988975000131177,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 502.7715280152079,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207548416,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 215519232,
+              "peak_rss_increase_bytes": 7970816,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.0028946000020368956,
+            "prefill_sample_sd_seconds": 1.342683612140081e-05,
+            "prompt_tokens": 64,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          },
+          {
+            "active_state_bytes_after_decode": 212992,
+            "actual_kv_bytes_after_decode": 212992,
+            "batch_size": 1,
+            "decode_cpu_memory": {
+              "baseline_rss_bytes": 207466496,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 214786048,
+              "peak_rss_increase_bytes": 7319552,
+              "status": "measured"
+            },
+            "decode_median_seconds": 0.012890799996966962,
+            "decode_sample_sd_seconds": 0.001834649853923146,
+            "decode_seconds_per_token": 0.0016113499996208702,
+            "decode_tokens": 8,
+            "decode_tokens_per_second": 620.5976356690272,
+            "prefill_cpu_memory": {
+              "baseline_rss_bytes": 207581184,
+              "method": "Win32 GetProcessMemoryInfo",
+              "peak_rss_bytes": 216260608,
+              "peak_rss_increase_bytes": 8679424,
+              "status": "measured"
+            },
+            "prefill_median_seconds": 0.003272000001743436,
+            "prefill_sample_sd_seconds": 0.000410507201887152,
+            "prompt_tokens": 96,
+            "state_memory_accounting_status": "exact union of module-declared active contiguous tensor regions"
+          }
+        ]
+      },
+      "run_directory": "runs/q11-baseline-001/seed-123",
+      "run_id": "seed-123",
+      "seed": 123,
+      "source_revision": "549ff8d26e12e529415efd7a8b858093965d0a48",
+      "status": "completed",
+      "tasks": {
+        "conditional_bits_per_utf8_byte": 11.251049984996664,
+        "exact_match": 0.0,
+        "example_count": 4,
+        "per_example": [
+          {
+            "conditional_bits_per_utf8_byte": 10.7454989569284,
+            "conditional_nll_sum": 22.344636917114258,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 3,
+            "exact_match": false,
+            "example_id": "q11-v1-lookup-amber-01",
+            "prediction": "the p 1 1"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 8.967377208963855,
+            "conditional_nll_sum": 18.647136688232422,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 3,
+            "exact_match": false,
+            "example_id": "q11-v1-order-px4-02",
+            "prediction": "the p the p the"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 11.843945268683123,
+            "conditional_nll_sum": 24.62879180908203,
+            "conditional_scored_bytes": 3,
+            "conditional_scored_tokens": 4,
+            "exact_match": false,
+            "example_id": "q11-v1-index-lm22-03",
+            "prediction": "1 1 1 1"
+          },
+          {
+            "conditional_bits_per_utf8_byte": 17.84003554624052,
+            "conditional_nll_sum": 12.36577033996582,
+            "conditional_scored_bytes": 1,
+            "conditional_scored_tokens": 2,
+            "exact_match": false,
+            "example_id": "q11-v1-record-ab31-04",
+            "prediction": "1 1 1 1"
+          }
+        ]
+      },
+      "training": {
+        "compute_estimator": "decoder-module-mac-v1",
+        "estimated_flops": 721554505728,
+        "failure_events": 0,
+        "optimizer_active_time_seconds": 6.052833300062048,
+        "optimizer_updates": 256,
+        "process_memory_after_training": {
+          "method": "Win32 GetProcessMemoryInfo",
+          "peak_rss_bytes": 344662016,
+          "private_bytes": 828289024,
+          "rss_bytes": 344645632
+        },
+        "tokens_per_second": 21654.65221033865,
+        "tokens_seen": 131072,
+        "wall_time_seconds_this_invocation": 7.601458499993896
+      },
+      "validation": {
+        "bits_per_byte": 3.6891206759817248,
+        "per_document": [
+          {
+            "bits_per_byte": 3.772896250087625,
+            "content_nll_sum": 52044.5458984375,
+            "document_index": 0,
+            "nll_sum": 52053.921142578125,
+            "scored_tokens": 10678,
+            "scored_utf8_bytes": 19901,
+            "status": "scored"
+          },
+          {
+            "bits_per_byte": 3.61683096084139,
+            "content_nll_sum": 57818.85297012329,
+            "document_index": 1,
+            "nll_sum": 57828.26263809204,
+            "scored_tokens": 11909,
+            "scored_utf8_bytes": 23063,
+            "status": "scored"
+          }
+        ],
+        "scored_tokens": 22587,
+        "scored_utf8_bytes": 42964
+      }
+    }
+  ],
+  "schema_version": 1,
+  "source_revision": "549ff8d26e12e529415efd7a8b858093965d0a48",
+  "status": "completed_all_three_seeds"
+}
