@@ -1,0 +1,52 @@
+{
+  "seed": 17,
+  "output_dir": "runs/baseline-a-seed17",
+  "data_dir": "data/tinystories",
+  "model": {
+    "vocab_size": 259,
+    "max_seq_len": 256,
+    "width": 128,
+    "layers": 4,
+    "query_heads": 4,
+    "kv_heads": 4,
+    "ffn_width": 512,
+    "normalization": "rmsnorm",
+    "ffn": "gelu",
+    "position": "rope",
+    "residual_topology": "pre_norm",
+    "sequence_types": [],
+    "dropout": 0.0,
+    "bias": false,
+    "tie_embeddings": true,
+    "rope_theta": 10000.0
+  },
+  "train": {
+    "batch_size": 8,
+    "context_length": 256,
+    "max_steps": null,
+    "max_tokens": 2097152,
+    "learning_rate": 0.0003,
+    "min_learning_rate": 0.00003,
+    "warmup_steps": 100,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "gradient_accumulation": 1,
+    "eval_interval": 100,
+    "checkpoint_interval": 100,
+    "mixed_precision": "auto",
+    "deterministic": true
+  },
+  "evaluation": {
+    "stride": 128,
+    "max_validation_documents": null,
+    "tasks_path": null,
+    "generation_max_tokens": 64
+  },
+  "profiling": {
+    "batch_size": 1,
+    "prompt_lengths": [32, 128, 224],
+    "decode_tokens": 32,
+    "warmup_steps": 2,
+    "repeats": 5
+  }
+}

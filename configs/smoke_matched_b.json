@@ -1,0 +1,52 @@
+{
+  "seed": 17,
+  "output_dir": "runs/m1-smoke-b",
+  "data_dir": null,
+  "model": {
+    "vocab_size": 259,
+    "max_seq_len": 16,
+    "width": 16,
+    "layers": 2,
+    "query_heads": 4,
+    "kv_heads": 2,
+    "ffn_width": 32,
+    "normalization": "rmsnorm",
+    "ffn": "gelu",
+    "position": "rope",
+    "residual_topology": "pre_norm",
+    "sequence_types": [],
+    "dropout": 0.0,
+    "bias": false,
+    "tie_embeddings": true,
+    "rope_theta": 10000.0
+  },
+  "train": {
+    "batch_size": 1,
+    "context_length": 16,
+    "max_steps": 88,
+    "max_tokens": null,
+    "learning_rate": 0.001,
+    "min_learning_rate": 0.0001,
+    "warmup_steps": 0,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "gradient_accumulation": 1,
+    "eval_interval": 22,
+    "checkpoint_interval": 22,
+    "mixed_precision": "fp32",
+    "deterministic": true
+  },
+  "evaluation": {
+    "stride": 8,
+    "max_validation_documents": 4,
+    "tasks_path": null,
+    "generation_max_tokens": 4
+  },
+  "profiling": {
+    "batch_size": 1,
+    "prompt_lengths": [4, 8],
+    "decode_tokens": 4,
+    "warmup_steps": 1,
+    "repeats": 3
+  }
+}
