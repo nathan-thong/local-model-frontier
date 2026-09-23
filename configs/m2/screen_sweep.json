@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "name": "m2-gqa-001-screen",
+  "baseline": {
+    "id": "mha",
+    "config": "tinystories_v3_mha_screen.json"
+  },
+  "candidates": [
+    {
+      "id": "gqa",
+      "config": "tinystories_v3_gqa_screen.json"
+    }
+  ],
+  "seeds": [
+    17
+  ],
+  "output_root": "../../runs/m2-gqa-001-screen",
+  "total_compute_cap_flops": 1500000000000
+}

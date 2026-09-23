@@ -1,0 +1,56 @@
+{
+  "seed": 17,
+  "output_dir": "runs/m2-gqa-001-smoke/mha-seed17",
+  "data_dir": "data/tinystories-v3",
+  "model": {
+    "vocab_size": 259,
+    "max_seq_len": 256,
+    "width": 128,
+    "layers": 4,
+    "query_heads": 4,
+    "kv_heads": 4,
+    "ffn_width": 512,
+    "normalization": "rmsnorm",
+    "ffn": "gelu",
+    "position": "rope",
+    "residual_topology": "pre_norm",
+    "sequence_types": [],
+    "dropout": 0.0,
+    "bias": false,
+    "tie_embeddings": true,
+    "rope_theta": 10000.0
+  },
+  "train": {
+    "batch_size": 8,
+    "context_length": 256,
+    "max_steps": 32,
+    "max_tokens": null,
+    "learning_rate": 0.0003,
+    "min_learning_rate": 3e-05,
+    "warmup_steps": 5,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "gradient_accumulation": 1,
+    "eval_interval": 32,
+    "checkpoint_interval": 8,
+    "mixed_precision": "auto",
+    "deterministic": true
+  },
+  "evaluation": {
+    "stride": 128,
+    "max_validation_documents": null,
+    "tasks_path": null,
+    "generation_max_tokens": 64
+  },
+  "profiling": {
+    "batch_size": 1,
+    "prompt_lengths": [
+      32,
+      128,
+      224
+    ],
+    "decode_tokens": 32,
+    "warmup_steps": 2,
+    "repeats": 5
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "name": "m2-gqa-001-smoke",
+  "baseline": {
+    "id": "mha",
+    "config": "tinystories_v3_mha_smoke.json"
+  },
+  "candidates": [
+    {
+      "id": "gqa",
+      "config": "tinystories_v3_gqa_smoke.json"
+    }
+  ],
+  "seeds": [
+    17
+  ],
+  "output_root": "../../runs/m2-gqa-001-smoke",
+  "total_compute_cap_flops": 1000000000000
+}
