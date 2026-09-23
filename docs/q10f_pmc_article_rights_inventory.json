@@ -1,0 +1,970 @@
+{
+  "schema_version": 1,
+  "experiment_id": "Q10-SOURCE-005",
+  "status": "preregistered_before_xml_request",
+  "as_of_date": "2026-09-23",
+  "preregistered_revision": "dd6863cf1a6c7def5854c90d816dc0aa3c728bb5",
+  "source_gate_experiment_id": "Q10-SOURCE-004",
+  "source_gate_revision": "dd6863cf1a6c7def5854c90d816dc0aa3c728bb5",
+  "source_gate_inventory_path": "docs/q10e_pmc_corrected_candidate_inventory.json",
+  "source_gate_inventory_sha256": "d3d1b7affa704f26773c8b7c88aefe8e0c151ef9dede6a510e831473cdf00a84",
+  "source_gate_candidate_selection_sha256": "8489310e65e4b0c65ffc1f59afdc93dd5ac841ddbe306294a5d8205c9a843adb",
+  "eligible_xml_request_count": 21,
+  "expected_eligible_xml_bytes": 3153456,
+  "eligible_xml_manifest_sha256": "4a2512aeafcc0d031464953041f0451ec8e1e1d65fec60354ff01755d2517a2a",
+  "source_metadata_only": true,
+  "article_xml_requested": false,
+  "figures_or_supplements_requested": false,
+  "training_tokens": 0,
+  "training_updates": 0,
+  "training_flops": 0,
+  "source_service_review": {
+    "reviewed_at_utc": "2026-09-23T11:00:48Z",
+    "pmc_article_datasets_page": "https://pmc.ncbi.nlm.nih.gov/tools/pmcaws/",
+    "current_pmc_cloud_readme": "https://pmc-oa-opendata.s3.amazonaws.com/README.txt",
+    "pmc_oai_pmh_api": "https://pmc.ncbi.nlm.nih.gov/tools/oai/",
+    "cc_by_4_0_legal_code": "https://creativecommons.org/licenses/by/4.0/legalcode",
+    "verified_service": "PMC Article Datasets Cloud service via HTTPS/S3",
+    "migration_note": "PMC announced legacy distribution removal in August 2026; current Cloud page/README still document per-version PMC<PMCID>.<version>/PMC<PMCID>.<version>.xml objects and individual HTTPS/S3 retrieval. The retired OA Web Service is not used.",
+    "source_terms": "The Cloud README requires clear NLM attribution and prohibits implying NLM/NIH/HHS endorsement. PMC states article license terms vary and the exact article license governs."
+  },
+  "retrieval_protocol": {
+    "method": "Serial HTTPS GET for only the 21 frozen xml_https_url values",
+    "max_concurrency": 1,
+    "minimum_inter_request_delay_ms": 500,
+    "download_only_xml": true,
+    "do_not_request": [
+      "TXT objects",
+      "PDF objects",
+      "figures",
+      "supplements",
+      "media",
+      "other versions"
+    ],
+    "verify_each_object": [
+      "HTTP success",
+      "downloaded byte length equals frozen xml_size_bytes",
+      "computed MD5 equals frozen xml_md5 and xml_s3_etag",
+      "compute and record SHA-256 after MD5 passes"
+    ],
+    "on_mismatch": "Record failure, stop content parsing for that object, do not substitute another version, and preserve the candidate failure.",
+    "local_storage": "data/q10-source-005/raw/ (ignored by Git); never commit article XML or extracted corpus text."
+  },
+  "article_level_rights_protocol": {
+    "xml_license": "Parse the exact version XML JATS permissions/license element. Require an explicit href equal to https://creativecommons.org/licenses/by/4.0/ and an article statement consistent with CC BY 4.0; fail on missing, conflicting, or unclear article-level rights.",
+    "identity": "Cross-check the XML PMCID and article title/DOI against the frozen candidate metadata.",
+    "third_party": "Exclude all figure/table/media/supplement/caption content from text extraction. Review permissions, license notes and body notices for separately licensed or untraceable third-party text; exclude the entire candidate if a body-text rights exception cannot be isolated.",
+    "attribution": "Preserve author list, title, journal citation, DOI, PMCID/version, exact license URL, source URL, source hashes and access date. Include the required NLM source acknowledgement in the local source manifest; do not imply NLM endorsement.",
+    "minimum_documents": "At least 20 complete, article-level rights-cleared documents must remain before deterministic preparation; otherwise stop with no substitutions.",
+    "training_text": "If rights pass, prepare only abstract and main-body prose; omit back matter, references, acknowledgements, permissions, all figure/table/caption/supplement/media content, and non-prose markup."
+  },
+  "eligible_article_records": [
+    {
+      "stratum_name": "neurosciences",
+      "mesh_descriptor_ui": "D009488",
+      "pmcid": "PMC5798820",
+      "numeric_pmcid": 5798820,
+      "cloud_version": 1,
+      "xml_object_key": "PMC5798820.1/PMC5798820.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC5798820.1/PMC5798820.1.xml",
+      "xml_size_bytes": 142172,
+      "xml_md5": "d2f182777e5698823170b11fd4477e47",
+      "xml_s3_etag": "d2f182777e5698823170b11fd4477e47",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© 2018 Im et al This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+        "http://creativecommons.org/licenses/by/4.0/",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2018-02-05"
+      ],
+      "resolved_publication_years": [
+        2018
+      ],
+      "cloud_title": "Taking an educational psychology course improves neuroscience literacy but does not reduce belief in neuromyths",
+      "cloud_citation": "PLoS One. 2018 Feb 5;13(2):e0192163. doi: 10.1371/journal.pone.0192163",
+      "doi": "10.1371/journal.pone.0192163",
+      "authors": [
+        "Im, Soo-hyun",
+        "Cho, Joo-Yun",
+        "Dubinsky, Janet M.",
+        "Varma, Sashank"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "neurosciences",
+      "mesh_descriptor_ui": "D009488",
+      "pmcid": "PMC5802623",
+      "numeric_pmcid": 5802623,
+      "cloud_version": 1,
+      "xml_object_key": "PMC5802623.1/PMC5802623.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC5802623.1/PMC5802623.1.xml",
+      "xml_size_bytes": 141731,
+      "xml_md5": "73bfa8dfdb53425992683c7baa7bf8af",
+      "xml_s3_etag": "73bfa8dfdb53425992683c7baa7bf8af",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s) 2018 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/",
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2018-01-31"
+      ],
+      "resolved_publication_years": [
+        2018
+      ],
+      "cloud_title": "Dopamine, psychosis and schizophrenia: the widening gap between basic and clinical neuroscience",
+      "cloud_citation": "Transl Psychiatry. 2018 Jan 31;8:30. doi: 10.1038/s41398-017-0071-9",
+      "doi": "10.1038/s41398-017-0071-9",
+      "authors": [
+        "Kesby, JP",
+        "Eyles, DW",
+        "McGrath, JJ",
+        "Scott, JG"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "neurosciences",
+      "mesh_descriptor_ui": "D009488",
+      "pmcid": "PMC5809949",
+      "numeric_pmcid": 5809949,
+      "cloud_version": 1,
+      "xml_object_key": "PMC5809949.1/PMC5809949.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC5809949.1/PMC5809949.1.xml",
+      "xml_size_bytes": 82198,
+      "xml_md5": "c4230c308594fb2043a76e41a713bf4b",
+      "xml_s3_etag": "c4230c308594fb2043a76e41a713bf4b",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s). 2018 Open AccessThis article is distributed under the terms of the Creative Commons Attribution 4.0 International License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and reproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The Creative Commons Public Domain Dedication waiver (http://creativecommons.org/publicdomain/zero/1.0/) applies to the data made available in this article, unless otherwise stated.",
+        "https://creativecommons.org/licenses/by/4.0/",
+        "http://creativecommons.org/licenses/by/4.0/",
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "oai_dc_date": [
+        "2018-02-12"
+      ],
+      "resolved_publication_years": [
+        2018
+      ],
+      "cloud_title": "Evaluation of a multicomponent pathway to address inpatient delirium on a neurosciences ward",
+      "cloud_citation": "BMC Health Serv Res. 2018 Feb 12;18:106. doi: 10.1186/s12913-018-2906-3",
+      "doi": "10.1186/s12913-018-2906-3",
+      "authors": [
+        "Brown, Ethan G.",
+        "Josephson, S. Andrew",
+        "Anderson, Noriko",
+        "Reid, Mary",
+        "Lee, Melissa",
+        "Douglas, Vanja C."
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "neurosciences",
+      "mesh_descriptor_ui": "D009488",
+      "pmcid": "PMC5813180",
+      "numeric_pmcid": 5813180,
+      "cloud_version": 1,
+      "xml_object_key": "PMC5813180.1/PMC5813180.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC5813180.1/PMC5813180.1.xml",
+      "xml_size_bytes": 75483,
+      "xml_md5": "b88b33828d9fe308b6960ecb213b03cd",
+      "xml_s3_etag": "b88b33828d9fe308b6960ecb213b03cd",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s) 2018 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/",
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2018-02-14"
+      ],
+      "resolved_publication_years": [
+        2018
+      ],
+      "cloud_title": "The Caveats of observing Inter-Trial Phase-Coherence in Cognitive Neuroscience",
+      "cloud_citation": "Sci Rep. 2018 Feb 14;8:2990. doi: 10.1038/s41598-018-20423-z",
+      "doi": "10.1038/s41598-018-20423-z",
+      "authors": [
+        "van Diepen, Rosanne Maria",
+        "Mazaheri, Ali"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "neurosciences",
+      "mesh_descriptor_ui": "D009488",
+      "pmcid": "PMC5825014",
+      "numeric_pmcid": 5825014,
+      "cloud_version": 1,
+      "xml_object_key": "PMC5825014.1/PMC5825014.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC5825014.1/PMC5825014.1.xml",
+      "xml_size_bytes": 205221,
+      "xml_md5": "dd4e5c19f235121dba3d5b42e3a19063",
+      "xml_s3_etag": "dd4e5c19f235121dba3d5b42e3a19063",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s) 2018 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/",
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2018-02-23"
+      ],
+      "resolved_publication_years": [
+        2018
+      ],
+      "cloud_title": "Quantitative 3-D morphometric analysis of individual dendritic spines",
+      "cloud_citation": "Sci Rep. 2018 Feb 23;8:3545. doi: 10.1038/s41598-018-21753-8",
+      "doi": "10.1038/s41598-018-21753-8",
+      "authors": [
+        "Basu, Subhadip",
+        "Saha, Punam Kumar",
+        "Roszkowska, Matylda",
+        "Magnowska, Marta",
+        "Baczynska, Ewa",
+        "Das, Nirmal",
+        "Plewczynski, Dariusz",
+        "Wlodarczyk, Jakub"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "pmcid": "PMC11261691",
+      "numeric_pmcid": 11261691,
+      "cloud_version": 1,
+      "xml_object_key": "PMC11261691.1/PMC11261691.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11261691.1/PMC11261691.1.xml",
+      "xml_size_bytes": 113783,
+      "xml_md5": "272d0804267c4797a69c85db4320bc50",
+      "xml_s3_etag": "272d0804267c4797a69c85db4320bc50",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2024 The Authors This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2024-06-18"
+      ],
+      "resolved_publication_years": [
+        2024
+      ],
+      "cloud_title": "Nocardioides agri sp. nov., isolated from garden soil",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jun 18;74(6):006407. doi: 10.1099/ijsem.0.006407",
+      "doi": "10.1099/ijsem.0.006407",
+      "authors": [
+        "Huq, Md. Amdadul",
+        "NAM, Kihong",
+        "Rahman, Md. Shahedur",
+        "Rahman, M. Mizanur",
+        "Parvez, Md. Anowar Khasru",
+        "Kang, Kwon-Kyoo",
+        "Akter, Shahina"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "pmcid": "PMC11261710",
+      "numeric_pmcid": 11261710,
+      "cloud_version": 1,
+      "xml_object_key": "PMC11261710.1/PMC11261710.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11261710.1/PMC11261710.1.xml",
+      "xml_size_bytes": 59371,
+      "xml_md5": "facd5ab679864d0de90895fc0f2882bd",
+      "xml_s3_etag": "facd5ab679864d0de90895fc0f2882bd",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2024 Institute of Microbiology, Chinese Academy of Sciences This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2024-06-19"
+      ],
+      "resolved_publication_years": [
+        2024
+      ],
+      "cloud_title": "Pengzhenrongella frigida sp. nov., isolated from a glacier",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jun 19;74(6):006433. doi: 10.1099/ijsem.0.006433",
+      "doi": "10.1099/ijsem.0.006433",
+      "authors": [
+        "Liu, Qing",
+        "Yang, Lei-Lei",
+        "Xin, Yu-Hua"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "pmcid": "PMC11281480",
+      "numeric_pmcid": 11281480,
+      "cloud_version": 1,
+      "xml_object_key": "PMC11281480.1/PMC11281480.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11281480.1/PMC11281480.1.xml",
+      "xml_size_bytes": 90390,
+      "xml_md5": "087cf7f38fd1918b45a349198f008133",
+      "xml_s3_etag": "087cf7f38fd1918b45a349198f008133",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2024 The Authors This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2024-07-26"
+      ],
+      "resolved_publication_years": [
+        2024
+      ],
+      "cloud_title": "Flavobacterium facile sp. nov., isolated from water system of Atlantic salmon (Salmo salar) fry cultured in Chile",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jul 26;74(7):006468. doi: 10.1099/ijsem.0.006468",
+      "doi": "10.1099/ijsem.0.006468",
+      "authors": [
+        "Irgang, Rute",
+        "Saldarriaga-Córdoba, Mónica",
+        "Poblete-Morales, Matías",
+        "Avendaño-Herrera, Ruben"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "pmcid": "PMC11281800",
+      "numeric_pmcid": 11281800,
+      "cloud_version": 1,
+      "xml_object_key": "PMC11281800.1/PMC11281800.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11281800.1/PMC11281800.1.xml",
+      "xml_size_bytes": 119872,
+      "xml_md5": "5c86f7545548652047ac6537092d531e",
+      "xml_s3_etag": "5c86f7545548652047ac6537092d531e",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2024 The Authors This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2024-07-26"
+      ],
+      "resolved_publication_years": [
+        2024
+      ],
+      "cloud_title": "Pseudomonas beijingensis sp. nov., a novel species widely colonizing plant rhizosphere",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jul 26;74(7):006473. doi: 10.1099/ijsem.0.006473",
+      "doi": "10.1099/ijsem.0.006473",
+      "authors": [
+        "Liao, Kaiji",
+        "Wu, Jingyi",
+        "Wang, Can",
+        "Li, Jun-Zhou",
+        "Wei, Hai-Lei"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "pmcid": "PMC11288634",
+      "numeric_pmcid": 11288634,
+      "cloud_version": 1,
+      "xml_object_key": "PMC11288634.1/PMC11288634.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11288634.1/PMC11288634.1.xml",
+      "xml_size_bytes": 152797,
+      "xml_md5": "9e69d81b2bef53bcf37ff207731ef86e",
+      "xml_s3_etag": "9e69d81b2bef53bcf37ff207731ef86e",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2024 The Authors This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2024-07-30"
+      ],
+      "resolved_publication_years": [
+        2024
+      ],
+      "cloud_title": "Collimonas rhizosphaerae sp. nov., a novel species isolated from the beech rhizosphere",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jul 30;74(7):006481. doi: 10.1099/ijsem.0.006481",
+      "doi": "10.1099/ijsem.0.006481",
+      "authors": [
+        "Uroz, Stephane",
+        "Bouche, Ségolène",
+        "Morin, Emmanuelle",
+        "Bocquart, Mathilde",
+        "Kumar, Ravi",
+        "Rey, Michael W.",
+        "Pham, Jonathan",
+        "Akum, Fidel",
+        "Leveau, Johan H. J."
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "pmcid": "PMC11316580",
+      "numeric_pmcid": 11316580,
+      "cloud_version": 1,
+      "xml_object_key": "PMC11316580.1/PMC11316580.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11316580.1/PMC11316580.1.xml",
+      "xml_size_bytes": 94416,
+      "xml_md5": "b50c09f3f75ed26afe752f741b35aa1c",
+      "xml_s3_etag": "b50c09f3f75ed26afe752f741b35aa1c",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2024 The Authors This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2024-07-04"
+      ],
+      "resolved_publication_years": [
+        2024
+      ],
+      "cloud_title": "Chitinophaga pollutisoli sp. nov., isolated from contaminated sediment",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jul 4;74(7):006447. doi: 10.1099/ijsem.0.006447",
+      "doi": "10.1099/ijsem.0.006447",
+      "authors": [
+        "Lee, Dae Seung",
+        "Lee, Jae Kyeong",
+        "Han, Dong Min",
+        "Baek, Ju Hye",
+        "Jeon, Che Ok"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "pmcid": "PMC11349053",
+      "numeric_pmcid": 11349053,
+      "cloud_version": 1,
+      "xml_object_key": "PMC11349053.1/PMC11349053.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11349053.1/PMC11349053.1.xml",
+      "xml_size_bytes": 157553,
+      "xml_md5": "a25768575a1d28eb76884fb41b68bd1c",
+      "xml_s3_etag": "a25768575a1d28eb76884fb41b68bd1c",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2024 The Authors This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2024-08-27"
+      ],
+      "resolved_publication_years": [
+        2024
+      ],
+      "cloud_title": "Mycovorax composti gen. nov., sp. nov., a member of the family Chitinophagaceae isolated from button mushroom compost",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Aug 27;74(8):006496. doi: 10.1099/ijsem.0.006496",
+      "doi": "10.1099/ijsem.0.006496",
+      "authors": [
+        "Thai, Meghann",
+        "Bell, Tina L.",
+        "Kertesz, Michael A."
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "microbiology",
+      "mesh_descriptor_ui": "D008829",
+      "pmcid": "PMC11350378",
+      "numeric_pmcid": 11350378,
+      "cloud_version": 1,
+      "xml_object_key": "PMC11350378.1/PMC11350378.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11350378.1/PMC11350378.1.xml",
+      "xml_size_bytes": 41051,
+      "xml_md5": "28b89310fa50b1c75eda86151a4478e7",
+      "xml_s3_etag": "28b89310fa50b1c75eda86151a4478e7",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2024 Not applicable This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2024-08-27"
+      ],
+      "resolved_publication_years": [
+        2024
+      ],
+      "cloud_title": "Genomic evidence that Ornithinicoccus soli Jiang et al. 2020 is a later heterotypic synonym of Segeticoccus rhizosphaerae Lee and Whang 2020",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Aug 27;74(8):006503. doi: 10.1099/ijsem.0.006503",
+      "doi": "10.1099/ijsem.0.006503",
+      "authors": [
+        "Liu, Qing",
+        "Xin, Yu-Hua"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "pmcid": "PMC8233365",
+      "numeric_pmcid": 8233365,
+      "cloud_version": 1,
+      "xml_object_key": "PMC8233365.1/PMC8233365.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8233365.1/PMC8233365.1.xml",
+      "xml_size_bytes": 84419,
+      "xml_md5": "910870c083871ea169d42de94f721c54",
+      "xml_s3_etag": "910870c083871ea169d42de94f721c54",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s) 2021 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2021-06-25"
+      ],
+      "resolved_publication_years": [
+        2021
+      ],
+      "cloud_title": "Multi-year presence of humpback whales in the Atlantic sector of the Southern Ocean but not during El Niño",
+      "cloud_citation": "Commun Biol. 2021 Jun 25;4:790. doi: 10.1038/s42003-021-02332-6",
+      "doi": "10.1038/s42003-021-02332-6",
+      "authors": [
+        "Schall, Elena",
+        "Thomisch, Karolin",
+        "Boebel, Olaf",
+        "Gerlach, Gabriele",
+        "Mangia Woods, Sari",
+        "El-Gabbas, Ahmed",
+        "Van Opzeeland, Ilse"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "pmcid": "PMC8238932",
+      "numeric_pmcid": 8238932,
+      "cloud_version": 1,
+      "xml_object_key": "PMC8238932.1/PMC8238932.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8238932.1/PMC8238932.1.xml",
+      "xml_size_bytes": 95856,
+      "xml_md5": "126647711f081c770e2404c22653d7af",
+      "xml_s3_etag": "126647711f081c770e2404c22653d7af",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s) 2021 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2021-06-28"
+      ],
+      "resolved_publication_years": [
+        2021
+      ],
+      "cloud_title": "Storm surge and ponding explain mangrove dieback in southwest Florida following Hurricane Irma",
+      "cloud_citation": "Nat Commun. 2021 Jun 28;12:4003. doi: 10.1038/s41467-021-24253-y",
+      "doi": "10.1038/s41467-021-24253-y",
+      "authors": [
+        "Lagomasino, David",
+        "Fatoyinbo, Temilola",
+        "Castañeda-Moya, Edward",
+        "Cook, Bruce D.",
+        "Montesano, Paul M.",
+        "Neigh, Christopher S. R.",
+        "Corp, Lawrence A.",
+        "Ott, Lesley E.",
+        "Chavez, Selena",
+        "Morton, Douglas C."
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "pmcid": "PMC8248734",
+      "numeric_pmcid": 8248734,
+      "cloud_version": 1,
+      "xml_object_key": "PMC8248734.1/PMC8248734.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8248734.1/PMC8248734.1.xml",
+      "xml_size_bytes": 155322,
+      "xml_md5": "25f518b56a0a4abe8e26d637fb3a847c",
+      "xml_s3_etag": "25f518b56a0a4abe8e26d637fb3a847c",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© 2021 Pham et al This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2021-07-01"
+      ],
+      "resolved_publication_years": [
+        2021
+      ],
+      "cloud_title": "Mapping the potential aggregation values of ecotourism landscapes from stakeholder survey, structural equation modeling and GIS: Case study of Moc Chau site, Vietnam",
+      "cloud_citation": "PLoS One. 2021 Jul 1;16(7):e0253908. doi: 10.1371/journal.pone.0253908",
+      "doi": "10.1371/journal.pone.0253908",
+      "authors": [
+        "Pham, Tuan Anh",
+        "Pham, Tam Minh",
+        "Dang, Giang Thi Huong",
+        "Nguyen, Doi Trong",
+        "Du, Quan Vu Viet"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "pmcid": "PMC8253789",
+      "numeric_pmcid": 8253789,
+      "cloud_version": 1,
+      "xml_object_key": "PMC8253789.1/PMC8253789.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8253789.1/PMC8253789.1.xml",
+      "xml_size_bytes": 668319,
+      "xml_md5": "fb6f03a17dfc4257d4ef0cbb36db679f",
+      "xml_s3_etag": "fb6f03a17dfc4257d4ef0cbb36db679f",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s) 2021 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2021-07-02"
+      ],
+      "resolved_publication_years": [
+        2021
+      ],
+      "cloud_title": "Quantifying nitrogen fixation by heterotrophic bacteria in sinking marine particles",
+      "cloud_citation": "Nat Commun. 2021 Jul 2;12:4085. doi: 10.1038/s41467-021-23875-6",
+      "doi": "10.1038/s41467-021-23875-6",
+      "authors": [
+        "Chakraborty, Subhendu",
+        "Andersen, Ken H.",
+        "Visser, André W.",
+        "Inomura, Keisuke",
+        "Follows, Michael J.",
+        "Riemann, Lasse"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "pmcid": "PMC8257505",
+      "numeric_pmcid": 8257505,
+      "cloud_version": 1,
+      "xml_object_key": "PMC8257505.1/PMC8257505.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8257505.1/PMC8257505.1.xml",
+      "xml_size_bytes": 276355,
+      "xml_md5": "173037c9fd29beb1bd3fba5f880c08c5",
+      "xml_s3_etag": "173037c9fd29beb1bd3fba5f880c08c5",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s) 2021 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2021-05-03"
+      ],
+      "resolved_publication_years": [
+        2021
+      ],
+      "cloud_title": "Consequences of spatial patterns for coexistence in species-rich plant communities",
+      "cloud_citation": "Nat Ecol Evol. 2021 May 3;5(7):965–73. doi: 10.1038/s41559-021-01440-0",
+      "doi": "10.1038/s41559-021-01440-0",
+      "authors": [
+        "Wiegand, Thorsten",
+        "Wang, Xugao",
+        "Anderson-Teixeira, Kristina J.",
+        "Bourg, Norman A.",
+        "Cao, Min",
+        "Ci, Xiuqin",
+        "Davies, Stuart J.",
+        "Hao, Zhanqing",
+        "Howe, Robert W.",
+        "Kress, W. John",
+        "Lian, Juyu",
+        "Li, Jie",
+        "Lin, Luxiang",
+        "Lin, Yiching",
+        "Ma, Keping",
+        "McShea, William",
+        "Mi, Xiangcheng",
+        "Su, Sheng-Hsin",
+        "Sun, I-Fang",
+        "Wolf, Amy",
+        "Ye, Wanhui",
+        "Huth, Andreas"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "pmcid": "PMC8260664",
+      "numeric_pmcid": 8260664,
+      "cloud_version": 1,
+      "xml_object_key": "PMC8260664.1/PMC8260664.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8260664.1/PMC8260664.1.xml",
+      "xml_size_bytes": 92104,
+      "xml_md5": "a0fcf2eeed9dea70d53d606c4316e303",
+      "xml_s3_etag": "a0fcf2eeed9dea70d53d606c4316e303",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© The Author(s) 2021 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2021-07-06"
+      ],
+      "resolved_publication_years": [
+        2021
+      ],
+      "cloud_title": "Artificial nighttime lighting impacts visual ecology links between flowers, pollinators and predators",
+      "cloud_citation": "Nat Commun. 2021 Jul 6;12:4163. doi: 10.1038/s41467-021-24394-0",
+      "doi": "10.1038/s41467-021-24394-0",
+      "authors": [
+        "Briolat, Emmanuelle S.",
+        "Gaston, Kevin J.",
+        "Bennie, Jonathan",
+        "Rosenfeld, Emma J.",
+        "Troscianko, Jolyon"
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "pmcid": "PMC8262960",
+      "numeric_pmcid": 8262960,
+      "cloud_version": 1,
+      "xml_object_key": "PMC8262960.1/PMC8262960.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8262960.1/PMC8262960.1.xml",
+      "xml_size_bytes": 160165,
+      "xml_md5": "f809b3b86e62b172af1efc0cf09cd807",
+      "xml_s3_etag": "f809b3b86e62b172af1efc0cf09cd807",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "Copyright © 2021 Murareanu et al. This is an open-access article distributed under the terms of the Creative Commons Attribution 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2021-06-29"
+      ],
+      "resolved_publication_years": [
+        2021
+      ],
+      "cloud_title": "Generation of a Microsporidia Species Attribute Database and Analysis of the Extensive Ecological and Phenotypic Diversity of Microsporidia",
+      "cloud_citation": "mBio. 2021 Jun 29;12(3):e01490-21. doi: 10.1128/mBio.01490-21",
+      "doi": "10.1128/mBio.01490-21",
+      "authors": [
+        "Murareanu, Brandon M.",
+        "Sukhdeo, Ronesh",
+        "Qu, Rui",
+        "Jiang, Jason",
+        "Reinke, Aaron W."
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    },
+    {
+      "stratum_name": "ecology",
+      "mesh_descriptor_ui": "D004463",
+      "pmcid": "PMC8270205",
+      "numeric_pmcid": 8270205,
+      "cloud_version": 1,
+      "xml_object_key": "PMC8270205.1/PMC8270205.1.xml",
+      "xml_https_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8270205.1/PMC8270205.1.xml",
+      "xml_size_bytes": 144878,
+      "xml_md5": "43e5a7cef59f72fa3bed3f9749ef4a30",
+      "xml_s3_etag": "43e5a7cef59f72fa3bed3f9749ef4a30",
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© 2021 Aukes, Schiff This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_date": [
+        "2021-07-09"
+      ],
+      "resolved_publication_years": [
+        2021
+      ],
+      "cloud_title": "Composition Wheels: Visualizing dissolved organic matter using common composition metrics across a variety of Canadian ecozones",
+      "cloud_citation": "PLoS One. 2021 Jul 9;16(7):e0253972. doi: 10.1371/journal.pone.0253972",
+      "doi": "10.1371/journal.pone.0253972",
+      "authors": [
+        "Aukes, Pieter J. K.",
+        "Schiff, Sherry L."
+      ],
+      "source_metadata_screen_status": "eligible",
+      "xml_request_status": "pending",
+      "xml_requested_at_utc": null,
+      "downloaded_bytes": null,
+      "download_sha256": null,
+      "article_xml_license_hrefs": [],
+      "article_xml_license_texts": [],
+      "article_level_rights_status": "pending",
+      "article_level_exclusion_reasons": []
+    }
+  ]
+}
