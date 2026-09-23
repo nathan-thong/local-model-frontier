@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "metadata_screen_in_progress",
+  "status": "metadata_gate_failed_fewer_than_20",
   "protocol_base_revision": "9e412f98017b7752bf6a4e98d3ed5c95eaa9aec1",
   "as_of_date": "2026-09-23",
   "source": {
@@ -6209,7 +6209,7 @@
       "xml_object_key": "PMC5738777.1/PMC5738777.1.xml",
       "xml_size_bytes": 12308,
       "xml_s3_etag": "f238682f20d78bc2ebcd4d4c4512d80a",
-      "xml_last_modified_utc": "2026-07-04T15:18:13.000Z",
+      "xml_last_modified_utc": "2026-07-04T15:18:13Z",
       "xml_md5": "f238682f20d78bc2ebcd4d4c4512d80a",
       "eligibility_failure_reasons": [
         "OAI dc:rights identifies CC BY 2.5, not exact CC BY 4.0.",
@@ -6217,7 +6217,15 @@
       ],
       "dc_description_retained": false,
       "article_xml_requested": false,
-      "figures_or_supplements_requested": false
+      "figures_or_supplements_requested": false,
+      "available_cloud_versions": [
+        1
+      ],
+      "cloud_metadata_json_key": "metadata/PMC5738777.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC5738777.1.json",
+      "cloud_xml_object_key": "PMC5738777.1/PMC5738777.1.xml",
+      "cloud_xml_url_md5": "f238682f20d78bc2ebcd4d4c4512d80a",
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:5738777&metadataPrefix=oai_dc"
     },
     {
       "stratum_name": "neurosciences",
@@ -6225,7 +6233,63 @@
       "pmcid": "PMC5760855",
       "numeric_pmcid": 5760855,
       "numeric_rank_in_sorted_stratum_pool": 2,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC5760855.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC5760855.1.json",
+      "cloud_title": "Co‐infection with Chikungunya virus alters trafficking of pathogenic CD8+ T cells into the brain and prevents Plasmodium‐induced neuropathology",
+      "cloud_citation": "EMBO Mol Med. 2017 Nov 7;10(1):121–38. doi: 10.15252/emmm.201707885",
+      "doi": "10.15252/emmm.201707885",
+      "authors": [
+        "Teo, Teck‐Hui",
+        "Howland, Shanshan W",
+        "Claser, Carla",
+        "Gun, Sin Yee",
+        "Poh, Chek Meng",
+        "Lee, Wendy WL",
+        "Lum, Fok‐Moon",
+        "Ng, Lisa FP",
+        "Rénia, Laurent"
+      ],
+      "oai_dc_title": [
+        "Co‐infection with Chikungunya virus alters trafficking of pathogenic CD8(+) T cells into the brain and prevents Plasmodium‐induced neuropathology"
+      ],
+      "oai_dc_date": [
+        "2017-11-07"
+      ],
+      "raw_license_code": "CC BY",
+      "oai_dc_rights_values": [
+        "© 2017 Agency for Science, Technology and Research (A*STAR). Published under the terms of the CC BY 4.0 license This is an open access article under the terms of the Creative Commons Attribution 4.0 License, which permits use, distribution and reproduction in any medium, provided the original work is properly cited.",
+        "https://creativecommons.org/licenses/by/4.0/",
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "is_pmc_openaccess": true,
+      "is_manuscript": false,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_object_key": "PMC5760855.1/PMC5760855.1.xml",
+      "cloud_xml_url_md5": "629c4a4f0ebc92d14638899d52a2be42",
+      "xml_object_key": "PMC5760855.1/PMC5760855.1.xml",
+      "xml_size_bytes": 198376,
+      "xml_s3_etag": "629c4a4f0ebc92d14638899d52a2be42",
+      "xml_last_modified_utc": "2026-07-04T13:40:37Z",
+      "xml_md5": "629c4a4f0ebc92d14638899d52a2be42",
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:5760855&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2017
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:11:41Z",
+      "eligibility_failure_reasons": [
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2017)."
+      ],
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "neurosciences",
@@ -6233,7 +6297,56 @@
       "pmcid": "PMC5798820",
       "numeric_pmcid": 5798820,
       "numeric_rank_in_sorted_stratum_pool": 3,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:10:47Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC5798820.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC5798820.1.json",
+      "cloud_title": "Taking an educational psychology course improves neuroscience literacy but does not reduce belief in neuromyths",
+      "cloud_citation": "PLoS One. 2018 Feb 5;13(2):e0192163. doi: 10.1371/journal.pone.0192163",
+      "doi": "10.1371/journal.pone.0192163",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": false,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "d2f182777e5698823170b11fd4477e47",
+      "cloud_xml_object_key": "PMC5798820.1/PMC5798820.1.xml",
+      "xml_object_key": "PMC5798820.1/PMC5798820.1.xml",
+      "xml_size_bytes": 142172,
+      "xml_s3_etag": "d2f182777e5698823170b11fd4477e47",
+      "xml_last_modified_utc": "2026-07-04T14:24:01Z",
+      "xml_md5": "d2f182777e5698823170b11fd4477e47",
+      "oai_dc_title": [
+        "Taking an educational psychology course improves neuroscience literacy but does not reduce belief in neuromyths"
+      ],
+      "authors": [
+        "Im, Soo-hyun",
+        "Cho, Joo-Yun",
+        "Dubinsky, Janet M.",
+        "Varma, Sashank"
+      ],
+      "oai_dc_date": [
+        "2018-02-05"
+      ],
+      "oai_dc_rights_values": [
+        "© 2018 Im et al This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+        "http://creativecommons.org/licenses/by/4.0/",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:5798820&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2018
+      ],
+      "eligibility_failure_reasons": [],
+      "metadata_screen_status": "eligible",
+      "screening_error": null
     },
     {
       "stratum_name": "neurosciences",
@@ -6241,7 +6354,56 @@
       "pmcid": "PMC5802623",
       "numeric_pmcid": 5802623,
       "numeric_rank_in_sorted_stratum_pool": 4,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:10:52Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC5802623.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC5802623.1.json",
+      "cloud_title": "Dopamine, psychosis and schizophrenia: the widening gap between basic and clinical neuroscience",
+      "cloud_citation": "Transl Psychiatry. 2018 Jan 31;8:30. doi: 10.1038/s41398-017-0071-9",
+      "doi": "10.1038/s41398-017-0071-9",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": false,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "73bfa8dfdb53425992683c7baa7bf8af",
+      "cloud_xml_object_key": "PMC5802623.1/PMC5802623.1.xml",
+      "xml_object_key": "PMC5802623.1/PMC5802623.1.xml",
+      "xml_size_bytes": 141731,
+      "xml_s3_etag": "73bfa8dfdb53425992683c7baa7bf8af",
+      "xml_last_modified_utc": "2026-07-04T15:27:14Z",
+      "xml_md5": "73bfa8dfdb53425992683c7baa7bf8af",
+      "oai_dc_title": [
+        "Dopamine, psychosis and schizophrenia: the widening gap between basic and clinical neuroscience"
+      ],
+      "authors": [
+        "Kesby, JP",
+        "Eyles, DW",
+        "McGrath, JJ",
+        "Scott, JG"
+      ],
+      "oai_dc_date": [
+        "2018-01-31"
+      ],
+      "oai_dc_rights_values": [
+        "© The Author(s) 2018 Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.",
+        "https://creativecommons.org/licenses/by/4.0/",
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:5802623&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2018
+      ],
+      "eligibility_failure_reasons": [],
+      "metadata_screen_status": "eligible",
+      "screening_error": null
     },
     {
       "stratum_name": "microbiology",
@@ -6249,7 +6411,60 @@
       "pmcid": "PMC7619211",
       "numeric_pmcid": 7619211,
       "numeric_rank_in_sorted_stratum_pool": 1,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:10:57Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7619211.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7619211.1.json",
+      "cloud_title": "From field to plate: How do bacterial enteric pathogens interact with ready-to-eat fruit and vegetables, causing disease outbreaks?",
+      "cloud_citation": "Food Microbiol. Author manuscript; Available in PMC 2026 Jun 26.",
+      "doi": "10.1016/j.fm.2023.104389",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "b64f1c05dda211b7c0bc2c84ecc5a29e",
+      "cloud_xml_object_key": "PMC7619211.1/PMC7619211.1.xml",
+      "xml_object_key": "PMC7619211.1/PMC7619211.1.xml",
+      "xml_size_bytes": 410169,
+      "xml_s3_etag": "b64f1c05dda211b7c0bc2c84ecc5a29e",
+      "xml_last_modified_utc": "2026-07-19T11:59:29Z",
+      "xml_md5": "b64f1c05dda211b7c0bc2c84ecc5a29e",
+      "oai_dc_title": [
+        "From field to plate: How do bacterial enteric pathogens interact with ready-to-eat fruit and vegetables, causing disease outbreaks?"
+      ],
+      "authors": [
+        "Thomas, Gareth A.",
+        "Gil, Teresa Paradell",
+        "Müller, Carsten T.",
+        "Rogers, Hilary J.",
+        "Berger, Cedric N."
+      ],
+      "oai_dc_date": [
+        "2023-09-21"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a CC BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7619211&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2023,
+        2026
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript.",
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2023, 2026)."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "microbiology",
@@ -6257,7 +6472,58 @@
       "pmcid": "PMC11261691",
       "numeric_pmcid": 11261691,
       "numeric_rank_in_sorted_stratum_pool": 2,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:11:01Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC11261691.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC11261691.1.json",
+      "cloud_title": "Nocardioides agri sp. nov., isolated from garden soil",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jun 18;74(6):006407. doi: 10.1099/ijsem.0.006407",
+      "doi": "10.1099/ijsem.0.006407",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": false,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "272d0804267c4797a69c85db4320bc50",
+      "cloud_xml_object_key": "PMC11261691.1/PMC11261691.1.xml",
+      "xml_object_key": "PMC11261691.1/PMC11261691.1.xml",
+      "xml_size_bytes": 113783,
+      "xml_s3_etag": "272d0804267c4797a69c85db4320bc50",
+      "xml_last_modified_utc": "2026-06-27T12:47:29Z",
+      "xml_md5": "272d0804267c4797a69c85db4320bc50",
+      "oai_dc_title": [
+        "Nocardioides agri sp. nov., isolated from garden soil"
+      ],
+      "authors": [
+        "Huq, Md. Amdadul",
+        "NAM, Kihong",
+        "Rahman, Md. Shahedur",
+        "Rahman, M. Mizanur",
+        "Parvez, Md. Anowar Khasru",
+        "Kang, Kwon-Kyoo",
+        "Akter, Shahina"
+      ],
+      "oai_dc_date": [
+        "2024-06-18"
+      ],
+      "oai_dc_rights_values": [
+        "Copyright © 2024 The Authors This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:11261691&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2024
+      ],
+      "eligibility_failure_reasons": [],
+      "metadata_screen_status": "eligible",
+      "screening_error": null
     },
     {
       "stratum_name": "microbiology",
@@ -6265,7 +6531,54 @@
       "pmcid": "PMC11261710",
       "numeric_pmcid": 11261710,
       "numeric_rank_in_sorted_stratum_pool": 3,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:11:07Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC11261710.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC11261710.1.json",
+      "cloud_title": "Pengzhenrongella frigida sp. nov., isolated from a glacier",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jun 19;74(6):006433. doi: 10.1099/ijsem.0.006433",
+      "doi": "10.1099/ijsem.0.006433",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": false,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "facd5ab679864d0de90895fc0f2882bd",
+      "cloud_xml_object_key": "PMC11261710.1/PMC11261710.1.xml",
+      "xml_object_key": "PMC11261710.1/PMC11261710.1.xml",
+      "xml_size_bytes": 59371,
+      "xml_s3_etag": "facd5ab679864d0de90895fc0f2882bd",
+      "xml_last_modified_utc": "2026-06-27T12:47:29Z",
+      "xml_md5": "facd5ab679864d0de90895fc0f2882bd",
+      "oai_dc_title": [
+        "Pengzhenrongella frigida sp. nov., isolated from a glacier"
+      ],
+      "authors": [
+        "Liu, Qing",
+        "Yang, Lei-Lei",
+        "Xin, Yu-Hua"
+      ],
+      "oai_dc_date": [
+        "2024-06-19"
+      ],
+      "oai_dc_rights_values": [
+        "Copyright © 2024 Institute of Microbiology, Chinese Academy of Sciences This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:11261710&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2024
+      ],
+      "eligibility_failure_reasons": [],
+      "metadata_screen_status": "eligible",
+      "screening_error": null
     },
     {
       "stratum_name": "microbiology",
@@ -6273,7 +6586,55 @@
       "pmcid": "PMC11281480",
       "numeric_pmcid": 11281480,
       "numeric_rank_in_sorted_stratum_pool": 4,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:12:46Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC11281480.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC11281480.1.json",
+      "cloud_title": "Flavobacterium facile sp. nov., isolated from water system of Atlantic salmon (Salmo salar) fry cultured in Chile",
+      "cloud_citation": "Int J Syst Evol Microbiol. 2024 Jul 26;74(7):006468. doi: 10.1099/ijsem.0.006468",
+      "doi": "10.1099/ijsem.0.006468",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": false,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "087cf7f38fd1918b45a349198f008133",
+      "cloud_xml_object_key": "PMC11281480.1/PMC11281480.1.xml",
+      "xml_object_key": "PMC11281480.1/PMC11281480.1.xml",
+      "xml_size_bytes": 90390,
+      "xml_s3_etag": "087cf7f38fd1918b45a349198f008133",
+      "xml_last_modified_utc": "2026-06-27T12:50:57Z",
+      "xml_md5": "087cf7f38fd1918b45a349198f008133",
+      "oai_dc_title": [
+        "Flavobacterium facile sp. nov., isolated from water system of Atlantic salmon (Salmo salar) fry cultured in Chile"
+      ],
+      "authors": [
+        "Irgang, Rute",
+        "Saldarriaga-Córdoba, Mónica",
+        "Poblete-Morales, Matías",
+        "Avendaño-Herrera, Ruben"
+      ],
+      "oai_dc_date": [
+        "2024-07-26"
+      ],
+      "oai_dc_rights_values": [
+        "Copyright © 2024 The Authors This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:11281480&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2024
+      ],
+      "eligibility_failure_reasons": [],
+      "metadata_screen_status": "eligible",
+      "screening_error": null
     },
     {
       "stratum_name": "plants",
@@ -6281,7 +6642,62 @@
       "pmcid": "PMC7618248",
       "numeric_pmcid": 7618248,
       "numeric_rank_in_sorted_stratum_pool": 1,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:12:50Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7618248.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7618248.1.json",
+      "cloud_title": "VEL-dependent polymerization maintains the chromatin association of Polycomb proteins for the switch to epigenetic silencing",
+      "cloud_citation": "Mol Cell. Author manuscript; Available in PMC 2025 Oct 13.",
+      "doi": "10.1016/j.molcel.2025.08.002",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "15d5236fbd0a329013992557053abfcb",
+      "cloud_xml_object_key": "PMC7618248.1/PMC7618248.1.xml",
+      "xml_object_key": "PMC7618248.1/PMC7618248.1.xml",
+      "xml_size_bytes": 171981,
+      "xml_s3_etag": "15d5236fbd0a329013992557053abfcb",
+      "xml_last_modified_utc": "2026-06-27T01:08:37Z",
+      "xml_md5": "15d5236fbd0a329013992557053abfcb",
+      "oai_dc_title": [
+        "VEL-dependent polymerization maintains the chromatin association of Polycomb proteins for the switch to epigenetic silencing"
+      ],
+      "authors": [
+        "Schulten, Anna",
+        "Jang, Geng-Jen",
+        "Payne-Dwyer, Alex",
+        "Fiedler, Marc",
+        "Nielsen, Mathias L.",
+        "Mateo-Bonmatí, Eduardo",
+        "Bienz, Mariann",
+        "Leake, Mark C.",
+        "Dean, Caroline"
+      ],
+      "oai_dc_date": [
+        "2025-08-25"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7618248&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2025
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "plants",
@@ -6289,7 +6705,63 @@
       "pmcid": "PMC7618441",
       "numeric_pmcid": 7618441,
       "numeric_rank_in_sorted_stratum_pool": 2,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:12:55Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7618441.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7618441.1.json",
+      "cloud_title": "Impact of tree-based interventions in addressing health and wellbeing outcomes in rural low-income and middle-income settings: a systematic review and meta-analysis",
+      "cloud_citation": "Lancet Planet Health. Author manuscript; Available in PMC 2025 Dec 6.",
+      "doi": "10.1016/S2542-5196(25)00003-8",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "15e05e57febb27edb99bec90b5b31d0c",
+      "cloud_xml_object_key": "PMC7618441.1/PMC7618441.1.xml",
+      "xml_object_key": "PMC7618441.1/PMC7618441.1.xml",
+      "xml_size_bytes": 121090,
+      "xml_s3_etag": "15e05e57febb27edb99bec90b5b31d0c",
+      "xml_last_modified_utc": "2026-06-27T01:08:39Z",
+      "xml_md5": "15e05e57febb27edb99bec90b5b31d0c",
+      "oai_dc_title": [
+        "Impact of tree-based interventions in addressing health and wellbeing outcomes in rural low-income and middle-income settings: a systematic review and meta-analysis"
+      ],
+      "authors": [
+        "Murage, Peninah",
+        "Anton, Blanca",
+        "Chiwanga, Faraja",
+        "Picetti, Roberto",
+        "Njunge, Tabby",
+        "Hassan, Syreen",
+        "Whitmee, Sarah",
+        "Falconer, Jane",
+        "Waddington, Hugh Sharma",
+        "Green, Rosemary"
+      ],
+      "oai_dc_date": [
+        "2025-02-01"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7618441&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2025
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "plants",
@@ -6297,7 +6769,58 @@
       "pmcid": "PMC7618682",
       "numeric_pmcid": 7618682,
       "numeric_rank_in_sorted_stratum_pool": 3,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:00Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7618682.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7618682.1.json",
+      "cloud_title": "Metabolic ecology of microbiomes: Nutrient competition, host benefits, and community engineering",
+      "cloud_citation": "Cell Host Microbe. Author manuscript; Available in PMC 2026 Jan 29.",
+      "doi": "10.1016/j.chom.2025.05.013",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "215b26744b5e6f1d5473249c3dc9c476",
+      "cloud_xml_object_key": "PMC7618682.1/PMC7618682.1.xml",
+      "xml_object_key": "PMC7618682.1/PMC7618682.1.xml",
+      "xml_size_bytes": 291964,
+      "xml_s3_etag": "215b26744b5e6f1d5473249c3dc9c476",
+      "xml_last_modified_utc": "2026-08-22T02:33:11Z",
+      "xml_md5": "215b26744b5e6f1d5473249c3dc9c476",
+      "oai_dc_title": [
+        "Metabolic ecology of microbiomes: Nutrient competition, host benefits, and community engineering"
+      ],
+      "authors": [
+        "Bakkeren, Erik",
+        "Piskovsky, Vit",
+        "Foster, Kevin R."
+      ],
+      "oai_dc_date": [
+        "2025-06-11"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7618682&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2025,
+        2026
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript.",
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2025, 2026)."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "plants",
@@ -6305,7 +6828,20 @@
       "pmcid": "PMC8883778",
       "numeric_pmcid": 8883778,
       "numeric_rank_in_sorted_stratum_pool": 5,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 2,
+      "available_cloud_versions": [
+        1,
+        2
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:05Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "eligibility_failure_reasons": [
+        "Expected exactly one available PMC Cloud version; found 2."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "ecology",
@@ -6313,7 +6849,58 @@
       "pmcid": "PMC7613921",
       "numeric_pmcid": 7613921,
       "numeric_rank_in_sorted_stratum_pool": 1,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:20Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7613921.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7613921.1.json",
+      "cloud_title": "The Cell Biology of Archaea",
+      "cloud_citation": "Nat Microbiol. Author manuscript; Available in PMC 2022 Dec 13.",
+      "doi": "10.1038/s41564-022-01215-8",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "dc679c90599790e4c9f05bd539e9467e",
+      "cloud_xml_object_key": "PMC7613921.1/PMC7613921.1.xml",
+      "xml_object_key": "PMC7613921.1/PMC7613921.1.xml",
+      "xml_size_bytes": 184521,
+      "xml_s3_etag": "dc679c90599790e4c9f05bd539e9467e",
+      "xml_last_modified_utc": "2026-06-27T01:04:35Z",
+      "xml_md5": "dc679c90599790e4c9f05bd539e9467e",
+      "oai_dc_title": [
+        "The Cell Biology of Archaea"
+      ],
+      "authors": [
+        "van Wolferen, Marleen",
+        "Pulschen, Andre",
+        "Baum, Buzz",
+        "Gribaldo, Simonetta",
+        "Albers, Sonja-Verena"
+      ],
+      "oai_dc_date": [
+        "2022-10-17"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a CC BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7613921&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2022
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "ecology",
@@ -6321,7 +6908,58 @@
       "pmcid": "PMC7616434",
       "numeric_pmcid": 7616434,
       "numeric_rank_in_sorted_stratum_pool": 2,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:25Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7616434.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7616434.1.json",
+      "cloud_title": "Static electricity passively attracts ticks onto hosts",
+      "cloud_citation": "Curr Biol. Author manuscript; Available in PMC 2024 Sep 10.",
+      "doi": "10.1016/j.cub.2023.06.021",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "0c13ab906a49921ea548e62a8337e36f",
+      "cloud_xml_object_key": "PMC7616434.1/PMC7616434.1.xml",
+      "xml_object_key": "PMC7616434.1/PMC7616434.1.xml",
+      "xml_size_bytes": 99921,
+      "xml_s3_etag": "0c13ab906a49921ea548e62a8337e36f",
+      "xml_last_modified_utc": "2026-06-27T00:33:44Z",
+      "xml_md5": "0c13ab906a49921ea548e62a8337e36f",
+      "oai_dc_title": [
+        "Static electricity passively attracts ticks onto hosts"
+      ],
+      "authors": [
+        "England, Sam J.",
+        "Lihou, Katie",
+        "Robert, Daniel"
+      ],
+      "oai_dc_date": [
+        "2023-06-30"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7616434&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2023,
+        2024
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript.",
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2023, 2024)."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "ecology",
@@ -6329,7 +6967,59 @@
       "pmcid": "PMC7618502",
       "numeric_pmcid": 7618502,
       "numeric_rank_in_sorted_stratum_pool": 3,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:30Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7618502.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7618502.1.json",
+      "cloud_title": "Safeguarding natural ecosystems can protect population health: advancing approaches to bridge the health–ecology divide",
+      "cloud_citation": "Lancet Planet Health. Author manuscript; Available in PMC 2025 Dec 21.",
+      "doi": "10.1016/j.lanplh.2025.101377",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "b905c79c3f990fca36c43accf85d3f5e",
+      "cloud_xml_object_key": "PMC7618502.1/PMC7618502.1.xml",
+      "xml_object_key": "PMC7618502.1/PMC7618502.1.xml",
+      "xml_size_bytes": 58623,
+      "xml_s3_etag": "b905c79c3f990fca36c43accf85d3f5e",
+      "xml_last_modified_utc": "2026-06-27T01:07:36Z",
+      "xml_md5": "b905c79c3f990fca36c43accf85d3f5e",
+      "oai_dc_title": [
+        "Safeguarding natural ecosystems can protect population health: advancing approaches to bridge the health–ecology divide"
+      ],
+      "authors": [
+        "Murage, Peninah",
+        "Hicks, Charlotte",
+        "Kapos, Valerie",
+        "Naidoo, Santhuri",
+        "Hassan, Syreen",
+        "Whitmee, Sarah"
+      ],
+      "oai_dc_date": [
+        "2025-11-05"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7618502&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2025
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "ecology",
@@ -6337,7 +7027,59 @@
       "pmcid": "PMC7619209",
       "numeric_pmcid": 7619209,
       "numeric_rank_in_sorted_stratum_pool": 4,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:35Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7619209.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7619209.1.json",
+      "cloud_title": "Assessing the solubility, chemical stability and ecotoxicology of an emerging non-halogenated flame retardant, melamine cyanurate, against a prevalent halogenated congener, tetrabromophthalic anhydride",
+      "cloud_citation": "Aquat Toxicol. Author manuscript; Available in PMC 2026 Jun 25.",
+      "doi": "10.1016/j.aquatox.2025.107537",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "c2c93970a6c6088207a3d61ae0b929ff",
+      "cloud_xml_object_key": "PMC7619209.1/PMC7619209.1.xml",
+      "xml_object_key": "PMC7619209.1/PMC7619209.1.xml",
+      "xml_size_bytes": 83032,
+      "xml_s3_etag": "c2c93970a6c6088207a3d61ae0b929ff",
+      "xml_last_modified_utc": "2026-07-13T17:40:49Z",
+      "xml_md5": "c2c93970a6c6088207a3d61ae0b929ff",
+      "oai_dc_title": [
+        "Assessing the solubility, chemical stability and ecotoxicology of an emerging non-halogenated flame retardant, melamine cyanurate, against a prevalent halogenated congener, tetrabromophthalic anhydride"
+      ],
+      "authors": [
+        "Masud, N.",
+        "Hansal, P.",
+        "Ward, B.D.",
+        "Cable, J."
+      ],
+      "oai_dc_date": [
+        "2025-08-10"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a CC BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7619209&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2025,
+        2026
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript.",
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2025, 2026)."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "computational biology",
@@ -6345,7 +7087,60 @@
       "pmcid": "PMC7618724",
       "numeric_pmcid": 7618724,
       "numeric_rank_in_sorted_stratum_pool": 1,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:40Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7618724.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7618724.1.json",
+      "cloud_title": "3DSeqCheck: A web-based tool for verifying sequence consistency between a 3D structure file and the corresponding UniProt entry",
+      "cloud_citation": "J Mol Biol. Author manuscript; Available in PMC 2026 Sep 1.",
+      "doi": "10.1016/j.jmb.2025.169620",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "63a310c4e408ef170c5519d355292724",
+      "cloud_xml_object_key": "PMC7618724.1/PMC7618724.1.xml",
+      "xml_object_key": "PMC7618724.1/PMC7618724.1.xml",
+      "xml_size_bytes": 58590,
+      "xml_s3_etag": "63a310c4e408ef170c5519d355292724",
+      "xml_last_modified_utc": "2026-09-02T15:41:13Z",
+      "xml_md5": "63a310c4e408ef170c5519d355292724",
+      "oai_dc_title": [
+        "3DSeqCheck: A web-based tool for verifying sequence consistency between a 3D structure file and the corresponding UniProt entry"
+      ],
+      "authors": [
+        "Conev, Anja",
+        "Islam, Suhail A.",
+        "Tsitsa, Ifigenia",
+        "David, Alessia",
+        "Sternberg, Michael J.E."
+      ],
+      "oai_dc_date": [
+        "2025-12-30"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7618724&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2025,
+        2026
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript.",
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2025, 2026)."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "computational biology",
@@ -6353,7 +7148,61 @@
       "pmcid": "PMC7618746",
       "numeric_pmcid": 7618746,
       "numeric_rank_in_sorted_stratum_pool": 2,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:52Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7618746.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7618746.1.json",
+      "cloud_title": "ChIPmentation for epigenomic analysis in fission yeast",
+      "cloud_citation": "Methods Mol Biol. Author manuscript; Available in PMC 2026 Feb 20.",
+      "doi": "10.1007/978-1-0716-4168-2_18",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "cca47d8b7d9f74d938b8c6a8ccba9429",
+      "cloud_xml_object_key": "PMC7618746.1/PMC7618746.1.xml",
+      "xml_object_key": "PMC7618746.1/PMC7618746.1.xml",
+      "xml_size_bytes": 48795,
+      "xml_s3_etag": "cca47d8b7d9f74d938b8c6a8ccba9429",
+      "xml_last_modified_utc": "2026-06-27T01:07:19Z",
+      "xml_md5": "cca47d8b7d9f74d938b8c6a8ccba9429",
+      "oai_dc_title": [
+        "ChIPmentation for epigenomic analysis in fission yeast"
+      ],
+      "authors": [
+        "Dewornu, Felix Selasi",
+        "Tong, Pin",
+        "Torres-Garcia, Sito",
+        "Pidoux, Alison",
+        "Shukla, Manu",
+        "Allshire, Robin"
+      ],
+      "oai_dc_date": [
+        "2025-01-01"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7618746&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2025,
+        2026
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript.",
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2025, 2026)."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "computational biology",
@@ -6361,7 +7210,88 @@
       "pmcid": "PMC7618751",
       "numeric_pmcid": 7618751,
       "numeric_rank_in_sorted_stratum_pool": 3,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:13:57Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7618751.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7618751.1.json",
+      "cloud_title": "Pre-treatment untargeted cerebrospinal fluid metabolomic profiling in tuberculous meningitis uncovers pathways associated with mortality",
+      "cloud_citation": "Med. Author manuscript; Available in PMC 2026 Feb 19.",
+      "doi": "10.1016/j.medj.2025.100703",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "47017255bb65506ea1e3a114471f7ccd",
+      "cloud_xml_object_key": "PMC7618751.1/PMC7618751.1.xml",
+      "xml_object_key": "PMC7618751.1/PMC7618751.1.xml",
+      "xml_size_bytes": 181714,
+      "xml_s3_etag": "47017255bb65506ea1e3a114471f7ccd",
+      "xml_last_modified_utc": "2026-06-27T01:09:41Z",
+      "xml_md5": "47017255bb65506ea1e3a114471f7ccd",
+      "oai_dc_title": [
+        "Pre-treatment untargeted cerebrospinal fluid metabolomic profiling in tuberculous meningitis uncovers pathways associated with mortality"
+      ],
+      "authors": [
+        "Nhat Le, Thanh Hoang",
+        "van Abeelen, Kirsten C.J.",
+        "Ardiansyah, Edwin",
+        "Avila-Pacheco, Julian",
+        "Dian, Sofiati",
+        "Carstens, Gesa",
+        "Schramke, Lara",
+        "Hai, Hoang Thanh",
+        "Minh Nguyen, Tran Binh",
+        "Triet, Thai Minh",
+        "Deik, Amy",
+        "Krejci, Jesse",
+        "Pruyne, Jeff",
+        "Dailey, Lucas",
+        "Alisjahbana, Bachti",
+        "Netea, Mihai G.",
+        "Estiasari, Riwanti",
+        "Tram, Trinh Thi Bich",
+        "Donovan, Joseph",
+        "Heemskerk, Dorothee",
+        "Chau Tran, Thi Hong",
+        "Bang, Nguyen Duc",
+        "Ganiem, Ahmad Rizal",
+        "Hamers, Raph L.",
+        "Ruslami, Rovina",
+        "Imran, Darma",
+        "Maharani, Kartika",
+        "Kumar, Vinod",
+        "van Crevel, Reinout",
+        "Thwaites, Guy",
+        "Clish, Clary B.",
+        "Thuong Thuong, Nguyen Thuy",
+        "van Laarhoven, Arjan"
+      ],
+      "oai_dc_date": [
+        "2025-05-23"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7618751&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2025,
+        2026
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript.",
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2025, 2026)."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "computational biology",
@@ -6369,7 +7299,59 @@
       "pmcid": "PMC7618866",
       "numeric_pmcid": 7618866,
       "numeric_rank_in_sorted_stratum_pool": 4,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 1,
+      "available_cloud_versions": [
+        1
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:14:02Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "cloud_version": 1,
+      "cloud_metadata_json_key": "metadata/PMC7618866.1.json",
+      "cloud_metadata_json_url": "https://pmc-oa-opendata.s3.amazonaws.com/metadata/PMC7618866.1.json",
+      "cloud_title": "The opportunities and challenges posed by the new generation of deep learning-based protein structure predictors",
+      "cloud_citation": "Curr Opin Struct Biol. Author manuscript; Available in PMC 2026 Mar 14.",
+      "doi": "10.1016/j.sbi.2023.102543",
+      "raw_license_code": "CC BY",
+      "is_pmc_openaccess": true,
+      "is_manuscript": true,
+      "is_historical_ocr": false,
+      "is_retracted": false,
+      "cloud_xml_url_md5": "2a6736d5cdfc9fc2a89f71d97222eb51",
+      "cloud_xml_object_key": "PMC7618866.1/PMC7618866.1.xml",
+      "xml_object_key": "PMC7618866.1/PMC7618866.1.xml",
+      "xml_size_bytes": 90557,
+      "xml_s3_etag": "2a6736d5cdfc9fc2a89f71d97222eb51",
+      "xml_last_modified_utc": "2026-06-26T23:55:54Z",
+      "xml_md5": "2a6736d5cdfc9fc2a89f71d97222eb51",
+      "oai_dc_title": [
+        "The opportunities and challenges posed by the new generation of deep learning-based protein structure predictors"
+      ],
+      "authors": [
+        "Varadi, Mihaly",
+        "Bordin, Nicola",
+        "Orengo, Christine",
+        "Velankar, Sameer"
+      ],
+      "oai_dc_date": [
+        "2023-02-18"
+      ],
+      "oai_dc_rights_values": [
+        "This work is licensed under a BY 4.0 International license.",
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "oai_dc_request_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7618866&metadataPrefix=oai_dc",
+      "resolved_publication_years": [
+        2023,
+        2026
+      ],
+      "eligibility_failure_reasons": [
+        "PMC Cloud marks this version as a manuscript.",
+        "Cloud citation and available OAI dc:date do not consistently resolve to one year from 2018 through 2025 (years: 2023, 2026)."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "public health",
@@ -6377,7 +7359,21 @@
       "pmcid": "PMC7613718",
       "numeric_pmcid": 7613718,
       "numeric_rank_in_sorted_stratum_pool": 1,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 3,
+      "available_cloud_versions": [
+        1,
+        2,
+        3
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:14:07Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "eligibility_failure_reasons": [
+        "Expected exactly one available PMC Cloud version; found 3."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "public health",
@@ -6385,7 +7381,20 @@
       "pmcid": "PMC7618178",
       "numeric_pmcid": 7618178,
       "numeric_rank_in_sorted_stratum_pool": 2,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 2,
+      "available_cloud_versions": [
+        1,
+        2
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:14:08Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "eligibility_failure_reasons": [
+        "Expected exactly one available PMC Cloud version; found 2."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "public health",
@@ -6393,7 +7402,20 @@
       "pmcid": "PMC7618191",
       "numeric_pmcid": 7618191,
       "numeric_rank_in_sorted_stratum_pool": 3,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 2,
+      "available_cloud_versions": [
+        1,
+        2
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:14:16Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "eligibility_failure_reasons": [
+        "Expected exactly one available PMC Cloud version; found 2."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     },
     {
       "stratum_name": "public health",
@@ -6401,14 +7423,27 @@
       "pmcid": "PMC7619018",
       "numeric_pmcid": 7619018,
       "numeric_rank_in_sorted_stratum_pool": 4,
-      "metadata_screen_status": "pending"
+      "cloud_version_count": 2,
+      "available_cloud_versions": [
+        1,
+        2
+      ],
+      "metadata_screened_at_utc": "2026-09-23T10:14:17Z",
+      "dc_description_retained": false,
+      "article_xml_requested": false,
+      "figures_or_supplements_requested": false,
+      "eligibility_failure_reasons": [
+        "Expected exactly one available PMC Cloud version; found 2."
+      ],
+      "metadata_screen_status": "ineligible",
+      "screening_error": null
     }
   ],
-  "eligible_version_count": null,
-  "combined_xml_bytes": null,
+  "eligible_version_count": 5,
+  "combined_xml_bytes": 547447,
   "selection_inventory_sha256": "186d9e01b2853a4c5ae947d3592366b626a2b60549a189b626a977e837e88836",
   "selection_inventory_sha256_encoding": "UTF-8 of one line per selected candidate in selection order as stratum_name<TAB>PMCID, LF separated, no trailing LF",
-  "metadata_screened_count": 1,
+  "metadata_screened_count": 24,
   "protocol_amendments": [
     {
       "amendment_number": 1,
@@ -6422,5 +7457,33 @@
       "remaining_candidates_screened_before_amendment": false,
       "article_xml_requested": false
     }
-  ]
+  ],
+  "eligible_screened_count": 5,
+  "combined_eligible_xml_bytes_screened_so_far": 547447,
+  "metadata_screen_completed_at_utc": "2026-09-23T10:20:18Z",
+  "metadata_screen_summary": {
+    "frozen_candidate_count": 24,
+    "metadata_screened_count": 24,
+    "eligible_version_count": 5,
+    "ineligible_candidate_count": 19,
+    "eligible_pmcids": [
+      "PMC5798820",
+      "PMC5802623",
+      "PMC11261691",
+      "PMC11261710",
+      "PMC11281480"
+    ],
+    "combined_eligible_xml_bytes": 547447,
+    "minimum_eligible_versions_required": 20,
+    "failure_category_counts": {
+      "manuscript_flag": 12,
+      "publication_date": 10,
+      "ambiguous_version": 5,
+      "license_rights": 1
+    },
+    "failure_categories_overlap": true,
+    "article_xml_requested": false,
+    "figures_or_supplements_requested": false
+  },
+  "body_request_gate_failure": "Only 5 of the required 20 metadata-eligible versions passed; no article content was requested."
 }
