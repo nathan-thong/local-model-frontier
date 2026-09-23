@@ -5,11 +5,13 @@ from __future__ import annotations
 import importlib.metadata
 import json
 import math
+import os
 import platform
 import subprocess
 import sys
 import time
 from contextlib import nullcontext
+from multiprocessing.connection import Connection
 from pathlib import Path
 
 import torch
@@ -133,6 +135,7 @@ def train(
     resume: bool = False,
     stop_after_steps: int | None = None,
     stop_after_seconds: float | None = None,
+    cpu_step_memory_probe: Connection | None = None,
 ) -> Path:
     runtime_budget_started = time.perf_counter()
     config.validate()
@@ -141,6 +144,8 @@ def train(
     ):
         raise ValueError("stop_after_seconds must be a finite positive duration")
     resume = resume or config.train.resume
+    if cpu_step_memory_probe is not None and resume:
+        raise ValueError("CPU optimizer-step profiling requires a fresh non-resume run")
     run_dir = Path(config.output_dir).resolve()
     run_dir.mkdir(parents=True, exist_ok=True)
     checkpoint_path = run_dir / "checkpoints" / "last.pt"
@@ -183,7 +188,7 @@ def train(
             f"configured vocab_size {config.model.vocab_size} differs from {tokenizer.name} size {tokenizer.vocab_size}"
         )
 
-    device = resolve_device()
+    device = torch.device("cpu") if cpu_step_memory_probe is not None else resolve_device()
     amp_dtype, amp_enabled = resolve_precision(config.train.mixed_precision, device)
     environment = _environment(device)
     seed_everything(config.seed, config.train.deterministic)
@@ -324,6 +329,7 @@ def train(
     process_memory_before_training = process_memory_bytes()
     accelerator_memory_before_training = accelerator_memory(device)
     training_accelerator_peak_records = []
+    cpu_step_memory_measurement = None
     final_step = start_step
 
     def record_nonfinite_failure(
@@ -368,6 +374,13 @@ def train(
             torch.cuda.reset_peak_memory_stats(device)
         optimizer.zero_grad(set_to_none=True)
         loss_total = torch.zeros((), device=device)
+        if cpu_step_memory_probe is not None and step == start_step + 1:
+            cpu_step_memory_probe.send({"event": "ready", "pid": os.getpid()})
+            start_message = cpu_step_memory_probe.recv()
+            if not isinstance(start_message, dict) or start_message.get("event") != "begin":
+                raise RuntimeError(
+                    "CPU optimizer-step measurement did not receive its begin signal"
+                )
         step_start = time.perf_counter()
         for _ in range(config.train.gradient_accumulation):
             x, y = sample_batch(
@@ -415,6 +428,13 @@ def train(
         _sync(device)
         training_accelerator_peak_records.append(accelerator_memory(device))
         elapsed = time.perf_counter() - step_start
+        if cpu_step_memory_probe is not None and step == start_step + 1:
+            cpu_step_memory_probe.send(
+                {"event": "optimizer_step_complete", "step": step, "step_seconds": elapsed}
+            )
+            cpu_step_memory_measurement = cpu_step_memory_probe.recv()
+            if not isinstance(cpu_step_memory_measurement, dict):
+                raise RuntimeError("CPU optimizer-step measurement returned an invalid record")
         active_seconds += elapsed
         final_step = step
         time_budget_reached = (
@@ -526,7 +546,7 @@ def train(
             "process_memory_after_training": process_memory_bytes(),
             "accelerator_memory_after_training": accelerator_memory(device),
             "memory": {
-                "schema_version": 1,
+                "schema_version": 2 if cpu_step_memory_measurement is not None else 1,
                 "scope": (
                     "training invocation; accelerator peak counters reset per optimizer step, "
                     "and each step is synchronized before reading its peak"
@@ -544,6 +564,11 @@ def train(
                 "accelerator_peak_scope": (
                     "maximum CUDA allocated/reserved peak across optimizer steps in this "
                     "invocation; excludes validation and checkpoint serialization"
+                ),
+                **(
+                    {"cpu_optimizer_step_sampled_peak": cpu_step_memory_measurement}
+                    if cpu_step_memory_measurement is not None
+                    else {}
                 ),
             },
         }

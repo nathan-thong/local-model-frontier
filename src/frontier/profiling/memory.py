@@ -12,7 +12,7 @@ from typing import Any
 import torch
 
 
-def _windows_process_memory_bytes() -> dict[str, int | str | None]:
+def _windows_process_memory_bytes(process_id: int | None = None) -> dict[str, int | str | None]:
     import ctypes
     from ctypes import wintypes
 
@@ -37,21 +37,37 @@ def _windows_process_memory_bytes() -> dict[str, int | str | None]:
     psapi = ctypes.windll.psapi
     kernel32.GetCurrentProcess.restype = wintypes.HANDLE
     kernel32.GetCurrentProcess.argtypes = []
+    kernel32.OpenProcess.restype = wintypes.HANDLE
+    kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+    kernel32.CloseHandle.restype = wintypes.BOOL
+    kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
     psapi.GetProcessMemoryInfo.restype = wintypes.BOOL
     psapi.GetProcessMemoryInfo.argtypes = [
         wintypes.HANDLE,
         ctypes.POINTER(Counters),
         wintypes.DWORD,
     ]
-    ok = psapi.GetProcessMemoryInfo(
-        kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb
-    )
-    return {
-        "rss_bytes": int(counters.WorkingSetSize) if ok else None,
-        "private_bytes": int(counters.PrivateUsage) if ok else None,
-        "peak_rss_bytes": int(counters.PeakWorkingSetSize) if ok else None,
-        "method": "Win32 GetProcessMemoryInfo",
-    }
+    close_handle = False
+    if process_id is None:
+        process_handle = kernel32.GetCurrentProcess()
+    else:
+        # PROCESS_QUERY_LIMITED_INFORMATION is sufficient for GetProcessMemoryInfo on
+        # supported Windows versions and avoids requesting read access to process memory.
+        process_handle = kernel32.OpenProcess(0x1000, False, process_id)
+        close_handle = bool(process_handle)
+    try:
+        ok = bool(process_handle) and psapi.GetProcessMemoryInfo(
+            process_handle, ctypes.byref(counters), counters.cb
+        )
+        return {
+            "rss_bytes": int(counters.WorkingSetSize) if ok else None,
+            "private_bytes": int(counters.PrivateUsage) if ok else None,
+            "peak_rss_bytes": int(counters.PeakWorkingSetSize) if ok else None,
+            "method": "Win32 GetProcessMemoryInfo",
+        }
+    finally:
+        if close_handle:
+            kernel32.CloseHandle(process_handle)
 
 
 def _native_peak_rss_bytes() -> tuple[int | None, str]:
@@ -169,20 +185,52 @@ def isolated_process_peak(
             process.join()
 
 
-def process_memory_bytes() -> dict[str, int | None]:
+def process_memory_bytes(process_id: int | None = None) -> dict[str, int | str | None]:
     if os.name == "nt":
-        return _windows_process_memory_bytes()
+        return _windows_process_memory_bytes(process_id)
+    if process_id is not None:
+        try:
+            import psutil  # type: ignore[import-not-found]
+
+            process = psutil.Process(process_id)
+            info = process.memory_info()
+            full_info = process.memory_full_info()
+            return {
+                "rss_bytes": int(info.rss),
+                "private_bytes": (
+                    int(full_info.uss) if getattr(full_info, "uss", None) is not None else None
+                ),
+                "peak_rss_bytes": None,
+                "method": "psutil current RSS and USS",
+            }
+        except ImportError:
+            return {
+                "rss_bytes": None,
+                "private_bytes": None,
+                "peak_rss_bytes": None,
+                "method": "psutil required for another-process memory readings",
+            }
+        except Exception as error:  # noqa: BLE001 - report process sensor errors as unavailable.
+            return {
+                "rss_bytes": None,
+                "private_bytes": None,
+                "peak_rss_bytes": None,
+                "method": f"psutil process reading unavailable: {type(error).__name__}",
+            }
     peak, peak_method = _native_peak_rss_bytes()
     try:
         import psutil  # type: ignore[import-not-found]
 
         process = psutil.Process()
         info = process.memory_info()
+        full_info = process.memory_full_info()
         return {
             "rss_bytes": int(info.rss),
-            "private_bytes": int(getattr(info, "private", info.rss)),
+            "private_bytes": (
+                int(full_info.uss) if getattr(full_info, "uss", None) is not None else None
+            ),
             "peak_rss_bytes": peak,
-            "method": f"psutil current RSS; {peak_method}",
+            "method": f"psutil current RSS and USS; {peak_method}",
         }
     except ImportError:
         return {

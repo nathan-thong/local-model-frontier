@@ -16,6 +16,10 @@ The exporter, verifier, CLI, adversarial tests, sanitized six-run result bundle,
 
 **Q09 stop condition:** If the exporter cannot safely sanitize a field, omit it and record that omission. Do not widen the allowlist just to retain a convenient field. If comparison eligibility cannot be reconstructed from source artifacts, export it as ineligible/unknown rather than trusting a supplied boolean.
 
+## Q08 E08 CPU optimizer-step measurement: active bounded package
+
+Add a fresh spawned CPU worker that follows the production training loop for exactly one optimizer update. Sample current working set/RSS and private memory after setup and during the step; preserve the existing process-lifetime high-water field and disclose that sampled peaks can miss short allocations. Preregister the check in `EXPERIMENTS.md`. Run the focused measurement validation and repository tests/style checks, then record the exact output. CUDA validation stays open because no suitable CUDA device is available. Do not turn this infrastructure probe into an architecture comparison.
+
 ## Establish a useful evaluation domain before sequence training
 
 Q10.a was corrected on 23 September 2026 before any acquisition. OpenStax *Principles of Economics 2e* is withdrawn because its publisher page prohibits LLM training without permission. The replacement decision is a bounded custom snapshot of English Wikipedia article revisions, subject to per-page CC BY-SA and attribution checks. Candidate review and this correction are recorded in `docs/data_protocol.md`. No source text has been acquired.

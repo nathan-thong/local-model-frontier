@@ -20,6 +20,7 @@ from frontier.experiments.results import write_json, write_summary
 from frontier.experiments.runner import execute_sweep
 from frontier.models import DecoderLanguageModel
 from frontier.profiling.benchmark import profile_model
+from frontier.profiling.cpu_step_memory import profile_cpu_optimizer_step
 from frontier.tokenization import (
     build_tokenizer,
     load_tokenizer_artifact,
@@ -186,6 +187,15 @@ def build_parser() -> argparse.ArgumentParser:
     profile_parser = commands.add_parser("profile", help="profile a trained run")
     profile_parser.add_argument("--run-dir", required=True, type=Path)
 
+    cpu_memory_parser = commands.add_parser(
+        "profile-cpu-step-memory",
+        help="sample process memory during one fresh CPU optimizer step",
+    )
+    cpu_memory_parser.add_argument("--config", required=True, type=Path)
+    cpu_memory_parser.add_argument("--output-dir", required=True, type=Path)
+    cpu_memory_parser.add_argument("--sample-interval-ms", type=float, default=10.0)
+    cpu_memory_parser.add_argument("--timeout-seconds", type=float, default=300.0)
+
     data_parser = commands.add_parser(
         "prepare-data", help="split line-oriented UTF-8 documents deterministically"
     )
@@ -261,6 +271,17 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "profile":
             metrics = _profile(args.run_dir.resolve())
             print(json.dumps(metrics, indent=2))
+        elif args.command == "profile-cpu-step-memory":
+            config = RunConfig.from_json(args.config)
+            config.output_dir = str(args.output_dir)
+            result = profile_cpu_optimizer_step(
+                config,
+                sample_interval_ms=args.sample_interval_ms,
+                timeout_seconds=args.timeout_seconds,
+            )
+            print(json.dumps(result, indent=2))
+            if result["worker_status"] != "completed":
+                return 1
         elif args.command == "prepare-data":
             source_metadata = (
                 json.loads(args.source_metadata.read_text(encoding="utf-8"))

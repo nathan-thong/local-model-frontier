@@ -1,7 +1,9 @@
+import pytest
 import torch
 from torch import nn
 
 from frontier.profiling.benchmark import _state_memory_accounting
+from frontier.profiling.cpu_step_memory import _summarize_samples
 from frontier.profiling.memory import isolated_process_peak, maximum_accelerator_peaks
 
 
@@ -33,6 +35,32 @@ def test_maximum_accelerator_peaks_handles_empty_invocation():
         "peak_allocated_bytes": None,
         "peak_reserved_bytes": None,
     }
+
+
+def test_cpu_step_summary_uses_sampled_current_memory_not_lifetime_peak():
+    measurement = _summarize_samples(
+        {
+            "rss_bytes": 100,
+            "private_bytes": 80,
+            "peak_rss_bytes": 10_000,
+            "method": "test sensor",
+        },
+        [
+            {"rss_bytes": 120, "private_bytes": 96, "method": "test sensor"},
+            {"rss_bytes": 150, "private_bytes": None, "method": "test sensor"},
+        ],
+        [1.0, 1.02],
+        10.0,
+        0.025,
+    )
+
+    assert measurement["status"] == "measured"
+    assert measurement["baseline"] == {"rss_bytes": 100, "private_bytes": 80}
+    assert measurement["sampled_peak"] == {"rss_bytes": 150, "private_bytes": 96}
+    assert measurement["sampled_increase"] == {"rss_bytes": 50, "private_bytes": 16}
+    assert measurement["sample_count"] == 2
+    assert measurement["sample_gap_seconds"]["maximum"] == pytest.approx(0.02)
+    assert measurement["peak_is_sampled"] is True
 
 
 def test_isolated_process_peaks_do_not_retain_prior_workload_high_water():
