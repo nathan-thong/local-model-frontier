@@ -1,6 +1,6 @@
 # Sequence-module experiment plan
 
-Status: S01 correctness/config work is implemented and tested; no GQA experiment or improvement has been completed. A separately prepared schema-3 TinyStories split now has explicit synthetic origin and verified source/split hashes; the historical schema-1 data remains unchanged. New training is still blocked until the MHA/GQA copies, scoped evaluation margin, and dry-run plan are frozen on a clean commit. Each numbered item is a small change or a bounded experiment; implement in order and preserve negative results. Use the experiment template in `EXPERIMENTS.md` before launching a run.
+Status: S01 correctness/config work is implemented and tested. GQA smoke and one-seed screen runs are complete, with no improvement claim; the short screen motivates only a fresh matched-compute confirmation. The schema-3 synthetic split and full MHA/GQA configs are frozen, and the historical schema-1 data remains unchanged. Each numbered item is a small change or a bounded experiment; implement in order and preserve negative results. Use the experiment template in `EXPERIMENTS.md` before launching a run.
 
 ## What the code currently supports
 
