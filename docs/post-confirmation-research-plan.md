@@ -1,6 +1,6 @@
 # Post-confirmation research plan
 
-Status: conditional research execution plan, 23 September 2026. The first M2-GQA-001 full-budget attempt completed but failed the comparator's warmup-fraction recipe gate; it supports no paired comparison claim. M2-GQA-002 is preregistered as the corrected confirmation. This plan defines future work and is not a result or authorization to provision paid compute or publish claims.
+Status: conditional research execution plan, 23 September 2026. The first M2-GQA-001 full-budget attempt failed the comparator's warmup-fraction recipe gate and remains ineligible. The corrected M2-GQA-002 passed paired comparison eligibility on synthetic TinyStories: mean NLL delta -0.02307 nats/token, sample SD 0.02439, with exactly half the KV bytes and about 8.5% slower CPU decode. It is not a broad capability claim. Q08 is the next package. This plan defines future work and does not authorize paid compute or publication.
 
 ## Objective and working rules
 
