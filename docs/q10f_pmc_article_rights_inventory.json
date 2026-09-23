@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "experiment_id": "Q10-SOURCE-005",
-  "status": "xml_retrieval_complete_rights_review_pending",
+  "status": "rights_gate_failed_minimum_documents",
   "as_of_date": "2026-09-23",
   "preregistered_revision": "dd6863cf1a6c7def5854c90d816dc0aa3c728bb",
   "source_gate_experiment_id": "Q10-SOURCE-004",
@@ -61,7 +61,7 @@
   "rights_protocol_amendments": [
     {
       "experiment_id": "Q10-SOURCE-006",
-      "status": "preregistered_before_cohort_rights_screen",
+      "status": "applied_screen_stopped_below_minimum",
       "preregistered_at_utc": "2026-09-23T11:12:45Z",
       "source005_original_rule_preserved": "The initial Q10-SOURCE-005 criterion required the literal HTTPS href https://creativecommons.org/licenses/by/4.0/.",
       "amended_rule": "For rights screening only, accept exactly either http://creativecommons.org/licenses/by/4.0/ or https://creativecommons.org/licenses/by/4.0/ as the JATS license href, with no port, query, fragment, credentials, or path variation. Preserve the raw href and normalize the HTTP form to the canonical HTTPS URL for comparison. Also require the article license text to identify CC BY 4.0, at least one exact canonical HTTPS CC BY 4.0 URI in the frozen OAI rights values, and no conflicting article-level license or restriction. Missing or ambiguous evidence still fails.",
@@ -123,14 +123,56 @@
       "xml_requested_at_utc": "2026-09-23T11:07:00Z",
       "downloaded_bytes": 142172,
       "download_sha256": "ad376b17d2ad1dc5471742009b9a4f1eed1ae42aff19d70a3484e9b6ae7eed12",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "d2f182777e5698823170b11fd4477e47",
       "xml_verified_at_utc": "2026-09-23T11:07:01Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "http://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "license",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        },
+        {
+          "value": "http://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC5798820",
+        "xml_version": "PMC5798820.1",
+        "xml_doi": "10.1371/journal.pone.0192163",
+        "xml_title": "Taking an educational psychology course improves neuroscience literacy but does not reduce belief in neuromyths"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 2,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "neurosciences",
@@ -169,14 +211,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:02Z",
       "downloaded_bytes": 141731,
       "download_sha256": "936ef1e09480d65128cb7d07dc0005ac44dccc6633045f26c88082bb7aaa78dd",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "73bfa8dfdb53425992683c7baa7bf8af",
       "xml_verified_at_utc": "2026-09-23T11:07:04Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "http://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC5802623",
+        "xml_version": "PMC5802623.1",
+        "xml_doi": "10.1038/s41398-017-0071-9",
+        "xml_title": "Dopamine, psychosis and schizophrenia: the widening gap between basic and clinical neuroscience"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "neurosciences",
@@ -218,14 +296,57 @@
       "xml_requested_at_utc": "2026-09-23T11:07:04Z",
       "downloaded_bytes": 82198,
       "download_sha256": "7c92a17e9532703575b0a35106c89058e5939994cad800f87a1190b624eb041a",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "http://creativecommons.org/licenses/by/4.0/",
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open AccessThis article is distributed under the terms of the Creative Commons Attribution 4.0 International License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and reproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The Creative Commons Public Domain Dedication waiver (http://creativecommons.org/publicdomain/zero/1.0/) applies to the data made available in this article, unless otherwise stated."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "c4230c308594fb2043a76e41a713bf4b",
       "xml_verified_at_utc": "2026-09-23T11:07:05Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "http://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        },
+        {
+          "value": "http://creativecommons.org/publicdomain/zero/1.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC5809949",
+        "xml_version": "PMC5809949.1",
+        "xml_doi": "10.1186/s12913-018-2906-3",
+        "xml_title": "Evaluation of a multicomponent pathway to address inpatient delirium on a neurosciences ward"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "neurosciences",
@@ -262,14 +383,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:06Z",
       "downloaded_bytes": 75483,
       "download_sha256": "52cbed65fdeaa61a1894653ea997d9441583690d1fefb3cf38eb86b2db68750b",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "b88b33828d9fe308b6960ecb213b03cd",
       "xml_verified_at_utc": "2026-09-23T11:07:07Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "http://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC5813180",
+        "xml_version": "PMC5813180.1",
+        "xml_doi": "10.1038/s41598-018-20423-z",
+        "xml_title": "The Caveats of observing Inter-Trial Phase-Coherence in Cognitive Neuroscience"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "neurosciences",
@@ -312,14 +469,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:07Z",
       "downloaded_bytes": 205221,
       "download_sha256": "f62afe8784d2c1185a20b128fde8e52b4e7044248e729c3a7b14d8707e824bcf",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "http://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "dd4e5c19f235121dba3d5b42e3a19063",
       "xml_verified_at_utc": "2026-09-23T11:07:09Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "http://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC5825014",
+        "xml_version": "PMC5825014.1",
+        "xml_doi": "10.1038/s41598-018-21753-8",
+        "xml_title": "Quantitative 3-D morphometric analysis of individual dendritic spines"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "microbiology",
@@ -361,13 +554,40 @@
       "downloaded_bytes": 113783,
       "download_sha256": "b1c24357bfab0f02f73c50540797cf1e951d6ed4ac00401667c37ece81357b22",
       "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution."
+      ],
+      "article_level_rights_status": "ineligible_missing_explicit_href",
+      "article_level_exclusion_reasons": [
+        "The exact JATS front/article-meta/permissions/license contains a canonical ALI license_ref and a CC BY 4.0 statement, but contains no xlink:href equal to either URI form permitted by Q10-SOURCE-006. This fails the preregistered explicit-href criterion and is a protocol-screen failure, not a conclusion that the article is unlicensed."
+      ],
       "download_md5": "272d0804267c4797a69c85db4320bc50",
       "xml_verified_at_utc": "2026-09-23T11:07:11Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC11261691",
+        "xml_version": "PMC11261691.1",
+        "xml_doi": "10.1099/ijsem.0.006407",
+        "xml_title": "Nocardioides agri sp. nov., isolated from garden soil"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 0,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": false,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "microbiology",
@@ -405,13 +625,40 @@
       "downloaded_bytes": 59371,
       "download_sha256": "4d196eb5ee881efeb926f4f8c58039f569c88c818a24707196a7b559b10e6072",
       "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution."
+      ],
+      "article_level_rights_status": "ineligible_missing_explicit_href",
+      "article_level_exclusion_reasons": [
+        "The exact JATS front/article-meta/permissions/license contains a canonical ALI license_ref and a CC BY 4.0 statement, but contains no xlink:href equal to either URI form permitted by Q10-SOURCE-006. This fails the preregistered explicit-href criterion and is a protocol-screen failure, not a conclusion that the article is unlicensed."
+      ],
       "download_md5": "facd5ab679864d0de90895fc0f2882bd",
       "xml_verified_at_utc": "2026-09-23T11:07:12Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC11261710",
+        "xml_version": "PMC11261710.1",
+        "xml_doi": "10.1099/ijsem.0.006433",
+        "xml_title": "Pengzhenrongella frigida sp. nov., isolated from a glacier"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 0,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": false,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "microbiology",
@@ -450,13 +697,40 @@
       "downloaded_bytes": 90390,
       "download_sha256": "d2bcf7e319efec7dca9ddc1333de66c7c3a2531da66d2cf9b405aa9b4787a940",
       "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution."
+      ],
+      "article_level_rights_status": "ineligible_missing_explicit_href",
+      "article_level_exclusion_reasons": [
+        "The exact JATS front/article-meta/permissions/license contains a canonical ALI license_ref and a CC BY 4.0 statement, but contains no xlink:href equal to either URI form permitted by Q10-SOURCE-006. This fails the preregistered explicit-href criterion and is a protocol-screen failure, not a conclusion that the article is unlicensed."
+      ],
       "download_md5": "087cf7f38fd1918b45a349198f008133",
       "xml_verified_at_utc": "2026-09-23T11:07:14Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC11281480",
+        "xml_version": "PMC11281480.1",
+        "xml_doi": "10.1099/ijsem.0.006468",
+        "xml_title": "Flavobacterium facile sp. nov., isolated from water system of Atlantic salmon (Salmo salar) fry cultured in Chile"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 0,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": false,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "microbiology",
@@ -496,13 +770,40 @@
       "downloaded_bytes": 119872,
       "download_sha256": "e4495efe30f0d46308a40e5f380540c557075097fe95d79287d0a435d3a83a62",
       "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution."
+      ],
+      "article_level_rights_status": "ineligible_missing_explicit_href",
+      "article_level_exclusion_reasons": [
+        "The exact JATS front/article-meta/permissions/license contains a canonical ALI license_ref and a CC BY 4.0 statement, but contains no xlink:href equal to either URI form permitted by Q10-SOURCE-006. This fails the preregistered explicit-href criterion and is a protocol-screen failure, not a conclusion that the article is unlicensed."
+      ],
       "download_md5": "5c86f7545548652047ac6537092d531e",
       "xml_verified_at_utc": "2026-09-23T11:07:16Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC11281800",
+        "xml_version": "PMC11281800.1",
+        "xml_doi": "10.1099/ijsem.0.006473",
+        "xml_title": "Pseudomonas beijingensis sp. nov., a novel species widely colonizing plant rhizosphere"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 0,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": false,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "microbiology",
@@ -546,13 +847,40 @@
       "downloaded_bytes": 152797,
       "download_sha256": "acd2260b60c3c542a7f6a7bed8db1e116ce2a5187bfbe2f9af42d55e16626699",
       "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution."
+      ],
+      "article_level_rights_status": "ineligible_missing_explicit_href",
+      "article_level_exclusion_reasons": [
+        "The exact JATS front/article-meta/permissions/license contains a canonical ALI license_ref and a CC BY 4.0 statement, but contains no xlink:href equal to either URI form permitted by Q10-SOURCE-006. This fails the preregistered explicit-href criterion and is a protocol-screen failure, not a conclusion that the article is unlicensed."
+      ],
       "download_md5": "9e69d81b2bef53bcf37ff207731ef86e",
       "xml_verified_at_utc": "2026-09-23T11:07:18Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC11288634",
+        "xml_version": "PMC11288634.1",
+        "xml_doi": "10.1099/ijsem.0.006481",
+        "xml_title": "Collimonas rhizosphaerae sp. nov., a novel species isolated from the beech rhizosphere"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 0,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": false,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "microbiology",
@@ -592,13 +920,40 @@
       "downloaded_bytes": 94416,
       "download_sha256": "2dca5502a63873c91e02ecbda00a6195949c900e4b32cad635ac7e090cee995c",
       "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution."
+      ],
+      "article_level_rights_status": "ineligible_missing_explicit_href",
+      "article_level_exclusion_reasons": [
+        "The exact JATS front/article-meta/permissions/license contains a canonical ALI license_ref and a CC BY 4.0 statement, but contains no xlink:href equal to either URI form permitted by Q10-SOURCE-006. This fails the preregistered explicit-href criterion and is a protocol-screen failure, not a conclusion that the article is unlicensed."
+      ],
       "download_md5": "b50c09f3f75ed26afe752f741b35aa1c",
       "xml_verified_at_utc": "2026-09-23T11:07:19Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC11316580",
+        "xml_version": "PMC11316580.1",
+        "xml_doi": "10.1099/ijsem.0.006447",
+        "xml_title": "Chitinophaga pollutisoli sp. nov., isolated from contaminated sediment"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 0,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": false,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "microbiology",
@@ -636,13 +991,40 @@
       "downloaded_bytes": 157553,
       "download_sha256": "1b618f5b2c911752cb8d0660fdbe58c85a46efaf2bdbee603f60d3a5447ced6b",
       "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution."
+      ],
+      "article_level_rights_status": "ineligible_missing_explicit_href",
+      "article_level_exclusion_reasons": [
+        "The exact JATS front/article-meta/permissions/license contains a canonical ALI license_ref and a CC BY 4.0 statement, but contains no xlink:href equal to either URI form permitted by Q10-SOURCE-006. This fails the preregistered explicit-href criterion and is a protocol-screen failure, not a conclusion that the article is unlicensed."
+      ],
       "download_md5": "a25768575a1d28eb76884fb41b68bd1c",
       "xml_verified_at_utc": "2026-09-23T11:07:21Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC11349053",
+        "xml_version": "PMC11349053.1",
+        "xml_doi": "10.1099/ijsem.0.006496",
+        "xml_title": "Mycovorax composti gen. nov., sp. nov., a member of the family Chitinophagaceae isolated from button mushroom compost"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 0,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": false,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "microbiology",
@@ -679,13 +1061,40 @@
       "downloaded_bytes": 41051,
       "download_sha256": "2903bdc0b025b22b3b72cf3d3582eb04cfe56d735b26b2a4f5fb9799cbffe05c",
       "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License. This article was made open access via a Publish and Read agreement between the Microbiology Society and the corresponding author’s institution."
+      ],
+      "article_level_rights_status": "ineligible_missing_explicit_href",
+      "article_level_exclusion_reasons": [
+        "The exact JATS front/article-meta/permissions/license contains a canonical ALI license_ref and a CC BY 4.0 statement, but contains no xlink:href equal to either URI form permitted by Q10-SOURCE-006. This fails the preregistered explicit-href criterion and is a protocol-screen failure, not a conclusion that the article is unlicensed."
+      ],
       "download_md5": "28b89310fa50b1c75eda86151a4478e7",
       "xml_verified_at_utc": "2026-09-23T11:07:23Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC11350378",
+        "xml_version": "PMC11350378.1",
+        "xml_doi": "10.1099/ijsem.0.006503",
+        "xml_title": "Genomic evidence that Ornithinicoccus soli Jiang et al. 2020 is a later heterotypic synonym of Segeticoccus rhizosphaerae Lee and Whang 2020"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 0,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": false,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "ecology",
@@ -726,14 +1135,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:23Z",
       "downloaded_bytes": 84419,
       "download_sha256": "37cdf2155080794622912385a44a7155dc0a828a73c003c457994f0b14ff47aa",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "910870c083871ea169d42de94f721c54",
       "xml_verified_at_utc": "2026-09-23T11:07:24Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "https://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC8233365",
+        "xml_version": "PMC8233365.1",
+        "xml_doi": "10.1038/s42003-021-02332-6",
+        "xml_title": "Multi-year presence of humpback whales in the Atlantic sector of the Southern Ocean but not during El Niño"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "ecology",
@@ -777,14 +1222,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:25Z",
       "downloaded_bytes": 95856,
       "download_sha256": "9e51be5edb08a2f2aeb0015ea7e640f41239b8089bef098d2fd87e3ec7409f50",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "126647711f081c770e2404c22653d7af",
       "xml_verified_at_utc": "2026-09-23T11:07:26Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "https://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC8238932",
+        "xml_version": "PMC8238932.1",
+        "xml_doi": "10.1038/s41467-021-24253-y",
+        "xml_title": "Storm surge and ponding explain mangrove dieback in southwest Florida following Hurricane Irma"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "ecology",
@@ -823,14 +1304,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:27Z",
       "downloaded_bytes": 155322,
       "download_sha256": "31db2e75e812d19cd51e6384290150d6de19d7cae33b9aca2e9f0cf1ff76ba17",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "25f518b56a0a4abe8e26d637fb3a847c",
       "xml_verified_at_utc": "2026-09-23T11:07:28Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "https://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC8248734",
+        "xml_version": "PMC8248734.1",
+        "xml_doi": "10.1371/journal.pone.0253908",
+        "xml_title": "Mapping the potential aggregation values of ecotourism landscapes from stakeholder survey, structural equation modeling and GIS: Case study of Moc Chau site, Vietnam"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "ecology",
@@ -870,14 +1387,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:29Z",
       "downloaded_bytes": 668319,
       "download_sha256": "3eff5f49a3877fdede96f7dad53947410eb72b6dadab6b44065595dade829534",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "fb6f03a17dfc4257d4ef0cbb36db679f",
       "xml_verified_at_utc": "2026-09-23T11:07:31Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "https://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC8253789",
+        "xml_version": "PMC8253789.1",
+        "xml_doi": "10.1038/s41467-021-23875-6",
+        "xml_title": "Quantifying nitrogen fixation by heterotrophic bacteria in sinking marine particles"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "ecology",
@@ -933,14 +1486,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:31Z",
       "downloaded_bytes": 276355,
       "download_sha256": "d2f0f600c285af5b5c5c274d70475d140ed377862788261b992ec855779385a5",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "173037c9fd29beb1bd3fba5f880c08c5",
       "xml_verified_at_utc": "2026-09-23T11:07:33Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "https://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC8257505",
+        "xml_version": "PMC8257505.1",
+        "xml_doi": "10.1038/s41559-021-01440-0",
+        "xml_title": "Consequences of spatial patterns for coexistence in species-rich plant communities"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "ecology",
@@ -979,14 +1568,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:33Z",
       "downloaded_bytes": 92104,
       "download_sha256": "63ec1618477263f7f33b0dacad52c3ca980429d2143ae63a9c5c63c5fc76416a",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "a0fcf2eeed9dea70d53d606c4316e303",
       "xml_verified_at_utc": "2026-09-23T11:07:34Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "https://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC8260664",
+        "xml_version": "PMC8260664.1",
+        "xml_doi": "10.1038/s41467-021-24394-0",
+        "xml_title": "Artificial nighttime lighting impacts visual ecology links between flowers, pollinators and predators"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "ecology",
@@ -1025,14 +1650,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:35Z",
       "downloaded_bytes": 160165,
       "download_sha256": "a360f3bba9966b464cea4f19cdd9300f2ddc434460d5b8623671a1962a072004",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution 4.0 International license."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "f809b3b86e62b172af1efc0cf09cd807",
       "xml_verified_at_utc": "2026-09-23T11:07:36Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "https://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC8262960",
+        "xml_version": "PMC8262960.1",
+        "xml_doi": "10.1128/mBio.01490-21",
+        "xml_title": "Generation of a Microsporidia Species Attribute Database and Analysis of the Extensive Ecological and Phenotypic Diversity of Microsporidia"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     },
     {
       "stratum_name": "ecology",
@@ -1068,14 +1729,50 @@
       "xml_requested_at_utc": "2026-09-23T11:07:37Z",
       "downloaded_bytes": 144878,
       "download_sha256": "08cfd493da4dbcaa90f9a03f8bf5ad2399e572bc021afdebf9f242c5e7648916",
-      "article_xml_license_hrefs": [],
-      "article_xml_license_texts": [],
-      "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": [],
+      "article_xml_license_hrefs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_texts": [
+        "https://creativecommons.org/licenses/by/4.0/This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited."
+      ],
+      "article_level_rights_status": "not_cleared_minimum_gate_unattainable",
+      "article_level_exclusion_reasons": [
+        "The XML identity, OAI URI and CC BY 4.0 license-element signals match; complete body-level third-party-rights review was stopped because 8 cohort records failed the explicit-href criterion, leaving a maximum of 13 possible passes against the frozen minimum of 20. This record is not rights-cleared."
+      ],
       "download_md5": "43e5a7cef59f72fa3bed3f9749ef4a30",
       "xml_verified_at_utc": "2026-09-23T11:07:38Z",
       "xml_request_error": null,
-      "request_attempt_count": 1
+      "request_attempt_count": 1,
+      "article_xml_ali_license_refs": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "article_xml_license_href_records": [
+        {
+          "value": "https://creativecommons.org/licenses/by/4.0/",
+          "owner_element": "ext-link",
+          "namespace_uri": "http://www.w3.org/1999/xlink",
+          "qualifies_as_xlink_href": true
+        }
+      ],
+      "article_xml_identity_review": {
+        "pmcid_exact": true,
+        "version_exact": true,
+        "doi_exact": true,
+        "title_exact": true,
+        "xml_pmcid": "PMC8270205",
+        "xml_version": "PMC8270205.1",
+        "xml_doi": "10.1371/journal.pone.0253972",
+        "xml_title": "Composition Wheels: Visualizing dissolved organic matter using common composition metrics across a variety of Canadian ecozones"
+      },
+      "article_xml_license_gate": {
+        "article_level_license_element_count": 1,
+        "qualifying_exact_cc_by_4_href_count": 1,
+        "frozen_oai_canonical_https_present": true,
+        "license_text_has_cc_by_4_signal": true,
+        "gate_passed": true,
+        "scope_description": "Preliminary identity, OAI, license-text and exact XLink href gate only; not a full article-rights clearance."
+      },
+      "article_xml_body_rights_review": "not_reviewed_after_minimum_gate_failure"
     }
   ],
   "preregistration_parent_revision": "dd6863cf1a6c7def5854c90d816dc0aa3c728bb",
@@ -1100,5 +1797,27 @@
   "retrieved_article_bytes": 3153456,
   "retrieval_started_at_utc": "2026-09-23T11:07:00Z",
   "verified_xml_count": 21,
-  "retrieval_completed_at_utc": "2026-09-23T11:07:38Z"
+  "retrieval_completed_at_utc": "2026-09-23T11:07:38Z",
+  "rights_decision_at_utc": "2026-09-23T11:26:46Z",
+  "rights_screen_summary": {
+    "protocol_experiment_id": "Q10-SOURCE-006",
+    "xml_parser": ".NET XmlReader with DtdProcessing=Ignore and XmlResolver=null",
+    "article_license_scope": "front/article-meta/permissions/license and descendant XLink href attributes",
+    "candidate_count": 21,
+    "exact_identity_matches": 21,
+    "oai_canonical_https_matches": 21,
+    "article_license_text_cc_by4_signals": 21,
+    "records_with_permitted_explicit_href": 13,
+    "records_missing_permitted_explicit_href": 8,
+    "minimum_complete_documents_required": 20,
+    "maximum_possible_complete_rights_cleared_documents": 13,
+    "full_body_third_party_rights_reviews": 0,
+    "complete_rights_cleared_documents": 0,
+    "body_prose_extracted": false,
+    "corpus_or_tokenizer_prepared": false,
+    "training_tokens": 0,
+    "training_updates": 0,
+    "training_flops": 0,
+    "stop_reason": "Eight records have an ALI license_ref and matching CC BY 4.0 statements but no allowed explicit XLink href. The frozen rule caps possible complete passes at 13, below the required 20. Stop before body-rights review; do not substitute candidates."
+  }
 }
