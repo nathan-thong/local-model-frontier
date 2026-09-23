@@ -100,6 +100,7 @@
   "contamination_check": {
     "scope": "Scan each task prompt, target and concatenated prompt-target against all 21 normalized Q10 train/validation/test documents. The scan is mechanical and does not calculate model scores or use test text for task selection.",
     "exact_identity": "Unicode NFC plus collapsed Unicode whitespace, matching the Q10 document identity policy.",
+    "phrase_ngram_tokens": 13,
     "phrase_overlap": "Casefold each whitespace-delimited token and require zero shared contiguous 13-token sequences between task strings and any Q10 document.",
     "record": "Per-task exact-identity and shared-13-gram counts plus source/split hashes; do not store matched source text.",
     "acceptance": "Zero exact identity matches and zero shared 13-token sequences in train, validation and test.",
