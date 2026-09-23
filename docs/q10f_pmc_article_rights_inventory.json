@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "experiment_id": "Q10-SOURCE-005",
-  "status": "preregistered_before_xml_request",
+  "status": "xml_retrieval_complete_rights_review_pending",
   "as_of_date": "2026-09-23",
-  "preregistered_revision": "dd6863cf1a6c7def5854c90d816dc0aa3c728bb5",
+  "preregistered_revision": "dd6863cf1a6c7def5854c90d816dc0aa3c728bb",
   "source_gate_experiment_id": "Q10-SOURCE-004",
   "source_gate_revision": "dd6863cf1a6c7def5854c90d816dc0aa3c728bb5",
   "source_gate_inventory_path": "docs/q10e_pmc_corrected_candidate_inventory.json",
@@ -12,8 +12,8 @@
   "eligible_xml_request_count": 21,
   "expected_eligible_xml_bytes": 3153456,
   "eligible_xml_manifest_sha256": "4a2512aeafcc0d031464953041f0451ec8e1e1d65fec60354ff01755d2517a2a",
-  "source_metadata_only": true,
-  "article_xml_requested": false,
+  "source_metadata_only": false,
+  "article_xml_requested": true,
   "figures_or_supplements_requested": false,
   "training_tokens": 0,
   "training_updates": 0,
@@ -58,6 +58,33 @@
     "minimum_documents": "At least 20 complete, article-level rights-cleared documents must remain before deterministic preparation; otherwise stop with no substitutions.",
     "training_text": "If rights pass, prepare only abstract and main-body prose; omit back matter, references, acknowledgements, permissions, all figure/table/caption/supplement/media content, and non-prose markup."
   },
+  "rights_protocol_amendments": [
+    {
+      "experiment_id": "Q10-SOURCE-006",
+      "status": "preregistered_before_cohort_rights_screen",
+      "preregistered_at_utc": "2026-09-23T11:12:45Z",
+      "source005_original_rule_preserved": "The initial Q10-SOURCE-005 criterion required the literal HTTPS href https://creativecommons.org/licenses/by/4.0/.",
+      "amended_rule": "For rights screening only, accept exactly either http://creativecommons.org/licenses/by/4.0/ or https://creativecommons.org/licenses/by/4.0/ as the JATS license href, with no port, query, fragment, credentials, or path variation. Preserve the raw href and normalize the HTTP form to the canonical HTTPS URL for comparison. Also require the article license text to identify CC BY 4.0, at least one exact canonical HTTPS CC BY 4.0 URI in the frozen OAI rights values, and no conflicting article-level license or restriction. Missing or ambiguous evidence still fails.",
+      "trigger_observation": {
+        "record": "PMC5798820 version 1",
+        "xml_path": "data/q10-source-005/raw/PMC5798820.1.xml",
+        "xml_href": "http://creativecommons.org/licenses/by/4.0/",
+        "xml_license_text_prefix": "https://creativecommons.org/licenses/by/4.0/ This is an open access article distributed under the terms of the Creative Commons Attribution License",
+        "frozen_oai_rights_include_canonical_https": true,
+        "article_prose_extracted": false,
+        "cohort_rights_decision_recorded": false
+      },
+      "interpretation_basis": "The official Creative Commons deed resolves the HTTP URL to its canonical HTTPS page and identifies the canonical HTTPS license URL. Treating the two exact URI forms as one URI identity is a narrow protocol interpretation, not a legal conclusion about any article or its contents.",
+      "supporting_primary_sources": [
+        "https://creativecommons.org/licenses/by/4.0/",
+        "https://creativecommons.org/licenses/by/4.0/legalcode"
+      ],
+      "cohort_rights_records_reviewed_at_preregistration": 0,
+      "training_tokens": 0,
+      "training_updates": 0,
+      "training_flops": 0
+    }
+  ],
   "eligible_article_records": [
     {
       "stratum_name": "neurosciences",
@@ -92,14 +119,18 @@
         "Varma, Sashank"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:00Z",
+      "downloaded_bytes": 142172,
+      "download_sha256": "ad376b17d2ad1dc5471742009b9a4f1eed1ae42aff19d70a3484e9b6ae7eed12",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "d2f182777e5698823170b11fd4477e47",
+      "xml_verified_at_utc": "2026-09-23T11:07:01Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "neurosciences",
@@ -134,14 +165,18 @@
         "Scott, JG"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:02Z",
+      "downloaded_bytes": 141731,
+      "download_sha256": "936ef1e09480d65128cb7d07dc0005ac44dccc6633045f26c88082bb7aaa78dd",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "73bfa8dfdb53425992683c7baa7bf8af",
+      "xml_verified_at_utc": "2026-09-23T11:07:04Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "neurosciences",
@@ -179,14 +214,18 @@
         "Douglas, Vanja C."
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:04Z",
+      "downloaded_bytes": 82198,
+      "download_sha256": "7c92a17e9532703575b0a35106c89058e5939994cad800f87a1190b624eb041a",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "c4230c308594fb2043a76e41a713bf4b",
+      "xml_verified_at_utc": "2026-09-23T11:07:05Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "neurosciences",
@@ -219,14 +258,18 @@
         "Mazaheri, Ali"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:06Z",
+      "downloaded_bytes": 75483,
+      "download_sha256": "52cbed65fdeaa61a1894653ea997d9441583690d1fefb3cf38eb86b2db68750b",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "b88b33828d9fe308b6960ecb213b03cd",
+      "xml_verified_at_utc": "2026-09-23T11:07:07Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "neurosciences",
@@ -265,14 +308,18 @@
         "Wlodarczyk, Jakub"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:07Z",
+      "downloaded_bytes": 205221,
+      "download_sha256": "f62afe8784d2c1185a20b128fde8e52b4e7044248e729c3a7b14d8707e824bcf",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "dd4e5c19f235121dba3d5b42e3a19063",
+      "xml_verified_at_utc": "2026-09-23T11:07:09Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "microbiology",
@@ -309,14 +356,18 @@
         "Akter, Shahina"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:09Z",
+      "downloaded_bytes": 113783,
+      "download_sha256": "b1c24357bfab0f02f73c50540797cf1e951d6ed4ac00401667c37ece81357b22",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "272d0804267c4797a69c85db4320bc50",
+      "xml_verified_at_utc": "2026-09-23T11:07:11Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "microbiology",
@@ -349,14 +400,18 @@
         "Xin, Yu-Hua"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:11Z",
+      "downloaded_bytes": 59371,
+      "download_sha256": "4d196eb5ee881efeb926f4f8c58039f569c88c818a24707196a7b559b10e6072",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "facd5ab679864d0de90895fc0f2882bd",
+      "xml_verified_at_utc": "2026-09-23T11:07:12Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "microbiology",
@@ -390,14 +445,18 @@
         "Avendaño-Herrera, Ruben"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:13Z",
+      "downloaded_bytes": 90390,
+      "download_sha256": "d2bcf7e319efec7dca9ddc1333de66c7c3a2531da66d2cf9b405aa9b4787a940",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "087cf7f38fd1918b45a349198f008133",
+      "xml_verified_at_utc": "2026-09-23T11:07:14Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "microbiology",
@@ -432,14 +491,18 @@
         "Wei, Hai-Lei"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:14Z",
+      "downloaded_bytes": 119872,
+      "download_sha256": "e4495efe30f0d46308a40e5f380540c557075097fe95d79287d0a435d3a83a62",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "5c86f7545548652047ac6537092d531e",
+      "xml_verified_at_utc": "2026-09-23T11:07:16Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "microbiology",
@@ -478,14 +541,18 @@
         "Leveau, Johan H. J."
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:16Z",
+      "downloaded_bytes": 152797,
+      "download_sha256": "acd2260b60c3c542a7f6a7bed8db1e116ce2a5187bfbe2f9af42d55e16626699",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "9e69d81b2bef53bcf37ff207731ef86e",
+      "xml_verified_at_utc": "2026-09-23T11:07:18Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "microbiology",
@@ -520,14 +587,18 @@
         "Jeon, Che Ok"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:18Z",
+      "downloaded_bytes": 94416,
+      "download_sha256": "2dca5502a63873c91e02ecbda00a6195949c900e4b32cad635ac7e090cee995c",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "b50c09f3f75ed26afe752f741b35aa1c",
+      "xml_verified_at_utc": "2026-09-23T11:07:19Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "microbiology",
@@ -560,14 +631,18 @@
         "Kertesz, Michael A."
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:20Z",
+      "downloaded_bytes": 157553,
+      "download_sha256": "1b618f5b2c911752cb8d0660fdbe58c85a46efaf2bdbee603f60d3a5447ced6b",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "a25768575a1d28eb76884fb41b68bd1c",
+      "xml_verified_at_utc": "2026-09-23T11:07:21Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "microbiology",
@@ -599,14 +674,18 @@
         "Xin, Yu-Hua"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:22Z",
+      "downloaded_bytes": 41051,
+      "download_sha256": "2903bdc0b025b22b3b72cf3d3582eb04cfe56d735b26b2a4f5fb9799cbffe05c",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "28b89310fa50b1c75eda86151a4478e7",
+      "xml_verified_at_utc": "2026-09-23T11:07:23Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "ecology",
@@ -643,14 +722,18 @@
         "Van Opzeeland, Ilse"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:23Z",
+      "downloaded_bytes": 84419,
+      "download_sha256": "37cdf2155080794622912385a44a7155dc0a828a73c003c457994f0b14ff47aa",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "910870c083871ea169d42de94f721c54",
+      "xml_verified_at_utc": "2026-09-23T11:07:24Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "ecology",
@@ -690,14 +773,18 @@
         "Morton, Douglas C."
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:25Z",
+      "downloaded_bytes": 95856,
+      "download_sha256": "9e51be5edb08a2f2aeb0015ea7e640f41239b8089bef098d2fd87e3ec7409f50",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "126647711f081c770e2404c22653d7af",
+      "xml_verified_at_utc": "2026-09-23T11:07:26Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "ecology",
@@ -732,14 +819,18 @@
         "Du, Quan Vu Viet"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:27Z",
+      "downloaded_bytes": 155322,
+      "download_sha256": "31db2e75e812d19cd51e6384290150d6de19d7cae33b9aca2e9f0cf1ff76ba17",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "25f518b56a0a4abe8e26d637fb3a847c",
+      "xml_verified_at_utc": "2026-09-23T11:07:28Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "ecology",
@@ -775,14 +866,18 @@
         "Riemann, Lasse"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:29Z",
+      "downloaded_bytes": 668319,
+      "download_sha256": "3eff5f49a3877fdede96f7dad53947410eb72b6dadab6b44065595dade829534",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "fb6f03a17dfc4257d4ef0cbb36db679f",
+      "xml_verified_at_utc": "2026-09-23T11:07:31Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "ecology",
@@ -834,14 +929,18 @@
         "Huth, Andreas"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:31Z",
+      "downloaded_bytes": 276355,
+      "download_sha256": "d2f0f600c285af5b5c5c274d70475d140ed377862788261b992ec855779385a5",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "173037c9fd29beb1bd3fba5f880c08c5",
+      "xml_verified_at_utc": "2026-09-23T11:07:33Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "ecology",
@@ -876,14 +975,18 @@
         "Troscianko, Jolyon"
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:33Z",
+      "downloaded_bytes": 92104,
+      "download_sha256": "63ec1618477263f7f33b0dacad52c3ca980429d2143ae63a9c5c63c5fc76416a",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "a0fcf2eeed9dea70d53d606c4316e303",
+      "xml_verified_at_utc": "2026-09-23T11:07:34Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "ecology",
@@ -918,14 +1021,18 @@
         "Reinke, Aaron W."
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:35Z",
+      "downloaded_bytes": 160165,
+      "download_sha256": "a360f3bba9966b464cea4f19cdd9300f2ddc434460d5b8623671a1962a072004",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "f809b3b86e62b172af1efc0cf09cd807",
+      "xml_verified_at_utc": "2026-09-23T11:07:36Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     },
     {
       "stratum_name": "ecology",
@@ -957,14 +1064,41 @@
         "Schiff, Sherry L."
       ],
       "source_metadata_screen_status": "eligible",
-      "xml_request_status": "pending",
-      "xml_requested_at_utc": null,
-      "downloaded_bytes": null,
-      "download_sha256": null,
+      "xml_request_status": "downloaded_verified",
+      "xml_requested_at_utc": "2026-09-23T11:07:37Z",
+      "downloaded_bytes": 144878,
+      "download_sha256": "08cfd493da4dbcaa90f9a03f8bf5ad2399e572bc021afdebf9f242c5e7648916",
       "article_xml_license_hrefs": [],
       "article_xml_license_texts": [],
       "article_level_rights_status": "pending",
-      "article_level_exclusion_reasons": []
+      "article_level_exclusion_reasons": [],
+      "download_md5": "43e5a7cef59f72fa3bed3f9749ef4a30",
+      "xml_verified_at_utc": "2026-09-23T11:07:38Z",
+      "xml_request_error": null,
+      "request_attempt_count": 1
     }
-  ]
+  ],
+  "preregistration_parent_revision": "dd6863cf1a6c7def5854c90d816dc0aa3c728bb",
+  "preregistration_commit": "803fbda75bee18e1483901b9f4bbe4f161901bf0",
+  "execution_notes": [
+    {
+      "event": "local_preflight_failure_before_request",
+      "timestamp_utc": "2026-09-23T11:05:27Z",
+      "detail": "The first downloader invocation stopped on an undeclared progress field before any network request. The committed inventory remained unchanged and the ignored raw directory was empty. The script was corrected before retrieval.",
+      "network_requests": 0,
+      "article_bytes_fetched": 0
+    },
+    {
+      "event": "local_preflight_failure_before_request",
+      "timestamp_utc": "2026-09-23T11:07:00Z",
+      "detail": "The second downloader invocation stopped on a PowerShell Test-Path argument-binding error while checking output paths; no candidate request was issued, candidate records remained pending, and the ignored raw directory remained empty. The condition was corrected before retrieval.",
+      "network_requests": 0,
+      "article_bytes_fetched": 0
+    }
+  ],
+  "network_request_count": 21,
+  "retrieved_article_bytes": 3153456,
+  "retrieval_started_at_utc": "2026-09-23T11:07:00Z",
+  "verified_xml_count": 21,
+  "retrieval_completed_at_utc": "2026-09-23T11:07:38Z"
 }
