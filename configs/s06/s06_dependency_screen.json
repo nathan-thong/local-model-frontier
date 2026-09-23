@@ -48,6 +48,7 @@
     "example_generation": {
       "algorithm": "sha256-rank-v1",
       "description": "For each namespace, seed, example_index, nonce, pool_name, and candidate token ID, rank candidate IDs by the pair (SHA-256 digest bytes, candidate token ID) computed from the UTF-8 string 'S06-DP-001|v1|{namespace}|{seed}|{example_index}|{nonce}|{pool_name}|{candidate_id}'. Use the first four ranked key IDs and the first four ranked value IDs in their ranked order. Set target_slot=example_index mod 4. Build tokens using input_layout and target the value at target_slot. Generate indices in ascending order. If an 11-token input sequence identity already exists in any train or evaluation split, increment nonce and regenerate that example. The evaluation split is generated once from namespace='evaluation' and evaluation_seed; training splits use namespace='training' and their respective seed.",
+      "generation_order": "training splits in the seeds array order, each in ascending example_index, followed by the shared evaluation split in ascending example_index",
       "identity": "SHA-256 of the 11 token IDs encoded as unsigned 16-bit little-endian integers"
     },
     "sequence_identity_policy": "Require all training input sequences to be unique and disjoint across seeds; require the shared evaluation inputs to be unique and absent from all training inputs."
