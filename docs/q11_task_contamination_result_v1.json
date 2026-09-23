@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "experiment_id": "Q11-TASK-001",
+  "status": "passed_task_scorer_and_contamination_gates",
+  "protocol": {
+    "contract_sha256": "2b86746845813c164c624c4adf12ad88baf7afa3e97ab404d074dac4bcdcdae1",
+    "task_file_sha256": "b00cf0f6e599d3bd54600d3568e196a2628194ed7b21afebff4ea50cdd08bf6d",
+    "data_manifest_sha256": "d49a425f09b087c6b5a31b041349b470b1759701e4de0f21ee9b469f6a21b5d1",
+    "split_sha256": {
+      "train": "e5aac508fb9c0cb6e78bdbed7a3453174000f0b630f4ba9d0c312d37fcea77a3",
+      "validation": "47faec7d07370d8148e4228351ff49e0136cfe02ecdb0ffe64412fd1c61293f5",
+      "test": "bfea9d78eb6b47e90ce9af367af62cac47f978e9d84a8f5b9ef16fc0147acdaa"
+    },
+    "tokenizer_sha256": "0570f7536d985403b6574b72f98355b1f12d0441641ff5e60cb1ede0eaa6bb33",
+    "ngram_size_tokens": 13
+  },
+  "audit_reproduction": {
+    "status": "passed",
+    "reports_byte_identical": true,
+    "report_bytes_each": 3713,
+    "report_sha256_each": "e52755947159e195c8bc93347e4248f345309b95151bef135daa5d76db2b6ba7",
+    "scanned_unique_documents": 21,
+    "split_document_counts": {"train": 17, "validation": 2, "test": 2},
+    "task_count": 4,
+    "exact_identity_match_count": 0,
+    "shared_ngram_match_count": 0,
+    "per_example": [
+      {
+        "id": "q11-v1-lookup-amber-01",
+        "prompt_sha256": "5c2c8458fb0eaf9f84b691e2d3ff9cdd6d8c7b5d8114cef20e5535759708b410",
+        "target_sha256": "3b6eacba866af413572664aae8ded43ed59b12af23a08366f3de91d516c8a4ce",
+        "prompt_target_sha256": "eb315398112d8cd8a8aa21a449bcba3a8ec5a89ff5294753e6ddcb6b427829c7",
+        "unique_task_ngram_count": 12,
+        "shared_ngram_counts_by_split": {"train": 0, "validation": 0, "test": 0}
+      },
+      {
+        "id": "q11-v1-order-px4-02",
+        "prompt_sha256": "49d75a90b5ddeb459e20ef458fe017f8b2ae29e5fc292cbae161b4165f5670b5",
+        "target_sha256": "8bdfc2b746c8e47775311723206a52d84ad9906164a8618a7246865cc5958f89",
+        "prompt_target_sha256": "1cbdd5825084228b86acb45d55fd815eaa435711d1f32321f1ba2124d34f27bf",
+        "unique_task_ngram_count": 17,
+        "shared_ngram_counts_by_split": {"train": 0, "validation": 0, "test": 0}
+      },
+      {
+        "id": "q11-v1-index-lm22-03",
+        "prompt_sha256": "0865590ca728758f02c46abd5d729a3cec19712540aa581f7abd522761a0c53e",
+        "target_sha256": "77d1228a9f021466f4ee061abbfe704332a34e89b754afad2c05397285b16997",
+        "prompt_target_sha256": "2dc4eb33938cfad07f1645353c96f778fdaae5ebdfc93da0518c0b53d495c42c",
+        "unique_task_ngram_count": 10,
+        "shared_ngram_counts_by_split": {"train": 0, "validation": 0, "test": 0}
+      },
+      {
+        "id": "q11-v1-record-ab31-04",
+        "prompt_sha256": "29dc5b5bd604949517c8d1a21b76c367eb62afcfb057bd3e9d7bf06509d8e279",
+        "target_sha256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+        "prompt_target_sha256": "6628214a37ba78ee0a36cc42825ca2f6ebba4fc03a42e0ccd70ae97de0018b2f",
+        "unique_task_ngram_count": 18,
+        "shared_ngram_counts_by_split": {"train": 0, "validation": 0, "test": 0}
+      }
+    ]
+  },
+  "scorer_validation": {
+    "hand_checked_targets": 4,
+    "exact_match_truth_table_cases": 4,
+    "per_example_utf8_byte_accounting_tested": true,
+    "eos_zero_byte_semantics_tested": true,
+    "deterministic_repeated_audit_tested": true,
+    "model_metrics_calculated": false
+  },
+  "training_budget": {
+    "network_requests": 0,
+    "model_training_tokens": 0,
+    "optimizer_updates": 0,
+    "training_flops": 0
+  },
+  "limitations": [
+    "The 13-token overlap screen detects exact long phrase reuse and full identity, not semantic similarity or shorter phrase reuse.",
+    "The four project-authored toy examples are scorer smoke probes, not a broad capability benchmark.",
+    "Test documents were scanned mechanically for contamination only; no test model metrics were calculated."
+  ],
+  "next_experiment": "Q11-BASELINE-001: freeze a bounded conventional GQA three-seed baseline plan before any training."
+}
