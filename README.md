@@ -1,12 +1,12 @@
 # Local Model Frontier
 
-A research codebase for testing whether sequence architecture, low-bit weights, distillation and adaptive computation improve language-model capability at fixed resident-memory or compute budgets. The project begins with a small, conventional decoder-only Transformer and a reproducible train/evaluate/profile loop.
+I'm building this repository to test whether changes to sequence architectures, weight precision, distillation, and inference-time computation can improve small language models under fixed memory or compute budgets. The work starts with conventional Transformer baselines and a repeatable training and evaluation setup. This is an ML systems and research project, not a chatbot or a wrapper around an existing model.
 
-Repository code is licensed under [Apache-2.0](LICENSE). Dataset licenses and terms remain separate; no corpus text is included in the source repository.
+The code is licensed under [Apache-2.0](LICENSE). Data has its own licensing terms; corpus text, checkpoints, and run outputs stay outside version control.
 
 ## Status
 
-Milestone 1 infrastructure is implemented and tested, and both conventional baselines have trained on a pinned, bounded TinyStories subset with three matched seeds each. Their estimated training-FLOP budgets differ by 0.044%; the larger model has worse held-out perplexity on this setup. The paired comparison passes its pinned-revision, clean-worktree and provenance checks, but no improvement is observed. The corpus is synthetic short fiction, so this is infrastructure and narrow baseline evidence rather than broad capability evidence. Run artifacts and results are recorded in [EXPERIMENTS.md](EXPERIMENTS.md). The baseline uses a fixed UTF-8 byte tokenizer, an infrastructure choice rather than a modeling recommendation.
+Milestone 1 is complete. I trained two conventional Transformer baselines on the same pinned TinyStories subset, with three paired seeds per model. Their estimated training-FLOP budgets differ by 0.044%. The larger model had higher held-out perplexity on every seed. The comparison passes the provenance checks; it does not show an improvement. TinyStories contains synthetic short stories, so these runs check the training and evaluation pipeline and provide a narrow baseline, not a measure of broad language capability. The setup and results are in [EXPERIMENTS.md](EXPERIMENTS.md).
 
 ## Quick start
 
@@ -43,7 +43,7 @@ frontier train --config configs/baseline_a.json --seed 123 --output-dir runs/bas
 
 Use the same seeds and corresponding output directories for `baseline_b.json`.
 
-## Repository guide
+## Code layout
 
 - `RESEARCH.md` records assumptions, prior work and failure modes before experimental architecture work.
 - `EXPERIMENTS.md` is the append-only research log. Planned experiments are marked not run.
@@ -51,16 +51,18 @@ Use the same seeds and corresponding output directories for `baseline_b.json`.
 - `src/frontier/training`, `evaluation`, `inference`, and `profiling` keep experiment stages separate.
 - `configs` stores fully specified JSON run configurations.
 - `tests` contains architecture, data, resume, profiling and comparison invariants.
+- `AGENTS.md` and `CONTRIBUTING.md` describe the experiment and code-change rules.
+- `.github/workflows/ci.yml` runs tests, lint, formatting, and wheel-build checks on Python 3.10 and 3.12.
 
 See [docs/reproducibility.md](docs/reproducibility.md), [docs/measurement_protocol.md](docs/measurement_protocol.md), [docs/data_protocol.md](docs/data_protocol.md) and [docs/downstream_evaluation.md](docs/downstream_evaluation.md) before comparing results. The command line writes resolved configs, environment details, metrics, checkpoints, evaluation output, profiles and a machine-readable summary into each run directory.
 
-## Current boundaries
+## Implemented and planned work
 
-The initial implementation provides full causal attention with MHA/GQA, LayerNorm/RMSNorm, GELU/SwiGLU, RoPE/learned positions, pre/post norm, mixed precision, resumable checkpoints, perplexity and generic JSONL task scoring. Local attention and recurrent/linear sequence modules are extension points for Milestone 2; no speed claim follows from an interface alone. Low-bit training, distillation, speculative decoding and adaptive compute remain future milestones.
+The current model supports causal MHA/GQA attention, LayerNorm/RMSNorm, GELU/SwiGLU, RoPE or learned positions, pre- or post-norm residuals, mixed-precision training, resumable checkpoints, perplexity, and JSONL task scoring. Local attention and recurrent or linear sequence blocks are planned for Milestone 2. Low-bit training, distillation, speculative decoding, and adaptive computation are later milestones.
 
-## Research integrity
+## Comparing results
 
-Every capability or efficiency claim needs a named control, a matched and disclosed training-compute budget, identical evaluation data and protocol, and repeated seeds. Report measured resident bytes and latency as well as parameter counts. Parameter count, nominal bit width, estimated FLOPs, and throughput are distinct quantities; none substitutes for the others.
+I compare changes against a named control using the same data, tokenizer, evaluation protocol, and at least three matched seeds. I report the training-compute budget, parameter count, model and cache memory, and measured latency and throughput. Estimated FLOPs and parameter counts are not substitutes for measured runtime or memory.
 
 ## Reproducing the bounded TinyStories corpus
 
