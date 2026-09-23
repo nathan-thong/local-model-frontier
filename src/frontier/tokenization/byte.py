@@ -23,6 +23,10 @@ class Tokenizer(Protocol):
 
     def encode(self, text: str, add_bos: bool = True, add_eos: bool = True) -> list[int]: ...
 
+    def token_byte_counts(
+        self, text: str, add_bos: bool = True, add_eos: bool = True
+    ) -> list[int]: ...
+
     def decode(self, ids: Sequence[int], skip_special: bool = True) -> str: ...
 
 
@@ -35,6 +39,26 @@ class ByteTokenizer:
     vocab_size = 259
     name = "utf8-byte-v1"
 
+    def to_dict(self) -> dict:
+        """Return the complete, versioned artifact needed to recreate this tokenizer."""
+        return {
+            "schema_version": 1,
+            "name": self.name,
+            "vocab_size": self.vocab_size,
+            "encoding": "UTF-8",
+            "byte_to_token_id": "identity mapping for byte values 0 through 255",
+            "special_tokens": {"bos": self.bos_id, "eos": self.eos_id, "pad": self.pad_id},
+            "encode_defaults": {"add_bos": True, "add_eos": True},
+            "decode_defaults": {"skip_special": True, "invalid_utf8": "replace"},
+        }
+
+    @classmethod
+    def from_dict(cls, artifact: dict) -> ByteTokenizer:
+        tokenizer = cls()
+        if artifact != tokenizer.to_dict():
+            raise ValueError("tokenizer artifact does not match the utf8-byte-v1 contract")
+        return tokenizer
+
     def encode(self, text: str, add_bos: bool = True, add_eos: bool = True) -> list[int]:
         ids = list(text.encode("utf-8"))
         if add_bos:
@@ -42,6 +66,11 @@ class ByteTokenizer:
         if add_eos:
             ids.append(self.eos_id)
         return ids
+
+    def token_byte_counts(self, text: str, add_bos: bool = True, add_eos: bool = True) -> list[int]:
+        """Return UTF-8 byte coverage aligned with encode(); special tokens cover zero bytes."""
+        byte_count = len(text.encode("utf-8"))
+        return ([0] if add_bos else []) + [1] * byte_count + ([0] if add_eos else [])
 
     def decode(self, ids: Sequence[int], skip_special: bool = True) -> str:
         raw = bytearray()

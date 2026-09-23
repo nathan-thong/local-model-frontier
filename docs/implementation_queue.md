@@ -1,0 +1,76 @@
+# Implementation queue
+
+Status: execution order for the next research cycle, 23 September 2026. This is a navigation and handoff document; detailed design, tests, and stop rules remain in the linked work packages. Re-read repository status before starting. No training run, data download, paid service, or public claim is authorized by this queue.
+
+## The objective
+
+Find out whether a small model can retain more useful capability per measured memory and compute than a fair conventional Transformer. Every stage should eliminate a weak idea cheaply. A correct but slow reference implementation is useful; an attractive architecture diagram is not evidence. Stop branches as soon as a decisive failure is established.
+
+## Immediate queue: remove blockers, then run one comparison
+
+| Order | Package | Best fit | Dependency | Deliverable and pass gate |
+|---|---|---|---|---|
+| Q00 | Reconcile the checkout | Luna | None | Read `AGENTS.md`, inspect the current diff, run the repository test/style commands, rebuild the wheel, and update stale status/count/hash text. Resolve every failure; do not train. Record the exact validation commands and outcomes. |
+| Q01 | Freeze this revision | Luna | Q00 | Review the combined diff for scope, verify no generated data/checkpoints/secrets are tracked, and make one local commit containing the accepted infrastructure/protocol changes. Every future control and candidate must use a clean pinned revision. Do not push as part of this package. |
+| Q02 | Rebuild the bounded TinyStories split | Luna | Q01; pinned raw prefix available | Use the documented source revision and exact byte range; verify raw-prefix hash, source sidecar, transformation, complete-story count, and newly prepared schema-3 manifest. Keep old files/runs unchanged. Gate: regenerated split hashes match the new manifest and `content_origin=synthetic`; otherwise stop and diagnose. |
+| Q03 | Freeze the comparison protocol | Luna | Q00 | Verify current comparator/schema against `AGENTS.md` and E02. Add only any missing adversarial tests: absent/null provenance, duplicate or invalid seeds, non-finite metrics, unsupported compute, dirty/mismatched source, and incomplete runs. Gate: no caller option weakens the three-paired-seed claim floor. |
+| Q04 | Close the minimum evaluation and compute gates | Sol | Q00 | Finish only the missing E05/E06 behavior needed by the first study. Confirm exact scored-token boundaries, byte coverage, module-aware cost support, and explicit unavailable states. Unknown module cost must disable compute-equivalence claims. Gate: hand-calculated tiny models agree with serialized accounting. |
+| Q05 | Make the pilot eligible | Luna | Q01-Q04 | Create immutable MHA/GQA config copies under `configs/m2/` that point to the new schema-3 split while preserving every other preregistered field; hash them and create the dry-run plan. Verify tokenizer/model/config hashes, environment, clean revision and planned compute. Gate: a fresh process loads the data and plan without model allocation; no unknown provenance remains. |
+| Q06 | Run a bounded GQA smoke pilot | Luna | Q05; S01 tests pass | Use one seed and at most 32 updates on synthetic TinyStories. Run train, resume, eval, and profile; log failures as results. This is stability/resource plumbing only, not a capability claim. Stop for non-finite values, invalid budgets, or parity/accounting failures. |
+| Q07 | Run the paired GQA comparison | Sol | Q06 passes; clean committed implementation | Execute the preregistered three paired seeds from the `configs/m2/` config copies against the fresh MHA control at the planned equivalent-compute budget. Report synthetic-domain loss only within that scope, and cache/memory separately, including all seeds/failures. Gate: comparator eligibility and complete evidence bundle; no broad capability claim from synthetic text and no "win" based on one seed or cache bytes alone. |
+| Q08 | Close state-accounting E08/E09 gaps | Sol | Q00; no architecture run required | Add isolated CPU peak-memory measurement and allocated-versus-active nested sequence-state accounting; add cumulative runtime accounting across resumes. Keep retry policy out unless a real use case demands it. Gate: workload order cannot contaminate peaks, unique backing storage is counted once, and resumed jobs cannot exceed total planned time silently. |
+| Q09 | Export portable evidence | Luna | Q07 or any completed run | Finish E11: sanitized per-run summary/config/protocol/hash manifest and reproduction command; include missing-artifact status, never corpus/checkpoints. Gate: a clean checkout validates every exported hash and no machine-specific path or secret leaks. |
+| Q10 | Freeze the next corpus decision | Luna | Q00-Q05 | Resolve the human-authored text/evaluation corpus and license from primary sources, or explicitly keep claims scoped to synthetic TinyStories. Freeze document IDs, duplicate policy, tokenizer-fit split, validation and held-out set before tuning. Gate: repeat preparation produces identical hashes and no normalized split overlap. |
+
+### Current package status
+
+**Q00 complete (23 September 2026):** 83 tests pass in 7.30 seconds; Ruff check and format checks pass; local Markdown targets resolve; `git diff --check` has no whitespace errors; the wheel builds (SHA-256 `130fb5d67d850fb667f17cbdc336222edf20e9380c6e4fc9297677835ef83b84`). **Q03 is also complete:** seeded comparison schema 3 validates saved configs, tokenizer/data artifacts and source hashes, then recomputes actual training cost from consumed tokens. Scope-specific synthetic claims are separate from fixture results and human-corpus claims. Non-finite loss/gradient stops and refusal to overwrite existing prepared corpora are regression-tested. **Q01 is underway.** The worktree is not committed or pushed, and no experiment was started.
+
+Q02-Q07 are the shortest path to the first new architecture datapoint. Q08-Q10 can proceed as independent infrastructure tasks, but must not change the pinned implementation or data under an active experiment. If a code fix is needed after pinning, stop, preserve the failed attempt, commit a new revision, and restart both arms.
+
+## Architecture sequence: each stage is conditional
+
+| Order | Package | Best fit | Source of full specification | Decision gate |
+|---|---|---|---|---|
+| A01 | Explicit cache/state contract | Sol | [sequence S02](roadmap-sequence.md#s02--make-sequence-state-explicit-and-inspectable) | Absolute positions, mixed per-layer state, chunk/full/token parity, and state bytes all pass before any bounded cache is added. No training. |
+| A02 | Dense local-attention reference | Sol | [sequence S03](roadmap-sequence.md#s03--implement-a-dense-local-attention-correctness-reference) | Reference outputs/gradients match the slow oracle at boundaries; cache stays bounded. Label its prefill compute dense. |
+| A03 | Local-attention learning pilot | Luna | [sequence S04](roadmap-sequence.md#s04--test-the-local-attention-capability-tradeoff-cheaply) | One seed at <=5% planned compute; stop on instability or an already-dominated resource/quality point. Confirm only if signal warrants three pairs. |
+| A04 | Local prefill backend | Sol | [sequence S05](roadmap-sequence.md#s05--add-one-implementation-that-actually-performs-local-prefill-work) | Implement only after profiling proves the reference's actual bottleneck; keep reference and numerical parity. Kill if workload latency/memory does not improve. |
+| A05 | Normalized causal linear-attention oracle | Sol | [sequence S06](roadmap-sequence.md#s06--implement-normalized-causal-linear-attention-as-a-reference) | Stable finite gradients, no future leakage, bounded persistent state, and chunk parity. Stop before kernels if the reference cannot learn the toy dependency. |
+| A06 | Optimize the surviving cheap block | Sol | [sequence S07](roadmap-sequence.md#s07--decide-whether-a-recurrent-implementation-deserves-optimization) | Only optimize a module with a measured tradeoff; optimized path matches reference and actual peak storage/work are reported. |
+| A07 | One fixed hybrid schedule | Luna | [sequence S08](roadmap-sequence.md#s08--test-one-hybrid-schedule) | Compare pure attention, pure cheap block, and one fixed hybrid; no schedule search. Three paired seeds only after one-seed stability. |
+| A08 | Small preregistered schedule/context extension | Luna | [sequence S09-S10](roadmap-sequence.md#s09--separate-window-size-from-attention-placement) | At most four validation configs; include search compute and fresh matched controls. Stop at budget cap; held-out set stays sealed. |
+| A09 | Sequence result freeze | Luna | [sequence S11](roadmap-sequence.md#s11--freeze-the-sequence-research-checkpoint) | Portable artifacts, technical report, and an independent rerun reproduce the selected result; otherwise label unresolved. |
+
+## Compression, teacher use, and inference: do not combine early
+
+| Order | Package | Best fit | Source | Decision gate |
+|---|---|---|---|---|
+| C01 | Quantization format and memory ledger | Luna | [compression C01](roadmap-compression.md#c01--quantization-specification-and-accounting) | Define exact weight grouping, rounding, scales, zero handling, exclusions, and real resident-memory accounting. |
+| C02 | Fake-quant linear reference | Sol | [compression C02](roadmap-compression.md#c02--fake-quantized-linear-reference) | Forward/gradient/serialization invariants pass for supported bit widths; floating master weights are never counted as low-bit storage. |
+| C03 | Low-bit stability screen | Luna | [compression C03](roadmap-compression.md#c03--low-bit-training-falsification-matrix) | Screen few preregistered formats at a small budget; promote at most one. Stop formats with unstable training or no plausible benefit. |
+| C04 | Quantization schedule ablation | Luna | [compression C04](roadmap-compression.md#c04--quantization-schedule-ablation) | One variable per schedule; compare equal compute and include all optimizer/master-state costs. |
+| C05 | Packed checkpoint round trip | Sol | [compression C05](roadmap-compression.md#c05--packed-checkpoint-format-and-round-trip) | Packed bytes, metadata, scales and load path are versioned; exact dequantized-reference tolerance and corruption rejection pass. |
+| C06 | Packed CPU execution reference | Sol | [compression C06](roadmap-compression.md#c06--cpu-packed-weight-execution-reference) | Establish end-to-end memory and latency against the same float checkpoint. No speed claim from file size. |
+| C07 | Native kernel feasibility | Sol | [compression C07](roadmap-compression.md#c07--native-kernel-feasibility-gate) | Build only if the CPU/reference profile identifies matrix unpack/compute as a material bottleneck. Keep fallback and backend identity explicit. |
+| D01-D02 | Teacher ledger and ordinary SFT control | Luna | [compression D01-D02](roadmap-compression.md#d01--teacher-provenance-and-cost-ledger) | Pin teacher/model/data/revision; charge acquisition/generation and student costs; establish SFT before distillation. |
+| D03-D04 | Logit distillation and exact target cache | Sol | [compression D03-D04](roadmap-compression.md#d03--full-logit-distillation-reference) | Correct temperature/mask/KL math and cache provenance; compare with SFT at equal student compute and disclose teacher-inclusive cost. |
+| D05-D06 | Representation then validated task targets | Sol | [compression D05-D06](roadmap-compression.md#d05--representation-distillation) | Run only if logit distillation survives. Separate representation objective from trajectory targets; validator correctness and contamination checks required. |
+| D07 | Quantization-distillation interaction | Luna | [compression D07](roadmap-compression.md#d07--quantization-aware-distillation-interaction) | Only after each intervention independently survives; preregister all four factorial cells and interaction, not best corners. |
+| I01 | Inference workload lock | Luna | [compression I01](roadmap-compression.md#i01--deterministic-inference-budget-baselines) | Freeze prompt/output shapes, batch, timing, warmup and cache protocol; establish repeat variance before optimizing. |
+| I02-I03 | Speculation correctness | Sol | [compression I02-I03](roadmap-compression.md#i02--greedy-speculative-decoding-correctness) | Greedy exact-token equality first; then sampling distribution correctness against tiny analytical cases. Count draft model/cache/work and latency. |
+| I04-I05 | Adaptive budget allocation | Sol | [compression I04-I05](roadmap-compression.md#i04--adaptive-computation-feasibility-experiment) | Test static two-model routing before learned early exit. Must beat fixed allocation including router, worst-case resident memory and tail latency. |
+| X01 | Combined frontier replication | Luna | [compression X01](roadmap-compression.md#x01--combined-frontier-replication) | Combine no more than two individually surviving changes; fresh conventional controls, all costs, uncertainty, portable artifacts, independent rerun. A negative result is an acceptable endpoint. |
+
+## Non-negotiable rules for every handoff
+
+- One package, one owner, one stated acceptance gate. Luna is the default for docs, schemas, test additions and small bounded fixes; Sol is the default for multi-file model/runtime changes. Either model must stop if the requested package depends on an unfinished gate.
+- Start by checking the current tree and reading `AGENTS.md`, `RESEARCH.md`, `EXPERIMENTS.md`, measurement protocol, and the chosen package. This queue may be stale by the time work starts.
+- Do not download data, install large dependencies, launch paid compute, or push a repository unless separately requested. Preserve existing user changes and historical outputs.
+- For code: add a failure-oriented test, run focused tests, then all required tests/Ruff checks. For protocols: verify paths, links, and CLI options against the code.
+- Before research training, preregister all eight fields, pin and commit the code/config/data protocol, ensure clean Git state, and run a smoke job. A pilot is not a claim. A claim needs at least three paired seeds, eligible compute/provenance, a declared practical effect, and complete failure accounting.
+- Never optimize a module merely because it is novel. First show that its accurate reference addresses a bottleneck relevant to the target device/workload. Never combine sequence, quantization, distillation and inference interventions until their isolated effects are understood.
+
+## First handoff prompt
+
+> Read `AGENTS.md`, `ROADMAP.md`, `docs/implementation_queue.md`, and the Q01 package. Inspect the complete diff, stage only reviewed source/docs/tests/configs, confirm ignored data/checkpoints/build artifacts are not staged, then create one local commit. Do not train, download data, or push. Record the commit and validation evidence, then stop at Q02.

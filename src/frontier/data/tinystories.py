@@ -24,6 +24,8 @@ def prepare_prefix(
     upstream_size_bytes: int,
     source_start_byte: int = 0,
 ) -> dict:
+    if input_path.resolve() == output_path.resolve():
+        raise ValueError("output path must not overwrite the downloaded source prefix")
     if source_start_byte != 0:
         raise ValueError(
             "TinyStories delimiter processing currently requires a file prefix from byte 0"
@@ -45,10 +47,16 @@ def prepare_prefix(
     if len(documents) < 2:
         raise ValueError("at least two complete TinyStories documents are required")
 
+    metadata_path = output_path.with_suffix(output_path.suffix + ".source.json")
+    if output_path.exists() or metadata_path.exists():
+        raise FileExistsError(
+            f"refusing to overwrite an existing TinyStories prepared output or sidecar: {output_path}"
+        )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text("\n".join(documents) + "\n", encoding="utf-8")
     metadata = {
         "dataset": DATASET,
+        "content_origin": "synthetic",
         "dataset_revision": revision,
         "source_file": UPSTREAM_FILE,
         "source_url": (
@@ -68,7 +76,6 @@ def prepare_prefix(
             "all Unicode whitespace within each story to one ASCII space."
         ),
     }
-    metadata_path = output_path.with_suffix(output_path.suffix + ".source.json")
     metadata_path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     return metadata
 

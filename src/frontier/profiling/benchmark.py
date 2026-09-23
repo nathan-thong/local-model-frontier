@@ -47,6 +47,28 @@ def _state_storage_bytes(states: list[object]) -> int:
     return total
 
 
+def _timing_summary(values: list[float]) -> dict[str, float | list[float] | None]:
+    return {
+        "repetitions_seconds": values,
+        "median_seconds": statistics.median(values),
+        "min_seconds": min(values),
+        "max_seconds": max(values),
+        "sample_stddev_seconds": statistics.stdev(values) if len(values) > 1 else None,
+    }
+
+
+def _maximum_accelerator_memory(records: list[dict[str, int | None]]) -> dict[str, int | None]:
+    return {
+        key: max((record[key] for record in records if record[key] is not None), default=None)
+        for key in (
+            "allocated_bytes",
+            "reserved_bytes",
+            "peak_allocated_bytes",
+            "peak_reserved_bytes",
+        )
+    }
+
+
 @torch.inference_mode()
 def profile_model(
     model: DecoderLanguageModel,
@@ -55,12 +77,23 @@ def profile_model(
     weights_path: str | Path | None = None,
 ) -> dict:
     device = next(model.parameters()).device
+    if settings.batch_size <= 0 or settings.decode_tokens <= 0 or settings.repeats <= 0:
+        raise ValueError("profile batch size, decode token count and repeats must be positive")
+    if settings.warmup_steps < 0:
+        raise ValueError("profile warmup_steps must be non-negative")
+    for requested in settings.prompt_lengths:
+        if requested <= 0 or requested + settings.decode_tokens > model.config.max_seq_len:
+            raise ValueError(
+                f"requested prompt length {requested} plus {settings.decode_tokens} decode "
+                f"tokens exceeds model.max_seq_len={model.config.max_seq_len}"
+            )
     was_training = model.training
     model.eval()
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats(device)
     precision_dtype = next(model.parameters()).dtype
     result: dict = {
+        "profile_schema_version": 3,
         "parameter_count": model.parameter_count(),
         "trainable_parameter_count": model.parameter_count(trainable_only=True),
         "model_tensor_bytes": unique_tensor_storage_bytes(model),
@@ -79,46 +112,66 @@ def profile_model(
         "workloads": [],
     }
     for requested in settings.prompt_lengths:
-        prompt_length = min(int(requested), model.config.max_seq_len - settings.decode_tokens)
-        if prompt_length <= 0:
-            continue
+        prompt_length = int(requested)
         ids = torch.randint(
             model.config.vocab_size - 3, (settings.batch_size, prompt_length), device=device
         )
+        if device.type == "cuda":
+            _sync(device)
+            torch.cuda.reset_peak_memory_stats(device)
         for _ in range(settings.warmup_steps):
             model(ids, use_cache=True)
         _sync(device)
         prefill_times = []
         for _ in range(settings.repeats):
+            _sync(device)
             start = time.perf_counter()
-            _, prefill_cache = model(ids, use_cache=True)
+            logits, prefill_cache = model(ids, use_cache=True)
+            logits[:, -1, :].argmax(dim=-1)
             _sync(device)
             prefill_times.append(time.perf_counter() - start)
             del prefill_cache
+        prefill_accelerator_memory = accelerator_memory(device)
 
-        def decode_cached(prompt_ids: torch.Tensor = ids) -> tuple[float, int]:
+        def decode_cached(
+            prompt_ids: torch.Tensor = ids,
+        ) -> tuple[float, int, int | None, dict[str, int | None]]:
             logits, cache = model(prompt_ids, use_cache=True)
             _sync(device)
-            decode_start = time.perf_counter()
             token = logits[:, -1, :].argmax(dim=-1, keepdim=True)
-            for _ in range(1, settings.decode_tokens):
+            _sync(device)
+            if device.type == "cuda":
+                torch.cuda.reset_peak_memory_stats(device)
+            decode_start = time.perf_counter()
+            for _ in range(settings.decode_tokens):
                 logits, cache = model(token, cache=cache, use_cache=True)
                 token = logits[:, -1, :].argmax(dim=-1, keepdim=True)
             _sync(device)
             cache_bytes = _state_storage_bytes(cache.states)
-            return time.perf_counter() - decode_start, cache_bytes
+            decode_memory = accelerator_memory(device)
+            state_position = getattr(cache, "position", None)
+            if not isinstance(state_position, int):
+                state_position = None
+            return time.perf_counter() - decode_start, cache_bytes, state_position, decode_memory
 
+        decode_memory_records = []
         for _ in range(settings.warmup_steps):
-            decode_cached()
+            _, _, _, phase_memory = decode_cached()
+            decode_memory_records.append(phase_memory)
         decode_times = []
         actual_cache_bytes = None
+        state_position_tokens = None
         for _ in range(settings.repeats):
-            elapsed, actual_cache_bytes = decode_cached()
+            elapsed, actual_cache_bytes, state_position_tokens, phase_memory = decode_cached()
             decode_times.append(elapsed)
-        prefill_median = statistics.median(prefill_times)
-        decode_median = statistics.median(decode_times)
+            decode_memory_records.append(phase_memory)
+        decode_accelerator_memory = _maximum_accelerator_memory(decode_memory_records)
+        prefill_summary = _timing_summary(prefill_times)
+        decode_summary = _timing_summary(decode_times)
+        prefill_median = float(prefill_summary["median_seconds"])
+        decode_median = float(decode_summary["median_seconds"])
         kv_element_size = 2 if precision_dtype in {torch.float16, torch.bfloat16} else 4
-        cache_tokens = prompt_length + settings.decode_tokens - 1
+        cache_tokens = prompt_length + settings.decode_tokens
         all_attention = all(name == "attention" for name in model.config.sequence_types)
         theoretical_kv_bytes = (
             2
@@ -134,24 +187,57 @@ def profile_model(
         result["workloads"].append(
             {
                 "batch_size": settings.batch_size,
+                "requested_prompt_tokens": int(requested),
                 "prompt_tokens": prompt_length,
-                "requested_decode_tokens": settings.decode_tokens,
+                "first_token_from_prefill_logits": 1,
+                "generated_tokens_per_repeat": 1 + settings.decode_tokens,
+                "timed_decode_tokens": settings.decode_tokens,
+                "timed_decode_forwards_per_repeat": settings.decode_tokens,
+                "decode_repeats": settings.repeats,
+                "state_position_tokens_after_decode": state_position_tokens,
+                "prefill_to_first_token_latency": prefill_summary,
                 "prefill_latency_seconds_median": prefill_median,
                 "prefill_tokens_per_second": settings.batch_size * prompt_length / prefill_median,
+                "decode_latency": decode_summary,
                 "decode_latency_seconds_median": decode_median,
                 "decode_tokens_per_second": settings.batch_size
                 * settings.decode_tokens
                 / decode_median,
                 "decode_seconds_per_token": decode_median / settings.decode_tokens,
-                "decode_measurement": "cached incremental loop; excludes prompt prefill",
+                "decode_measurement": (
+                    "exactly N cached incremental forwards per repeat producing N tokens after "
+                    "the first prefill-selected token; includes greedy token selection"
+                ),
+                "prefill_measurement": (
+                    "prompt forward plus greedy selection of the first generated token"
+                ),
+                "theoretical_kv_cache_tokens_after_decode_loop": cache_tokens
+                if all_attention
+                else None,
                 "theoretical_kv_bytes_after_decode_loop": theoretical_kv_bytes,
                 "theoretical_kv_bytes_status": "all sequence blocks use standard attention"
                 if all_attention
                 else "not estimated for this sequence-module mix",
-                "actual_kv_bytes_after_decode": actual_cache_bytes,
+                "actual_state_storage_bytes_after_decode": actual_cache_bytes,
+                "actual_kv_bytes_after_decode": actual_cache_bytes if all_attention else None,
+                "persistent_state_bytes_after_decode": actual_cache_bytes
+                if not all_attention
+                else None,
+                "active_state_bytes_after_decode": actual_cache_bytes if all_attention else None,
+                "active_state_bytes_status": "exact for dense attention cache"
+                if all_attention
+                else "module does not expose active-versus-allocated state accounting",
                 "kv_cache_accounting_dtype": str(precision_dtype),
-                "peak_process_memory": process_memory_bytes(),
-                "peak_accelerator_memory": accelerator_memory(device),
+                "process_memory_snapshot_after_workload": process_memory_bytes(),
+                "prefill_accelerator_memory": prefill_accelerator_memory,
+                "prefill_accelerator_memory_scope": (
+                    "prefill warmup and measured repetitions; peak reset per prompt workload"
+                ),
+                "decode_accelerator_memory": decode_accelerator_memory,
+                "decode_accelerator_memory_scope": (
+                    "cached incremental decode after prompt prefill; maximum across warmup "
+                    "and measured repetitions"
+                ),
             }
         )
     model.train(was_training)

@@ -1,0 +1,121 @@
+# Measurement and evidence work packages
+
+This is an implementation plan, not a record of completed experiments. Work packages are deliberately small enough for Sol or Luna to implement and verify independently. Preserve historical run files and append corrections to the research log. Do not regenerate evidence silently after changing a protocol.
+
+The initial source audit is historical: it found comparison and profiling failure modes before the fixes below. Those observations were not measurements of their impact. Historical artifact availability, complete dataset/tokenizer provenance, RSS peak semantics, and corpus overlap remain separate acceptance questions.
+
+## Implementation status (23 September 2026)
+
+| Package | Status | Verified evidence / remaining gate |
+|---|---|---|
+| E01 - Historical evidence erratum | Complete for the public log | Appended the TinyStories origin correction, preserved historical numbers and run files, and disclosed that `runs/` links are local-only. No public evidence bundle yet. |
+| E02 - Fail-closed comparison | Complete for comparison schema 3 | Enforces the non-overridable three-seed floor; verifies saved config, tokenizer, manifest, source files, consumed token budget, and recomputed module-aware FLOPs; requires tokenizer artifact identity for metric comparability; scopes eligible claims to known non-fixture corpora and distinguishes synthetic results from human-corpus claims. Full adversarial suite passes. |
+| E03 - Explicit data/tokenizer provenance | Complete for schema v3 and the built-in tokenizer | Manifests and run summaries carry fixture/origin, prepared-source and metadata hashes, preprocessing identity, split hashes, document/byte/token counts, and exact manifest hash. Tokenizers serialize to reproducible artifacts with SHA-256. NFC/whitespace duplicate leakage is rejected. Historical incomplete metadata remains readable but blocks a research claim. |
+| E05 - Evaluation contracts | In progress | Perplexity now retains per-document NLL/token counts, restores model mode on errors, rejects non-finite loss and supports tokenizer-aligned UTF-8 bits-per-byte with special-token coverage excluded. JSONL tasks carry unique example IDs, per-example scores and content hashes. Broader held-out evaluation and corpus/task adapter freeze remain. |
+| E06 - Architecture-aware compute | Complete for the current full-attention Transformer | New runs itemize projection, dense attention, FFN and vocabulary-head MACs with a versioned backward multiplier. Embedding lookup is excluded; unknown sequence modules return null. Tiny-shape hand calculations and actual consumed-token/overshoot fields are tested. Historical v1 values remain intact. |
+| E07 - Decode denominator correction | Complete for profile schema 3 | Prefill-to-first-token and steady-state decode are separate; decode times exactly N cached forwards; prompt clipping is rejected; all repetition durations, median, range and sample SD are recorded. CPU tests cover N=1, 2 and 3. CUDA synchronization/reset paths are implemented but not hardware-validated on this host. |
+| E08 - Memory accounting | In progress | Profile schema 3 measures prefill and cached-decode CUDA peaks separately. Training summaries now record pre-step snapshots and maximum CUDA allocated/reserved peaks across synchronized optimizer steps, excluding validation/checkpoint phases. The protocol distinguishes point-in-time RSS from process-lifetime CPU high-water marks. Isolated CPU peak workers and active-versus-allocated local/recurrent state remain. |
+| E09 - Sweep planning and execution | In progress | `frontier plan-sweep` writes a hash-protected plan with exact configs, seed pairs, budgets, compute deltas, host metadata and an enforced total-compute cap. `frontier execute-sweep` runs serially, resumes only matching interrupted runs, validates completed budgets, enforces a per-invocation runtime cap at optimizer-step boundaries, and writes atomic failure/status records. Tests cover cap rejection, tampered plans, completed-run skipping, time-limited pause/resume and unknown non-empty output directories. Explicit failed-job retries and cumulative runtime accounting across later invocations remain. |
+| E11 - Portable evidence and CSV completeness | In progress | Nested per-workload profile fields and repeated-duration vectors now survive summary CSV export. Sanitized portable evidence bundles, checksums for missing large artifacts, clean-checkout reproduction and independent reruns remain. |
+
+Latest local validation (23 September 2026): `.venv\Scripts\python.exe -m pytest` passes 83 tests in 7.30 seconds; `.venv\Scripts\ruff.exe check src tests scripts` passes; `.venv\Scripts\ruff.exe format --check src tests scripts` passes (47 files); local Markdown targets resolve; `git diff --check` reports no whitespace errors; `.venv\Scripts\python.exe -m pip wheel . --no-deps --no-build-isolation --no-cache-dir --wheel-dir dist` builds `local_model_frontier-0.1.0-py3-none-any.whl` (SHA-256 `130fb5d67d850fb667f17cbdc336222edf20e9380c6e4fc9297677835ef83b84`). CUDA hardware validation is unavailable on this host. Future status updates must include the exact acceptance evidence; a code package can remain partial when its larger data or hardware gate is outstanding.
+
+## E01 — Audit historical evidence and publish an erratum
+
+**Change/files:** Review `EXPERIMENTS.md`, `RESEARCH.md`, `docs/technical_report.md`, all recorded summaries, and `data/tinystories.py`. Append an erratum explaining that TinyStories is synthetic generated text, while `synthetic_fixture: false` means only that a run did not use the infrastructure fixture. These are distinct properties. Record which historical claims and comparison eligibility flags are affected. Keep original measured numbers and original run IDs.
+
+**Acceptance:** Every reported result has an evidence scope, source revision, corpus provenance and accessible evidence reference or an explicit unavailable-artifact label. No narrative treats a fixture flag as proof of human-authored data. Historical records remain recoverable.
+
+**Stop rule:** No new architecture comparison may be advertised as an improvement while its provenance is unresolved. Do not spend training compute to repair a documentation issue.
+
+## E02 — Make comparison validation fail closed
+
+**Change/files:** Version comparison reports in `experiments/compare.py`; validate required fields and update `tests/test_compare.py`. Require all fields used for scientific eligibility to be present, correctly typed and meaningful. Missing values must never compare equal as evidence. Require at least three distinct paired seeds for claim eligibility regardless of a caller's requested minimum. Require the exact tokenizer artifact hash for metric comparability. Reject boolean seeds, duplicated run identities, absent model signatures, zero/negative/non-finite compute, malformed status, missing revision and dirty source trees. Distinguish test fixtures from explicit human, synthetic and mixed corpus origins: a non-fixture result may support only a claim explicitly scoped to that corpus, while the report marks whether human-corpus evidence is available. Treat nullable platform-specific fields through explicit applicability rules rather than demanding a CUDA runtime on CPU.
+
+**Acceptance:** Adversarial fixtures remove each required field independently; all block the relevant eligibility field with stable machine-readable reasons. Two-seed calls cannot grant eligibility. Missing or overflowed perplexity and missing FLOPs produce a structured ineligible report rather than `float(None)` or a traceback. Preserve valid NLL when perplexity overflows. Pairwise metric comparison stays distinct from scoped multi-seed claim eligibility; passing eligibility never asserts an improvement. A fixture cannot pass as a synthetic-domain corpus merely because its origin is synthetic.
+
+**Stop rule:** Do not loosen validation to make historical runs pass. Legacy schema readers must preserve the weaker provenance and report it.
+
+## E03 — Give dataset and tokenizer provenance explicit schemas
+
+**Change/files:** Extend `data/corpus.py`, `data/tinystories.py`, tokenizer metadata and run schema with separate `is_test_fixture`, `content_origin` (`human`, `synthetic`, `mixed`, `unknown`), source/revision/license, preprocessing version, split hashes, tokenizer artifact hash, document counts and byte/token counts. Version migrations; unknown stays unknown. Define claim scope by the actual corpus and task, without implying that synthetic data can never support a narrowly specified claim.
+
+**Acceptance:** Manifest round-trip preserves all fields. Same source text with different preprocessing/tokenizer versions has distinguishable identity. TinyStories correctly records synthetic origin independently of fixture status. Tests reject train/validation overlap by document identity after normalization and deduplication.
+
+**Stop rule:** No data acquisition or training if license, revision or intended evaluation split is unresolved. Document unresolved provenance instead of guessing.
+
+## E04 — Freeze one useful control corpus and evaluation set
+
+**Change/files:** Write a short corpus-selection decision record in `docs/data_protocol.md` using primary source dataset cards and licenses. Select one manageable corpus with documented origin and reproducible revision; keep TinyStories as its own experimental domain. Add download/prepare scripts with checksums, deterministic document-level splitting, duplicate detection and a small subword tokenizer fitted only on training documents. Freeze held-out test data before tuning.
+
+**Acceptance:** Two preparations from the same raw inputs and config give identical manifests and token streams. No validation/test document contributes to tokenizer fitting. Unicode round-trip and special-token tests pass. The prepared corpus fits a disclosed local storage/RAM budget. Downstream task example IDs, prompts, answer scoring and generation settings are versioned.
+
+**Stop rule:** Reject datasets requiring uncontrolled live endpoints or unrecorded preprocessing. Use a tiny fixture for CI; do not download full corpora in CI.
+
+## E05 — Lock evaluation accounting and task contracts
+
+**Change/files:** Extend `evaluation/perplexity.py`, `evaluation/tasks.py`, `docs/downstream_evaluation.md`, and `tests/test_data_and_evaluation.py`. Preserve exact token-weighted NLL and document boundaries; make BOS/EOS treatment explicit. Store per-document NLL and token count, and per-example task outcomes. Add a task adapter contract with pinned version, scoring direction, input limits and output provenance. Add byte-normalized likelihood for cross-tokenizer analysis with precisely specified scored byte coverage.
+
+**Acceptance:** Toy logits with analytically known likelihood verify each eligible target is counted once across short documents, stride boundaries, long documents and EOS. Aggregation equals summed NLL divided by total scored tokens rather than mean document perplexity. Empty/overflow/non-finite results are explicit. Evaluation restores model mode even on failure. Task scoring tests cover empty generation, normalization and ties.
+
+**Stop rule:** Do not compare raw perplexity across tokenizers. Do not tune on the held-out test set or treat a tiny model's chance-level task score as proof of general capability.
+
+## E06 — Version architecture-aware training compute
+
+**Change/files:** Replace the universal dense-transformer estimate with a versioned per-module compute contract in `profiling/compute.py`, consumed by `training/trainer.py` and `experiments/compare.py`. Itemize projection, attention-matrix, FFN, vocabulary head, recurrent/linear work, backward assumptions and recomputation. Disclose embedding/tied-weight treatment and optimizer exclusions. Record nominal token work, executed dense/sparse implementation work, and measured wall time separately. Unknown modules make compute equivalence unavailable.
+
+**Acceptance:** Hand-derived small-shape tests verify attention and FFN components; token/layer/batch scaling tests hold. Dense masked local attention remains charged for executed dense work. Hybrid totals equal the sum of layer contributions. Estimator version and assumptions participate in comparison eligibility. Compute budgets account for final-step granularity and report actual consumed tokens and overshoot.
+
+**Stop rule:** Do not present FLOP estimates as hardware measurements. No matched-compute improvement claim for an unsupported module or across incompatible estimator versions. Rerun both arms from one pinned implementation revision when accounting changes materially.
+
+## E07 — Correct decoding benchmark denominators
+
+**Change/files:** Update `profiling/benchmark.py`, `tests/test_profiling.py`, and `docs/measurement_protocol.md`. The current decode loop obtains the first token from already-computed prefill logits, then executes `decode_tokens - 1` model forwards while dividing elapsed time by `decode_tokens`. Choose and version a clear convention: prefill includes time to first generated token; steady-state decode times exactly N incremental forwards producing N subsequent tokens. Record generated tokens, forward count and cache length independently. Reject silently clipped prompt shapes or report requested and actual lengths explicitly.
+
+**Acceptance:** Instrumented models count forwards and cache tokens for N=1, N=2 and larger values. Throughput denominators equal timed work. CUDA synchronization surrounds each measured phase. Timing includes sampling only when the protocol says so. Record all repetitions plus median and spread; avoid tests asserting a specific speed.
+
+**Stop rule:** Preserve old timing artifacts with their original protocol ID. Never mix old and corrected timing protocols in a Pareto claim.
+
+## E08 — Separate resident peaks, allocator peaks and persistent state
+
+**Change/files:** Extend `profiling/memory.py` and `profiling/benchmark.py`. Measure load, prefill, decode and training independently, preferably in isolated workers for CPU process high-water marks. Reset accelerator peaks per workload after synchronizing. Record absolute process RSS, runtime baseline, tensor storage, accelerator allocated/reserved memory and temporary workspace separately. Use `persistent_state_bytes` for mixed/recurrent models, reserving KV terminology for attention state. Record allocated capacity and logically active bytes.
+
+**Acceptance:** Tied tensors/views are counted once. Artificial temporary allocations distinguish peak from final RSS. Changing workload order does not leak previous CUDA peaks into later rows. Hybrid and windowed state accounting matches actual allocated storage. Missing sensor support is null with a reason, never zero.
+
+**Stop rule:** Do not infer resident memory savings from serialized weight size. Do not claim bounded recurrent/local state if retained backing storage grows with context.
+
+## E09 — Add a budget planner and reproducible sweep runner
+
+**Change/files:** Add experiment planning and orchestration under `experiments/` with immutable sweep manifest, paired seeds, baseline/candidate IDs, predicted and actual compute, planned token counts, hardware configuration and budget cap. Expose separate plan, execute and aggregate commands through `cli.py`. Reuse existing training rather than adding a second training loop. Write a pre-registration entry with hypothesis, change, control, training budget, evaluation metrics, result pending, interpretation pending and next experiment.
+
+**Acceptance:** A dry run produces the exact resolved configurations without allocating a model or launching training. Resume skips completed validated run IDs and resumes only compatible interrupted runs. Failed/OOM/non-finite runs remain visible. Execution stops at the declared compute/time cap. A short fixture sweep verifies pairing and aggregation.
+
+**Stop rule:** Run a correctness pilot before any three-seed sweep. If a pilot has loss divergence, a protocol mismatch or no measurable resource change, diagnose once and either correct or close the experiment before expanding its budget.
+
+## E10 — Quantify uncertainty and construct defensible Pareto tables
+
+**Change/files:** Extend comparisons to signed paired NLL/task deltas, per-seed values, uncertainty intervals and resource ratios. Add `experiments/pareto.py` producing JSON/CSV with explicit maximize/minimize directions and comparable-workload strata. Predeclare one primary capability metric and minimum useful effect; secondary metrics remain visible. Retain absolute values and training cost for every point. Separate uncertainty across training seeds from repeated timing noise; three seeds are a minimum evidence floor, not a guarantee of statistical power.
+
+**Acceptance:** Synthetic tests cover dominance, exact ties, incomparable hardware/precision/workloads, missing dimensions and uncertainty overlap. Unknown energy or task metrics cannot create dominance. Paired statistics preserve seed correspondence. If bootstrap intervals are used, sampling unit and seed are disclosed; task-example and training-seed resampling are not conflated. Exact budget exceedances are visible.
+
+**Stop rule:** No single weighted capability score without a declared weighting rule. No confident winner from overlapping uncertainty or a post-selected metric. Candidates that miss the practical effect threshold are recorded as inconclusive or negative, then deprioritized.
+
+## E11 — Publish portable evidence bundles and reproduce independently
+
+**Change/files:** Add a sanitizing evidence-export command and tracked `results/` summaries containing configs, manifests, environment metadata, per-seed metrics, comparison reports, checksums and reproduction commands. Keep corpora/weights outside Git. Replace broken links into ignored `runs/` with committed summaries or durable artifact URLs, including expected hashes. Remove machine-specific absolute paths and secrets from exported metadata. Add schema compatibility tests and documented clean-checkout CPU reproduction.
+
+**Acceptance:** A fresh checkout can run the smallest experiment and verify exported checksums without access to the author's local paths. A second execution reproduces deterministic loss/checkpoints on the documented same-environment path; cross-platform checks use declared tolerances. All evidence links resolve. Missing large artifacts are identified clearly. JSON/CSV agree, including nested workload metrics that the current scalar-only flattening otherwise omits.
+
+**Stop rule:** Do not upload corpora or third-party weights without checking their terms. Do not treat a sanitized export as permission to alter original evidence; retain raw artifact hashes.
+
+## E12 — Add energy measurement only when the hardware supports it
+
+**Change/files:** Introduce an optional sensor adapter recording hardware/source, sampling interval, timestamps, idle power, integration method and total joules per measured workload. Include teacher and preprocessing energy separately when relevant. Keep support optional and disabled when unavailable.
+
+**Acceptance:** Numerical integration tests use a known synthetic power trace. Workloads last long enough relative to sensor sampling to support the stated precision. Baseline and candidate use the same sensor and procedure; report gross and any idle-adjusted energy separately.
+
+**Stop rule:** No energy estimate from TDP multiplied by runtime. Defer this package if sensors or permissions are unavailable; keep energy fields null with a reason.
+
+## Execution order and handoff
+
+Start with E01–E03, then E07 because the current decoding denominator needs correction before new throughput claims. E04–E05 and E06–E08 can proceed independently after the schemas are settled. Complete E09 and E11 before spending on a multi-seed architecture study; E10 aggregates that study. E12 is optional. A code package is done only when its focused tests and the repository's existing tests/style checks pass, the protocol change is documented, and the next agent can reproduce its acceptance check from the recorded command. Do not implement future experiment branches merely because this plan lists them.

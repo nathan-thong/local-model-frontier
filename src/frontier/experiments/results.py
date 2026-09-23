@@ -29,6 +29,11 @@ def flatten(value: dict[str, Any], prefix: str = "") -> dict[str, Any]:
         name = f"{prefix}.{key}" if prefix else key
         if isinstance(item, dict):
             flattened.update(flatten(item, name))
+        elif isinstance(item, (list, tuple)) and all(isinstance(entry, dict) for entry in item):
+            for index, entry in enumerate(item):
+                flattened.update(flatten(entry, f"{name}[{index}]"))
+        elif isinstance(item, (list, tuple)):
+            flattened[name] = json.dumps(item, ensure_ascii=False, allow_nan=False)
         elif isinstance(item, (str, int, float, bool)) or item is None:
             flattened[name] = item
     return flattened

@@ -107,3 +107,13 @@ def accelerator_memory(device: torch.device) -> dict[str, int | None]:
         "peak_allocated_bytes": int(torch.cuda.max_memory_allocated(device)),
         "peak_reserved_bytes": int(torch.cuda.max_memory_reserved(device)),
     }
+
+
+def maximum_accelerator_peaks(
+    records: list[dict[str, int | None]],
+) -> dict[str, int | None]:
+    """Return the largest phase peaks, preserving unavailable sensors as null."""
+    return {
+        key: max((row[key] for row in records if row.get(key) is not None), default=None)
+        for key in ("peak_allocated_bytes", "peak_reserved_bytes")
+    }

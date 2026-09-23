@@ -21,13 +21,19 @@ from frontier.data.corpus import (
     fixture_documents,
     load_split,
     sample_batch,
+    sha256_file,
     write_fixture,
 )
 from frontier.evaluation.perplexity import evaluate_perplexity
 from frontier.experiments.results import append_jsonl, write_json, write_summary
 from frontier.models import DecoderLanguageModel
-from frontier.profiling.memory import accelerator_memory, process_memory_bytes
-from frontier.tokenization import build_tokenizer
+from frontier.profiling.compute import estimate_training_compute
+from frontier.profiling.memory import (
+    accelerator_memory,
+    maximum_accelerator_peaks,
+    process_memory_bytes,
+)
+from frontier.tokenization import build_tokenizer, tokenizer_artifact
 from frontier.training.checkpoint import load_checkpoint, save_checkpoint
 from frontier.training.runtime import (
     capture_rng_state,
@@ -122,8 +128,18 @@ def _write_jsonl_metrics(path: Path, row: dict) -> None:
     append_jsonl(path, {"schema_version": 1, **row})
 
 
-def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None = None) -> Path:
+def train(
+    config: RunConfig,
+    resume: bool = False,
+    stop_after_steps: int | None = None,
+    stop_after_seconds: float | None = None,
+) -> Path:
+    runtime_budget_started = time.perf_counter()
     config.validate()
+    if stop_after_seconds is not None and (
+        not math.isfinite(stop_after_seconds) or stop_after_seconds <= 0
+    ):
+        raise ValueError("stop_after_seconds must be a finite positive duration")
     resume = resume or config.train.resume
     run_dir = Path(config.output_dir).resolve()
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -155,8 +171,13 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
         data_root = Path(config.data_dir).resolve()
         train_docs, valid_docs, manifest = load_split(data_root)
     tokenizer = build_tokenizer(config.tokenizer)
+    tokenizer_record = tokenizer_artifact(tokenizer)
+    tokenizer_hash = tokenizer_record["artifact_sha256"]
     train_tokens = encode_documents(train_docs, tokenizer)
     valid_tokens = encode_documents(valid_docs, tokenizer)
+    valid_token_byte_counts = [
+        tokenizer.token_byte_counts(document, add_bos=True, add_eos=True) for document in valid_docs
+    ]
     if config.model.vocab_size != tokenizer.vocab_size:
         raise ValueError(
             f"configured vocab_size {config.model.vocab_size} differs from {tokenizer.name} size {tokenizer.vocab_size}"
@@ -191,6 +212,12 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
     optimizer_updates = 0
     prior_active_seconds = 0.0
     if resume:
+        saved_tokenizer_path = run_dir / "tokenizer.json"
+        if (
+            not saved_tokenizer_path.exists()
+            or json.loads(saved_tokenizer_path.read_text(encoding="utf-8")) != tokenizer_record
+        ):
+            raise ValueError("resume tokenizer artifact differs from the original run")
         state = load_checkpoint(checkpoint_path, map_location=device)
         model.load_state_dict(state["model"])
         optimizer.load_state_dict(state["optimizer"])
@@ -202,6 +229,12 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
         prior_active_seconds = state.get("optimizer_active_time_seconds", 0.0)
         restore_rng_state(state["rng"], generator)
         summary = json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
+        data_manifest_path = run_dir / "data_manifest.json"
+        if not data_manifest_path.exists():
+            raise FileNotFoundError("resume requires the original run data_manifest.json")
+        data_manifest_sha256 = sha256_file(data_manifest_path)
+        if summary.get("data", {}).get("manifest_sha256") != data_manifest_sha256:
+            raise ValueError("resume data manifest differs from the original run")
         if summary.get("data", {}).get("train_sha256") != manifest.get(
             "train_sha256"
         ) or summary.get("data", {}).get("validation_sha256") != manifest.get("validation_sha256"):
@@ -224,35 +257,48 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
         write_json(config_path, config.to_dict())
         write_json(
             run_dir / "tokenizer.json",
-            {
-                "name": tokenizer.name,
-                "vocab_size": tokenizer.vocab_size,
-                "bos_id": tokenizer.bos_id,
-                "eos_id": tokenizer.eos_id,
-                "pad_id": tokenizer.pad_id,
-                "implementation": f"{type(tokenizer).__module__}.{type(tokenizer).__qualname__}",
-            },
+            tokenizer_record,
         )
         write_json(run_dir / "environment.json", environment)
         write_json(run_dir / "data_manifest.json", manifest)
+        data_manifest_sha256 = sha256_file(run_dir / "data_manifest.json")
         summary = {
-            "schema_version": 1,
+            "schema_version": 2,
             "run_id": run_dir.name,
             "status": "running",
             "resolved_config": config.to_dict(),
-            "tokenizer": {"name": tokenizer.name, "vocab_size": tokenizer.vocab_size},
+            "tokenizer": {
+                "name": tokenizer.name,
+                "vocab_size": tokenizer.vocab_size,
+                "artifact_sha256": tokenizer_hash,
+            },
             "environment": environment,
             "data": {
                 "root": str(data_root),
                 "source": manifest.get(
                     "source", manifest.get("source_path_name", "pre-split corpus")
                 ),
-                "synthetic_fixture": manifest.get("source")
-                == "frontier deterministic smoke fixture v1",
+                "is_test_fixture": manifest.get("is_test_fixture", False),
+                "synthetic_fixture": manifest.get("is_test_fixture", False),
+                "content_origin": manifest.get("content_origin", "unknown"),
+                "source_metadata": manifest.get("source_metadata"),
+                "source_metadata_sha256": manifest.get("source_metadata_sha256"),
+                "source_sha256": manifest.get("source_sha256"),
+                "preprocessing": manifest.get("preprocessing"),
+                "preprocessing_sha256": manifest.get("preprocessing_sha256"),
+                "manifest_sha256": data_manifest_sha256,
                 "train_sha256": manifest.get("train_sha256"),
                 "validation_sha256": manifest.get("validation_sha256"),
                 "train_documents": len(train_docs),
                 "validation_documents": len(valid_docs),
+                "train_utf8_bytes": manifest.get("train_utf8_bytes"),
+                "validation_utf8_bytes": manifest.get("validation_utf8_bytes"),
+                "train_tokens_including_special_tokens": sum(
+                    int(document.numel()) for document in train_tokens
+                ),
+                "validation_tokens_including_special_tokens": sum(
+                    int(document.numel()) for document in valid_tokens
+                ),
             },
             "training": {},
             "evaluation": {},
@@ -275,7 +321,51 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
     else:
         invocation_target = target_step
     metrics_path = run_dir / "metrics.jsonl"
+    process_memory_before_training = process_memory_bytes()
+    accelerator_memory_before_training = accelerator_memory(device)
+    training_accelerator_peak_records = []
+    final_step = start_step
+
+    def record_nonfinite_failure(
+        step: int,
+        failure_kind: str,
+        *,
+        loss_value: float | None = None,
+        gradient_norm_value: float | None = None,
+    ) -> None:
+        failure = {
+            "kind": failure_kind,
+            "step": step,
+            "tokens_seen_before_step": tokens_seen,
+            "optimizer_updates_before_step": optimizer_updates,
+            "loss": loss_value if loss_value is not None and math.isfinite(loss_value) else None,
+            "loss_finite": loss_value is not None and math.isfinite(loss_value),
+            "gradient_norm": (
+                gradient_norm_value
+                if gradient_norm_value is not None and math.isfinite(gradient_norm_value)
+                else None
+            ),
+            "gradient_norm_finite": (
+                gradient_norm_value is not None and math.isfinite(gradient_norm_value)
+            ),
+            "optimizer_step_applied": False,
+        }
+        summary["status"] = "failed"
+        summary["training"] = {
+            **summary.get("training", {}),
+            "step": step,
+            "tokens_seen": tokens_seen,
+            "optimizer_updates": optimizer_updates,
+            "failure": failure,
+        }
+        _write_jsonl_metrics(metrics_path, {"event": "training_failure", **failure})
+        write_summary(run_dir, summary)
+
     for step in range(start_step + 1, invocation_target + 1):
+        if device.type == "cuda":
+            # The previous optimizer step is synchronized below. Reset here so each
+            # peak covers one complete forward/backward/update step, not validation.
+            torch.cuda.reset_peak_memory_stats(device)
         optimizer.zero_grad(set_to_none=True)
         loss_total = torch.zeros((), device=device)
         step_start = time.perf_counter()
@@ -296,11 +386,24 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
                 logits, _ = model(x)
                 loss = F.cross_entropy(logits.reshape(-1, logits.shape[-1]).float(), y.reshape(-1))
             if not torch.isfinite(loss.detach()):
+                record_nonfinite_failure(
+                    step, "non_finite_loss", loss_value=float(loss.detach().item())
+                )
                 raise FloatingPointError(f"non-finite training loss at optimizer step {step}")
             loss_total += loss.detach() / config.train.gradient_accumulation
             scaler.scale(loss / config.train.gradient_accumulation).backward()
         scaler.unscale_(optimizer)
         grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), config.train.grad_clip)
+        grad_norm_value = float(grad_norm.item())
+        if not math.isfinite(grad_norm_value):
+            loss_value = float(loss_total.item())
+            record_nonfinite_failure(
+                step,
+                "non_finite_gradient_norm",
+                loss_value=loss_value,
+                gradient_norm_value=grad_norm_value,
+            )
+            raise FloatingPointError(f"non-finite gradient norm at optimizer step {step}")
         scale_before_step = scaler.get_scale()
         scaler.step(optimizer)
         scaler.update()
@@ -310,10 +413,16 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
             optimizer_updates += 1
         tokens_seen += tokens_per_step
         _sync(device)
+        training_accelerator_peak_records.append(accelerator_memory(device))
         elapsed = time.perf_counter() - step_start
         active_seconds += elapsed
+        final_step = step
+        time_budget_reached = (
+            stop_after_seconds is not None
+            and step < invocation_target
+            and time.perf_counter() - runtime_budget_started >= stop_after_seconds
+        )
         loss_value = float(loss_total.item())
-        grad_norm_value = float(grad_norm.item())
         row = {
             "event": "train_step",
             "step": step,
@@ -327,26 +436,36 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
             "tokens_per_second": tokens_per_step / elapsed,
         }
         _write_jsonl_metrics(metrics_path, row)
-        if step % config.train.eval_interval == 0 or step == invocation_target:
+        if (step % config.train.eval_interval == 0 or step == invocation_target) and not (
+            time_budget_reached
+        ):
             val = evaluate_perplexity(
                 model,
                 valid_tokens,
                 context_length=config.train.context_length,
                 stride=min(config.evaluation.stride, config.train.context_length),
                 max_documents=config.evaluation.max_validation_documents,
+                token_byte_counts=valid_token_byte_counts,
             )
             _write_jsonl_metrics(metrics_path, {"event": "validation", "step": step, **val})
             summary["evaluation"] = {
                 "perplexity": val,
                 "protocol": {
+                    "metrics_schema_version": val["schema_version"],
                     "dataset_sha256": manifest.get("validation_sha256"),
                     "tokenizer": tokenizer.name,
+                    "tokenizer_sha256": tokenizer_hash,
                     "context_length": config.train.context_length,
                     "stride": min(config.evaluation.stride, config.train.context_length),
                     "document_boundary": "score within documents; no cross-document targets",
+                    "byte_normalization": val["byte_metric_protocol"],
                 },
             }
-        if step % config.train.checkpoint_interval == 0 or step == invocation_target:
+        if (
+            step % config.train.checkpoint_interval == 0
+            or step == invocation_target
+            or time_budget_reached
+        ):
             state = {
                 "schema_version": 1,
                 "model": model.state_dict(),
@@ -361,35 +480,36 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
                 "config": config.to_dict(),
             }
             save_checkpoint(checkpoint_path, state)
-        supported_estimator = all(name == "attention" for name in config.model.sequence_types)
-        estimated_flops = (
-            estimate_training_flops_v1(
-                model.parameter_count(),
-                tokens_seen,
-                config.model.layers,
-                config.model.width,
-                config.train.context_length,
-            )
-            if supported_estimator
-            else None
+        compute_ledger = estimate_training_compute(
+            config.model, tokens_seen, config.train.context_length
         )
         summary["training"] = {
             "step": step,
             "optimizer_updates": optimizer_updates,
             "tokens_seen": tokens_seen,
             "tokens_per_step": tokens_per_step,
+            "token_budget_requested": config.train.max_tokens,
+            "token_budget_planned": planned_steps * tokens_per_step,
+            "token_budget_overshoot": max(0, tokens_seen - config.train.max_tokens)
+            if config.train.max_tokens is not None
+            else 0,
             "optimizer_active_time_seconds": prior_active_seconds + active_seconds,
             "tokens_per_second": tokens_seen / (prior_active_seconds + active_seconds)
             if prior_active_seconds + active_seconds
             else None,
-            "estimated_flops": estimated_flops,
-            "compute_estimator": "decoder-dense-v1" if supported_estimator else None,
-            "compute_estimator_assumptions": (
-                "approximate; see docs/measurement_protocol.md" if supported_estimator else None
-            ),
+            "estimated_flops": compute_ledger["estimated_flops"],
+            "estimated_macs": compute_ledger["estimated_macs"],
+            "compute_components": compute_ledger["components"],
+            "compute_status": compute_ledger["status"],
+            "compute_estimator": compute_ledger["estimator"],
+            "compute_estimator_assumptions": compute_ledger["assumptions"],
         }
-        summary["status"] = "completed" if step == target_step else "running"
+        if time_budget_reached:
+            summary["training"]["stop_reason"] = "runtime_budget"
+        summary["status"] = "completed" if final_step >= target_step else "running"
         write_summary(run_dir, summary)
+        if time_budget_reached:
+            break
 
     wall_time = time.perf_counter() - train_started
     summary["training"].update(
@@ -405,14 +525,38 @@ def train(config: RunConfig, resume: bool = False, stop_after_steps: int | None 
             "deterministic_algorithms": config.train.deterministic,
             "process_memory_after_training": process_memory_bytes(),
             "accelerator_memory_after_training": accelerator_memory(device),
+            "memory": {
+                "schema_version": 1,
+                "scope": (
+                    "training invocation; accelerator peak counters reset per optimizer step, "
+                    "and each step is synchronized before reading its peak"
+                ),
+                "process_memory_before_first_step": process_memory_before_training,
+                "process_memory_after_training": process_memory_bytes(),
+                "process_peak_scope": (
+                    "process lifetime high-water mark when supplied by the platform; not an "
+                    "isolated training-phase peak"
+                ),
+                "accelerator_memory_before_first_step": accelerator_memory_before_training,
+                "accelerator_peak_over_optimizer_steps": maximum_accelerator_peaks(
+                    training_accelerator_peak_records
+                ),
+                "accelerator_peak_scope": (
+                    "maximum CUDA allocated/reserved peak across optimizer steps in this "
+                    "invocation; excludes validation and checkpoint serialization"
+                ),
+            },
         }
     )
-    summary["status"] = (
-        "completed" if start_step >= target_step or invocation_target >= target_step else "running"
-    )
-    save_checkpoint(
-        run_dir / "weights.pt",
-        {"schema_version": 1, "model": model.state_dict(), "model_config": config.model.__dict__},
-    )
+    summary["status"] = "completed" if final_step >= target_step else "running"
+    if summary["status"] == "completed":
+        save_checkpoint(
+            run_dir / "weights.pt",
+            {
+                "schema_version": 1,
+                "model": model.state_dict(),
+                "model_config": config.model.__dict__,
+            },
+        )
     write_summary(run_dir, summary)
     return run_dir

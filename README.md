@@ -6,7 +6,7 @@ The code is licensed under [Apache-2.0](LICENSE). Data has its own licensing ter
 
 ## Status
 
-Milestone 1 is complete. I trained two conventional Transformer baselines on the same pinned TinyStories subset, with three paired seeds per model. Their estimated training-FLOP budgets differ by 0.044%. The larger model had higher held-out perplexity on every seed. The comparison passes the provenance checks; it does not show an improvement. TinyStories contains synthetic short stories, so these runs check the training and evaluation pipeline and provide a narrow baseline, not a measure of broad language capability. The setup and results are in [EXPERIMENTS.md](EXPERIMENTS.md).
+Milestone 1 is complete. I trained two conventional Transformer baselines on the same pinned TinyStories subset, with three paired seeds per model. Their estimated training-FLOP budgets differ by 0.044%. The larger model had higher held-out perplexity on every seed. TinyStories contains synthetic short stories, so these runs check the training and evaluation pipeline and provide a narrow baseline, not a measure of broad language capability. The historical comparator eligibility flag did not distinguish data origin; the reporting erratum in [EXPERIMENTS.md](EXPERIMENTS.md) explains that limitation.
 
 ## Quick start
 
@@ -26,12 +26,12 @@ To continue an interrupted run, use the same resolved config and run directory w
 The smoke config creates a deterministic fixture under its run directory; it needs no downloaded dataset. For a real corpus, create UTF-8 text files with one document per line, or split a source file deterministically:
 
 ```powershell
-frontier prepare-data --input path\to\corpus.txt --output data\corpus --validation-fraction 0.02 --seed 17
+frontier prepare-data --input path\to\corpus.txt --output data\corpus --validation-fraction 0.02 --seed 17 --content-origin human
 ```
 
-Point a training config's `data_dir` at the resulting directory. It contains `train.txt`, `validation.txt`, and a hash-bearing `data_manifest.json`. Keep data and checkpoints out of version control.
+Set `--content-origin` from the source documentation; the available values are `human`, `synthetic`, `mixed`, and `unknown`. If omitted, the command uses source metadata or records `unknown`. Pass a JSON source sidecar with `--source-metadata` to retain the dataset revision and license. A dataset name or the fact that data is not the built-in fixture does not establish human origin. Point a training config's `data_dir` at the resulting directory. It contains `train.txt`, `validation.txt`, and a hash-bearing `data_manifest.json`. Keep data and checkpoints out of version control.
 
-The baseline configs expect that prepared directory at `data/tinystories`. Export the selected, licensed corpus as one UTF-8 document per line before running. The preparation command splits on documents, groups identical text into one split, records hashes and rejects exact train/validation overlap. Use the same prepared directory for every control and candidate.
+The baseline configs expect that prepared directory at `data/tinystories`. Export the selected, licensed corpus as one UTF-8 document per line before running. The preparation command groups documents by Unicode-normalized identity so equivalent whitespace and Unicode forms cannot leak across splits, and records data, preprocessing and tokenizer hashes with each run. Use the same prepared directory for every control and candidate.
 
 Baseline A and B configs freeze the planned training budgets. To make the three seed runs without editing the source config, use:
 
@@ -49,6 +49,7 @@ Use the same seeds and corresponding output directories for `baseline_b.json`.
 - `EXPERIMENTS.md` is the append-only research log. Planned experiments are marked not run.
 - `src/frontier/models` contains the configurable Transformer and sequence-module interface.
 - `src/frontier/training`, `evaluation`, `inference`, and `profiling` keep experiment stages separate.
+- `src/frontier/tokenization` defines tokenizer contracts, portable artifacts and artifact hashes.
 - `configs` stores fully specified JSON run configurations.
 - `tests` contains architecture, data, resume, profiling and comparison invariants.
 - `AGENTS.md` and `CONTRIBUTING.md` describe the experiment and code-change rules.
@@ -62,7 +63,7 @@ The current model supports causal MHA/GQA attention, LayerNorm/RMSNorm, GELU/Swi
 
 ## Comparing results
 
-I compare changes against a named control using the same data, tokenizer, evaluation protocol, and at least three matched seeds. I report the training-compute budget, parameter count, model and cache memory, and measured latency and throughput. Estimated FLOPs and parameter counts are not substitutes for measured runtime or memory.
+I compare changes against a named control using the same data, tokenizer artifact, evaluation protocol, and at least three matched seeds. An improvement claim also requires pinned data source, license, revision and preprocessing metadata, plus a pinned clean source revision. I report the training-compute budget, parameter count, model and cache memory, and measured latency and throughput. Estimated FLOPs and parameter counts are not substitutes for measured runtime or memory.
 
 ## Reproducing the bounded TinyStories corpus
 
@@ -73,9 +74,9 @@ From the repository root on Windows, fetch the pinned range, convert complete st
 ```powershell
 curl.exe --fail --location --range 0-20971519 --max-filesize 20971520 --output data\tinystories-train-prefix.raw.txt https://huggingface.co/datasets/roneneldan/TinyStories/resolve/f54c09fd23315a6f9c86f9dc80f725de7d8f9c64/TinyStories-train.txt
 python scripts\prepare_tinystories_prefix.py --input data\tinystories-train-prefix.raw.txt --output data\tinystories-documents.txt --revision f54c09fd23315a6f9c86f9dc80f725de7d8f9c64 --upstream-size-bytes 1924281556
-frontier prepare-data --input data\tinystories-documents.txt --output data\tinystories --validation-fraction 0.02 --seed 17 --source-metadata data\tinystories-documents.txt.source.json
+frontier prepare-data --input data\tinystories-documents.txt --output data\tinystories-v3 --validation-fraction 0.02 --seed 17 --source-metadata data\tinystories-documents.txt.source.json
 ```
 
-The converter discards a partial trailing story and records the source revision, selected byte range, hashes, license and normalization. The M1 validation split is held out from this training-file prefix; it is not the dataset's separate validation file.
+The converter discards a partial trailing story and records the source revision, selected byte range, hashes, license, synthetic content origin and normalization. Use a new output directory so the schema-1 M1 files remain untouched; point a copied run config at `data/tinystories-v3` when using this split. The M1 validation split is held out from this training-file prefix; it is not the dataset's separate validation file.
 
-Use `frontier compare-seeds --baseline-runs ... --candidate-runs ... --output runs\seeded-comparison.json` for repeated-seed aggregation. An improvement claim requires at least three matched seeds, non-synthetic data, the same pinned Git revision, and clean Git worktrees recorded for every run; pairwise comparisons are metric-only.
+Use `frontier compare-seeds --baseline-runs ... --candidate-runs ... --output runs\seeded-comparison.json` for repeated-seed aggregation. A scoped improvement requires at least three matched seeds, known non-fixture corpus origin, the same pinned Git revision, and clean Git worktrees recorded for every run. The report marks synthetic-domain results separately from human-corpus results; a fixture or unknown origin cannot support a research claim. Pairwise comparisons are metric-only.

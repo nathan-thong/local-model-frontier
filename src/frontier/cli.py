@@ -14,10 +14,16 @@ from frontier.data.corpus import encode_documents, load_split, prepare_split
 from frontier.evaluation.perplexity import evaluate_perplexity
 from frontier.evaluation.tasks import evaluate_tasks
 from frontier.experiments.compare import compare_runs, compare_seeded_runs
+from frontier.experiments.planning import plan_sweep
 from frontier.experiments.results import write_json, write_summary
+from frontier.experiments.runner import execute_sweep
 from frontier.models import DecoderLanguageModel
 from frontier.profiling.benchmark import profile_model
-from frontier.tokenization import build_tokenizer
+from frontier.tokenization import (
+    build_tokenizer,
+    load_tokenizer_artifact,
+    tokenizer_artifact,
+)
 from frontier.training.checkpoint import load_checkpoint
 from frontier.training.runtime import resolve_device
 from frontier.training.trainer import train
@@ -56,8 +62,36 @@ def _evaluate(run_dir: Path) -> dict:
     config, model, summary, _ = _load_run(run_dir)
     data_root = Path(summary["data"]["root"])
     _, valid_docs, manifest = load_split(data_root)
-    tokenizer = build_tokenizer(config.tokenizer)
+    tokenizer_artifact_path = run_dir / "tokenizer.json"
+    if not tokenizer_artifact_path.exists():
+        raise FileNotFoundError(f"trained run is missing its tokenizer artifact: {run_dir}")
+    serialized_tokenizer = json.loads(tokenizer_artifact_path.read_text(encoding="utf-8"))
+    if not isinstance(serialized_tokenizer, dict):
+        raise TypeError("tokenizer artifact file must contain a JSON object")
+    if "artifact_sha256" in serialized_tokenizer:
+        tokenizer = load_tokenizer_artifact(tokenizer_artifact_path)
+    else:
+        # Legacy byte-tokenizer runs can still be evaluated without rewriting their saved artifact.
+        tokenizer = build_tokenizer(config.tokenizer)
+        legacy_identity = {
+            "name": tokenizer.name,
+            "vocab_size": tokenizer.vocab_size,
+            "bos_id": tokenizer.bos_id,
+            "eos_id": tokenizer.eos_id,
+            "pad_id": tokenizer.pad_id,
+        }
+        if any(serialized_tokenizer.get(key) != value for key, value in legacy_identity.items()):
+            raise ValueError("legacy tokenizer metadata does not match the configured tokenizer")
+    tokenizer_hash = tokenizer_artifact(tokenizer)["artifact_sha256"]
+    if tokenizer.name != config.tokenizer or tokenizer.vocab_size != config.model.vocab_size:
+        raise ValueError("saved tokenizer does not match the model configuration")
+    saved_tokenizer_hash = summary.get("tokenizer", {}).get("artifact_sha256")
+    if saved_tokenizer_hash is not None and saved_tokenizer_hash != tokenizer_hash:
+        raise ValueError("run summary tokenizer hash does not match tokenizer.json")
     valid_tokens = encode_documents(valid_docs, tokenizer)
+    valid_token_byte_counts = [
+        tokenizer.token_byte_counts(document, add_bos=True, add_eos=True) for document in valid_docs
+    ]
     stride = config.evaluation.stride
     metrics = evaluate_perplexity(
         model,
@@ -65,27 +99,33 @@ def _evaluate(run_dir: Path) -> dict:
         context_length=config.train.context_length,
         stride=stride,
         max_documents=config.evaluation.max_validation_documents,
+        token_byte_counts=valid_token_byte_counts,
     )
     evaluation = {
         "perplexity": metrics,
         "protocol": {
+            "metrics_schema_version": metrics["schema_version"],
             "dataset_sha256": manifest.get("validation_sha256"),
             "tokenizer": tokenizer.name,
+            "tokenizer_sha256": tokenizer_hash,
             "context_length": config.train.context_length,
             "stride": stride,
             "document_boundary": "score within documents; no cross-document targets",
+            "byte_normalization": metrics["byte_metric_protocol"],
         },
     }
     if config.evaluation.tasks_path:
         task_path = Path(config.evaluation.tasks_path)
         if not task_path.is_absolute():
             task_path = Path.cwd() / task_path
-        evaluation["tasks"] = evaluate_tasks(
+        task_metrics = evaluate_tasks(
             model,
             tokenizer,
             task_path,
             max_new_tokens=config.evaluation.generation_max_tokens,
         )
+        evaluation["tasks"] = task_metrics
+        evaluation["protocol"]["task"] = task_metrics["protocol"]
     summary["evaluation"] = evaluation
     write_json(run_dir / "evaluation.json", evaluation)
     write_summary(run_dir, summary)
@@ -153,6 +193,11 @@ def build_parser() -> argparse.ArgumentParser:
     data_parser.add_argument("--validation-fraction", type=float, default=0.02)
     data_parser.add_argument("--seed", type=int, default=17)
     data_parser.add_argument("--source-metadata", type=Path)
+    data_parser.add_argument(
+        "--content-origin",
+        choices=("human", "synthetic", "mixed", "unknown"),
+        help="verified origin of the corpus text; defaults to source metadata or unknown",
+    )
 
     compare_parser = commands.add_parser(
         "compare", help="compare runs and report whether controls are comparable"
@@ -168,6 +213,19 @@ def build_parser() -> argparse.ArgumentParser:
     seeded_parser.add_argument("--candidate-runs", nargs="+", required=True, type=Path)
     seeded_parser.add_argument("--minimum-seeds", type=int, default=3)
     seeded_parser.add_argument("--output", type=Path, default=Path("seeded-comparison.json"))
+
+    plan_parser = commands.add_parser(
+        "plan-sweep", help="resolve a seed-paired sweep and compute budget without training"
+    )
+    plan_parser.add_argument("--spec", required=True, type=Path)
+    plan_parser.add_argument("--output", required=True, type=Path)
+
+    execute_parser = commands.add_parser(
+        "execute-sweep", help="run or resume jobs from a verified sweep plan"
+    )
+    execute_parser.add_argument("--plan", required=True, type=Path)
+    execute_parser.add_argument("--status", type=Path)
+    execute_parser.add_argument("--max-runtime-seconds", type=float)
     return parser
 
 
@@ -201,6 +259,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.validation_fraction,
                 args.seed,
                 source_metadata,
+                args.content_origin,
             )
             print(json.dumps(manifest, indent=2))
         elif args.command == "compare":
@@ -214,8 +273,16 @@ def main(argv: list[str] | None = None) -> int:
                 args.minimum_seeds,
             )
             print(json.dumps(report, indent=2))
+        elif args.command == "plan-sweep":
+            plan = plan_sweep(args.spec, args.output)
+            print(json.dumps(plan, indent=2))
+        elif args.command == "execute-sweep":
+            status = execute_sweep(args.plan, args.status, args.max_runtime_seconds)
+            print(json.dumps(status, indent=2))
+            if status["status"] == "failed":
+                return 1
         return 0
-    except (ValueError, FileNotFoundError, FileExistsError, FloatingPointError) as error:
+    except (ValueError, TypeError, FileNotFoundError, FileExistsError, FloatingPointError) as error:
         parser.error(str(error))
     return 2
 
