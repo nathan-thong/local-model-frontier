@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "experiment_id": "Q10-SOURCE-003",
+  "status": "preregistered_before_query",
+  "as_of_date": "2026-09-23",
+  "preregistration_parent_revision": "92ddd131336533412e2a7345e51672383ee8836e",
+  "supersedes_failed_screen": "Q10-SOURCE-002",
+  "candidate_ids_are_new_and_not_replacements": true,
+  "source": {
+    "dataset": "NIH NLM NCBI PubMed Central Article Datasets — Open Access Subset",
+    "dataset_documentation": "https://pmc-oa-opendata.s3.amazonaws.com/README.txt",
+    "open_access_subset": "https://pmc.ncbi.nlm.nih.gov/tools/openftlist/",
+    "cloud_versioning": "https://pmc.ncbi.nlm.nih.gov/tools/pmcaws/",
+    "copyright_notice": "https://pmc.ncbi.nlm.nih.gov/about/copyright/",
+    "oai_metadata_api": "https://pmc.ncbi.nlm.nih.gov/tools/oai/",
+    "search_syntax": "https://pmc.ncbi.nlm.nih.gov/about/userguide/",
+    "license_uri": "https://creativecommons.org/licenses/by/4.0/",
+    "publication_stage_filters": {
+      "author_manuscript_exclusion": "NOT \"author manuscript\"[filter]",
+      "preprint_exclusion": "NOT preprint[filter]",
+      "primary_documentation": "https://pmc.ncbi.nlm.nih.gov/about/userguide/"
+    },
+    "source_scope": "English MEDLINE-indexed biomedical and life-sciences journal articles; any resulting claim is restricted to this domain"
+  },
+  "amendment_reason": "Q10-SOURCE-002 screened 24 candidates and found 12 PMC author-manuscript flags, 5 ambiguous multi-version records, and 5 eligible versions. The official PMC User Guide documents author-manuscript and preprint search filters. This new, separate cohort excludes both publication stages before ID selection; it does not replace or refill the failed cohort.",
+  "query_protocol": {
+    "metadata_only": true,
+    "base_query": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp] AND NOT \"author manuscript\"[filter] AND NOT preprint[filter]",
+    "topic_field_note": "The frozen [mh] MeSH topic terms restrict retrieval to the MEDLINE-indexed subset of PMC.",
+    "topic_strata_in_priority_order": [
+      {"name": "neurosciences", "mesh_descriptor_ui": "D009488", "mesh_term": "neurosciences[MeSH Terms]", "target": 8},
+      {"name": "microbiology", "mesh_descriptor_ui": "D008829", "mesh_term": "microbiology[MeSH Terms]", "target": 8},
+      {"name": "plants", "mesh_descriptor_ui": "D010944", "mesh_term": "plants[MeSH Terms]", "target": 8},
+      {"name": "ecology", "mesh_descriptor_ui": "D004463", "mesh_term": "ecology[MeSH Terms]", "target": 8},
+      {"name": "computational biology", "mesh_descriptor_ui": "D019295", "mesh_term": "computational biology[MeSH Terms]", "target": 8},
+      {"name": "public health", "mesh_descriptor_ui": "D011634", "mesh_term": "public health[MeSH Terms]", "target": 8}
+    ],
+    "esearch_max_ids_per_stratum": 1000,
+    "ordering": "Run each frozen query once with retmax=1000. Sort each returned numeric PMCID list ascending; process strata in the listed order; take the first eight globally unique IDs for each stratum. Skip IDs already assigned to an earlier stratum and continue through that stratum's frozen result list. Do not replace a candidate after metadata screening. If fewer than 48 unique candidates are available across the six capped result lists, the candidate-selection gate fails.",
+    "candidate_selection_sha256_encoding": "UTF-8 of one line per selected candidate in selection order as stratum_name<TAB>PMCID, LF separated, no trailing LF"
+  },
+  "screening_protocol": {
+    "version_source": "For the 48 frozen PMCID candidates only, inspect PMC Cloud per-version JSON metadata, exact S3 XML object-list metadata, and OAI-PMH compact Dublin Core (metadataPrefix=oai_dc). Do not request full-text or pmc_fm records. Process only identifier, title, creator, date, subject/citation and rights fields; do not retain dc:description containing abstract text. Require exactly one available Cloud article version per PMCID.",
+    "version_eligibility": [
+      "is_pmc_openaccess is true",
+      "the raw license_code maps to the CC BY family and agrees with the PMC cc by license search filter",
+      "at least one OAI-PMH oai_dc dc:rights value is exactly https://creativecommons.org/licenses/by/4.0/; record every rights value and fail if another value gives a different CC license URI or conflicting restriction",
+      "is_manuscript is false",
+      "is_historical_ocr is false",
+      "is_retracted is false",
+      "the exact XML object is present and its MD5, S3 LastModifiedDate, version and byte size are recorded",
+      "the exact XML object is at most 1 MiB",
+      "Cloud citation publication year and all available OAI dc:date values resolve consistently to 2018 through 2025",
+      "title, creator list, DOI and source citation are present and unambiguous"
+    ],
+    "article_metadata_exclusions": [
+      "records with a missing or ambiguous version, rights statement, title, author list, DOI, or source citation",
+      "records whose Cloud citation year or available OAI dc:date does not resolve consistently to 2018 through 2025",
+      "records with conflicting license or restriction metadata"
+    ]
+  },
+  "bounds": {
+    "candidate_pmcids": 48,
+    "candidates_per_stratum": 8,
+    "minimum_metadata_eligible_before_body_request": 20,
+    "maximum_xml_bytes_per_article": 1048576,
+    "maximum_combined_xml_bytes": 4194304,
+    "combined_xml_size_applies_to": "all metadata-eligible versions in the frozen 48-PMCID set; if their sum exceeds the cap, do not request any article XML"
+  },
+  "acquisition_gate": {
+    "article_xml_requested": false,
+    "figures_or_supplements_requested": false,
+    "body_request_allowed_only_if": "all 48 candidate records are screened, at least 20 versions pass, and the sum of all eligible XML object sizes is at most 4194304 bytes",
+    "after_xml_gate": "Retrieve eligible XML serially through an approved PMC service; inspect article-level rights and exclude separately licensed or untraceable content before deterministic preparation."
+  },
+  "query_result_records": [],
+  "query_result_record_fields": [
+    "stratum_name_and_descriptor_ui",
+    "query_timestamp_utc",
+    "full_query_string",
+    "esearch_count",
+    "retstart_and_retmax",
+    "returned_numeric_pmcid_list_in_original_api_order",
+    "sha256_of_returned_pmcid_list",
+    "pmc_cloud_inventory_snapshot_and_manifest_identity"
+  ],
+  "metadata_query_results": [],
+  "eligible_version_count": null,
+  "combined_xml_bytes": null,
+  "metadata_screened_count": 0,
+  "selection_inventory_sha256": null,
+  "selection_inventory_sha256_encoding": "UTF-8 of one line per selected candidate in selection order as stratum_name<TAB>PMCID, LF separated, no trailing LF",
+  "protocol_amendments": [],
+  "content_or_model_training_used": false
+}
