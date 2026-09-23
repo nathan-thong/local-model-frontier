@@ -234,6 +234,16 @@ def build_parser() -> argparse.ArgumentParser:
     pmc_parser.add_argument(
         "--preparation-inventory", type=Path, default=Path("docs/q10h_pmc_corpus_preparation.json")
     )
+
+    contamination_parser = commands.add_parser(
+        "audit-task-contamination",
+        help="audit a frozen task contract against all train/validation/test documents",
+    )
+    contamination_parser.add_argument(
+        "--contract", type=Path, default=Path("docs/q11_task_contract_v1.json")
+    )
+    contamination_parser.add_argument("--data-dir", required=True, type=Path)
+    contamination_parser.add_argument("--output", type=Path)
     compare_parser = commands.add_parser(
         "compare", help="compare runs and report whether controls are comparable"
     )
@@ -345,6 +355,50 @@ def main(argv: list[str] | None = None) -> int:
                 preparation_inventory=args.preparation_inventory,
             )
             print(json.dumps(result, indent=2))
+        elif args.command == "audit-task-contamination":
+            import hashlib
+
+            from frontier.data.corpus import load_all_splits
+            from frontier.evaluation.contamination import audit_task_contamination
+
+            contract_path = args.contract.resolve()
+            contract = json.loads(contract_path.read_text(encoding="utf-8"))
+            repository_root = contract_path.parent.parent
+            task_path = (repository_root / contract["task_set"]["path"]).resolve()
+            task_hash = hashlib.sha256(task_path.read_bytes()).hexdigest()
+            if task_hash != contract["task_set"]["sha256"]:
+                raise ValueError("task file hash does not match the frozen Q11 contract")
+
+            data_dir = args.data_dir.resolve()
+            manifest_path = data_dir / "data_manifest.json"
+            manifest_hash = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+            data_contract = contract["data_protocol"]
+            if manifest_hash != data_contract["data_manifest_sha256"]:
+                raise ValueError("data manifest hash does not match the frozen Q10 contract")
+            _, _, _, manifest = load_all_splits(data_dir)
+            for split in ("train", "validation", "test"):
+                if manifest.get(f"{split}_sha256") != data_contract[f"{split}_sha256"]:
+                    raise ValueError(f"{split} split hash differs from the frozen Q10 contract")
+            tokenizer = load_tokenizer_artifact(data_dir / "tokenizer.json")
+            if (
+                tokenizer_artifact(tokenizer)["artifact_sha256"]
+                != data_contract["tokenizer_sha256"]
+            ):
+                raise ValueError("data tokenizer hash differs from the frozen Q10 contract")
+
+            ngram_size = contract["contamination_check"]["phrase_ngram_tokens"]
+            report = audit_task_contamination(task_path, data_dir, ngram_size=ngram_size)
+            report["contract_sha256"] = hashlib.sha256(contract_path.read_bytes()).hexdigest()
+            if args.output is not None:
+                if args.output.exists():
+                    raise FileExistsError(
+                        f"refusing to overwrite task contamination report: {args.output}"
+                    )
+                args.output.parent.mkdir(parents=True, exist_ok=True)
+                args.output.write_bytes((json.dumps(report, indent=2) + "\n").encode("utf-8"))
+            print(json.dumps(report, indent=2))
+            if report["status"] != "passed":
+                return 1
         elif args.command == "compare":
             report = compare_runs(args.baseline_run, args.candidate_runs, args.output)
             print(json.dumps(report, indent=2))

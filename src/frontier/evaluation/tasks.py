@@ -43,6 +43,11 @@ def read_tasks(path: str | Path) -> list[dict[str, str]]:
     return tasks
 
 
+def _score_exact_match(prediction: str, target: str) -> bool:
+    """Case- and punctuation-sensitive exact match after stripping outer whitespace."""
+    return prediction.strip() == target.strip()
+
+
 @torch.inference_mode()
 def evaluate_tasks(
     model: DecoderLanguageModel,
@@ -63,12 +68,19 @@ def evaluate_tasks(
     exact = 0
     nll_sum = 0.0
     scored_tokens = 0
+    scored_bytes = 0
     was_training = model.training
     model.eval()
     try:
         for row in rows:
             prompt_ids = tokenizer.encode(row["prompt"], add_bos=True, add_eos=False)
             target_ids = tokenizer.encode(row["target"], add_bos=False, add_eos=True)
+            target_byte_counts = tokenizer.token_byte_counts(
+                row["target"], add_bos=False, add_eos=True
+            )
+            if len(target_byte_counts) != len(target_ids):
+                raise ValueError("task target byte counts are not aligned to encoded target IDs")
+            example_bytes = sum(target_byte_counts)
             prompt = torch.tensor([prompt_ids], device=device)
             full = torch.tensor(prompt_ids + target_ids, device=device)
             target_position = len(prompt_ids)
@@ -102,11 +114,15 @@ def evaluate_tasks(
             output = generate(model, prompt, max_new_tokens=max_new_tokens, eos_id=tokenizer.eos_id)
             prediction = tokenizer.decode(output[0, retained_prompt:].tolist()).strip()
             expected = row["target"].strip()
-            matched = prediction == expected
+            matched = _score_exact_match(prediction, expected)
             exact += int(matched)
             nll_sum += example_nll
             scored_tokens += example_tokens
+            scored_bytes += example_bytes
             example_mean_nll = example_nll / example_tokens if example_tokens else None
+            example_bits_per_byte = (
+                example_nll / (math.log(2.0) * example_bytes) if example_bytes else None
+            )
             example_overflow = example_mean_nll is not None and example_mean_nll >= 709
             details.append(
                 {
@@ -117,7 +133,9 @@ def evaluate_tasks(
                     "exact_match": matched,
                     "conditional_nll_sum": example_nll,
                     "conditional_scored_tokens": example_tokens,
+                    "conditional_scored_bytes": example_bytes,
                     "conditional_mean_nll": example_mean_nll,
+                    "conditional_bits_per_utf8_byte": example_bits_per_byte,
                     "conditional_perplexity": (
                         math.exp(example_mean_nll)
                         if example_mean_nll is not None and not example_overflow
@@ -133,12 +151,23 @@ def evaluate_tasks(
         "exact_match": exact / len(rows),
         "conditional_nll_sum": nll_sum,
         "conditional_scored_tokens": scored_tokens,
+        "conditional_scored_bytes": scored_bytes,
         "conditional_mean_nll": nll_sum / scored_tokens if scored_tokens else None,
+        "conditional_bits_per_utf8_byte": (
+            nll_sum / (math.log(2.0) * scored_bytes) if scored_bytes else None
+        ),
         "details": details,
         "protocol": {
             "adapter": "jsonl-prompt-target-v1",
             "artifact_sha256": task_hash,
-            "scoring": "strip exact match; teacher-forced target token NLL; target includes EOS",
+            "scoring": (
+                "case-sensitive exact match after stripping outer whitespace; teacher-forced "
+                "target token NLL; target includes EOS"
+            ),
+            "byte_normalization": (
+                "conditional target NLL in nats divided by ln(2) and target UTF-8 bytes; "
+                "BOS is unscored and EOS contributes zero bytes"
+            ),
             "generation": "greedy; max_new_tokens as configured; stop at EOS",
         },
     }
