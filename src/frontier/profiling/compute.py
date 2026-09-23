@@ -31,8 +31,30 @@ def _attention_macs_per_token(config: ModelConfig, context_length: int) -> dict[
     }
 
 
+def _normalized_linear_attention_macs_per_token(
+    config: ModelConfig, context_length: int
+) -> dict[str, int]:
+    """Count projections, recurrent key/value outer products, and query contractions."""
+    del context_length  # Recurrent mixing work per token does not depend on prefix length.
+    head_dim = config.width // config.query_heads
+    kv_width = config.kv_heads * head_dim
+    projections = config.width * (config.width + 2 * kv_width + config.width)
+    recurrent = (
+        config.kv_heads * head_dim * head_dim
+        + config.query_heads * head_dim * head_dim
+        + config.query_heads * head_dim
+    )
+    return {
+        "sequence_projection_macs_per_token": projections,
+        "linear_recurrent_macs_per_token": recurrent,
+    }
+
+
 register_sequence_mac_estimator("attention", _attention_macs_per_token)
 register_sequence_mac_estimator("local_attention_reference", _attention_macs_per_token)
+register_sequence_mac_estimator(
+    "normalized_linear_attention_reference", _normalized_linear_attention_macs_per_token
+)
 
 
 def estimate_training_compute(
@@ -69,7 +91,12 @@ def estimate_training_compute(
     sequence_projection_per_token = sum(
         layer["sequence_projection_macs_per_token"] for layer in per_layer
     )
-    attention_per_token = sum(layer["attention_score_value_macs_per_token"] for layer in per_layer)
+    attention_per_token = sum(
+        layer.get("attention_score_value_macs_per_token", 0) for layer in per_layer
+    )
+    linear_recurrent_per_token = sum(
+        layer.get("linear_recurrent_macs_per_token", 0) for layer in per_layer
+    )
     if config.ffn == "gelu":
         ffn_macs_per_token_per_layer = 2 * config.width * config.ffn_width
     else:
@@ -79,12 +106,27 @@ def estimate_training_compute(
 
     components = {
         "sequence_projection_macs": sequence_projection_per_token * input_tokens,
-        "attention_score_value_macs": attention_per_token * input_tokens,
         "feed_forward_macs": ffn_per_token * input_tokens,
         "vocabulary_head_macs": vocabulary_head_per_token * input_tokens,
     }
+    if attention_per_token:
+        components["attention_score_value_macs"] = attention_per_token * input_tokens
+    if linear_recurrent_per_token:
+        components["linear_recurrent_macs"] = linear_recurrent_per_token * input_tokens
     total_macs = sum(components.values())
     components["total_macs"] = total_macs
+    assumptions = (
+        "two FLOPs per MAC and 3x forward MACs for forward plus backward; charges full "
+        "dense causal attention matrices at configured context; embedding table lookups, "
+        "softmax, normalization, activations, loss, optimizer, dropout and scalar work "
+        "are excluded; tied embedding weights are counted as vocabulary-head compute once"
+    )
+    if linear_recurrent_per_token:
+        assumptions += (
+            "; normalized linear attention counts recurrent key/value outer-product updates "
+            "and query contractions per token, not feature-map, denominator-epsilon, "
+            "Python-loop or autograd-intermediate overhead"
+        )
     return {
         "estimator": ESTIMATOR_ID,
         "status": "estimated",
@@ -93,10 +135,5 @@ def estimate_training_compute(
         "components": components,
         "sequence_modules": list(config.sequence_types),
         "per_layer_sequence_macs_per_token": per_layer,
-        "assumptions": (
-            "two FLOPs per MAC and 3x forward MACs for forward plus backward; charges full "
-            "dense causal attention matrices at configured context; embedding table lookups, "
-            "softmax, normalization, activations, loss, optimizer, dropout and scalar work "
-            "are excluded; tied embedding weights are counted as vocabulary-head compute once"
-        ),
+        "assumptions": assumptions,
     }

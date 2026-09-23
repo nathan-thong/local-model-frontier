@@ -85,3 +85,34 @@ def test_local_attention_reference_is_priced_at_dense_attention_work():
     assert local["status"] == "estimated"
     assert local["components"] == dense["components"]
     assert local["estimated_flops"] == dense["estimated_flops"]
+
+
+def test_normalized_linear_attention_recurrent_macs_match_hand_derived_shape():
+    linear_config = make_config(sequence_types=["normalized_linear_attention_reference"] * 2)
+    estimate = estimate_training_compute(linear_config, input_tokens=8, context_length=4)
+
+    assert estimate["status"] == "estimated"
+    assert estimate["components"] == {
+        "sequence_projection_macs": 3_072,
+        "feed_forward_macs": 4_096,
+        "vocabulary_head_macs": 16_576,
+        "linear_recurrent_macs": 512,
+        "total_macs": 24_256,
+    }
+    assert estimate["estimated_macs"] == 24_256
+    assert estimate["estimated_flops"] == 145_536
+    assert "per token" in estimate["assumptions"]
+
+
+def test_mixed_attention_compute_keeps_attention_and_recurrent_components_distinct():
+    mixed_config = make_config(
+        sequence_types=["attention", "normalized_linear_attention_reference"]
+    )
+    estimate = estimate_training_compute(mixed_config, input_tokens=8, context_length=4)
+
+    assert estimate["status"] == "estimated"
+    assert estimate["components"]["attention_score_value_macs"] == 512
+    assert estimate["components"]["linear_recurrent_macs"] == 256
+    assert estimate["components"]["total_macs"] == sum(
+        value for key, value in estimate["components"].items() if key != "total_macs"
+    )

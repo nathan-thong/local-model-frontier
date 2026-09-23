@@ -1,0 +1,34 @@
+{
+  "experiment_id": "S06-LINEAR-001",
+  "seed": 17,
+  "model": {
+    "vocab_size": 512,
+    "max_seq_len": 128,
+    "width": 128,
+    "layers": 4,
+    "query_heads": 4,
+    "kv_heads": 2,
+    "ffn_width": 512,
+    "normalization": "rmsnorm",
+    "ffn": "gelu",
+    "position": "rope",
+    "residual_topology": "pre_norm",
+    "sequence_types": [
+      "normalized_linear_attention_reference",
+      "normalized_linear_attention_reference",
+      "normalized_linear_attention_reference",
+      "normalized_linear_attention_reference"
+    ],
+    "dropout": 0.0,
+    "bias": false,
+    "tie_embeddings": true,
+    "rope_theta": 10000.0
+  },
+  "profiling": {
+    "batch_size": 1,
+    "prompt_lengths": [32, 64, 96],
+    "decode_tokens": 8,
+    "warmup_steps": 1,
+    "repeats": 3
+  }
+}

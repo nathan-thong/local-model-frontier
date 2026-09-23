@@ -1,4 +1,4 @@
-"""Sequence-mixing module interface and built-in attention implementation."""
+"""Sequence-mixing module interface and registered reference implementations."""
 
 from .attention import CausalSelfAttention
 from .interface import (
@@ -16,6 +16,7 @@ from .interface import (
     iter_state_tensors,
     register_sequence_module,
 )
+from .linear_attention import LinearAttentionState, NormalizedCausalLinearAttention
 from .local_attention import LocalCausalSelfAttention
 
 __all__ = [
@@ -23,7 +24,9 @@ __all__ = [
     "CausalSelfAttention",
     "DecoderCache",
     "KVCache",
+    "LinearAttentionState",
     "LocalCausalSelfAttention",
+    "NormalizedCausalLinearAttention",
     "RecurrentState",
     "SequenceCostDescriptor",
     "SequenceModule",
