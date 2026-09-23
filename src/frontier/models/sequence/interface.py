@@ -36,6 +36,14 @@ class SequenceModule(Protocol):
         use_cache: bool = False,
     ) -> tuple[torch.Tensor, SequenceState | None]: ...
 
+    def state_tensors(self, state: SequenceState) -> tuple[torch.Tensor, ...]:
+        """Return every tensor backing allocated persistent sequence state."""
+        ...
+
+    def active_state_tensors(self, state: SequenceState) -> tuple[torch.Tensor, ...]:
+        """Return contiguous views for logically active state, once per backing store."""
+        ...
+
 
 def register_sequence_module(name: str, factory: SequenceFactory) -> None:
     if not name or name in _REGISTRY:

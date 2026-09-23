@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import statistics
 import time
-from collections.abc import Iterator
+from collections import defaultdict
+from collections.abc import Iterable, Iterator, Mapping
+from dataclasses import fields, is_dataclass
 from pathlib import Path
 
 import torch
@@ -13,6 +15,7 @@ from frontier.config import ProfileConfig
 from frontier.models import DecoderLanguageModel
 from frontier.profiling.memory import (
     accelerator_memory,
+    isolated_process_peak,
     process_memory_bytes,
     unique_tensor_storage_bytes,
 )
@@ -26,25 +29,142 @@ def _sync(device: torch.device) -> None:
 def _state_tensors(state: object) -> Iterator[torch.Tensor]:
     if isinstance(state, torch.Tensor):
         yield state
-    elif isinstance(state, dict):
+    elif isinstance(state, Mapping):
         for value in state.values():
             yield from _state_tensors(value)
     elif isinstance(state, (tuple, list)):
         for value in state:
             yield from _state_tensors(value)
+    elif is_dataclass(state) and not isinstance(state, type):
+        for field in fields(state):
+            yield from _state_tensors(getattr(state, field.name))
 
 
-def _state_storage_bytes(states: list[object]) -> int:
-    seen: set[tuple[str, int]] = set()
-    total = 0
-    for state in states:
-        for tensor in _state_tensors(state):
+def _state_memory_accounting(
+    sequence_modules: list[torch.nn.Module], states: list[object]
+) -> dict[str, int | str | None]:
+    """Count state backing stores and module-declared active contiguous regions."""
+    if len(sequence_modules) != len(states):
+        raise ValueError("sequence module and state counts differ")
+    allocated_tensors: list[torch.Tensor] = []
+    module_state_tensors: list[list[torch.Tensor]] = []
+    for module, state in zip(sequence_modules, states, strict=True):
+        if state is None:
+            module_state_tensors.append([])
+            continue
+        state_tensors = getattr(module, "state_tensors", None)
+        if callable(state_tensors):
+            tensors = state_tensors(state)
+            if isinstance(tensors, torch.Tensor):
+                tensor_list = [tensors]
+            elif not isinstance(tensors, Iterable):
+                raise TypeError("state_tensors must return an iterable of tensors")
+            else:
+                tensor_list = list(tensors)
+        else:
+            tensor_list = list(_state_tensors(state))
+            if not tensor_list and not isinstance(
+                state, (str, int, float, bool, Mapping, tuple, list)
+            ):
+                return {
+                    "allocated_bytes": None,
+                    "active_bytes": None,
+                    "status": f"{type(module).__name__} has opaque state without state_tensors",
+                }
+        if any(not isinstance(tensor, torch.Tensor) for tensor in tensor_list):
+            raise TypeError("state_tensors returned a non-tensor value")
+        module_state_tensors.append(tensor_list)
+        allocated_tensors.extend(tensor_list)
+
+    seen_storages: set[tuple[str, int]] = set()
+    allocated_bytes = 0
+    for tensor in allocated_tensors:
+        storage = tensor.untyped_storage()
+        key = (str(tensor.device), storage.data_ptr())
+        if key not in seen_storages:
+            seen_storages.add(key)
+            allocated_bytes += storage.nbytes()
+
+    storage_sizes: dict[tuple[str, int], int] = {}
+    active_intervals: dict[tuple[str, int], list[tuple[int, int]]] = defaultdict(list)
+    for tensors in module_state_tensors:
+        for tensor in tensors:
+            storage = tensor.untyped_storage()
+            if storage.nbytes():
+                storage_sizes[(str(tensor.device), storage.data_ptr())] = storage.nbytes()
+
+    for module, state in zip(sequence_modules, states, strict=True):
+        if state is None:
+            continue
+        active_state_tensors = getattr(module, "active_state_tensors", None)
+        if not callable(active_state_tensors):
+            return {
+                "allocated_bytes": allocated_bytes,
+                "active_bytes": None,
+                "status": f"{type(module).__name__} does not expose active state",
+            }
+        tensors = active_state_tensors(state)
+        if isinstance(tensors, torch.Tensor):
+            active_tensor_list = [tensors]
+        elif not isinstance(tensors, Iterable):
+            raise TypeError("active_state_tensors must return an iterable of tensors")
+        else:
+            active_tensor_list = list(tensors)
+        for tensor in active_tensor_list:
+            if not isinstance(tensor, torch.Tensor):
+                raise TypeError("active_state_tensors returned a non-tensor value")
             storage = tensor.untyped_storage()
             key = (str(tensor.device), storage.data_ptr())
-            if key not in seen:
-                seen.add(key)
-                total += storage.nbytes()
-    return total
+            if key not in storage_sizes:
+                raise ValueError("active state tensor is not backed by the returned sequence state")
+            if not tensor.is_contiguous():
+                return {
+                    "allocated_bytes": allocated_bytes,
+                    "active_bytes": None,
+                    "status": "active state view is non-contiguous; exact bytes unavailable",
+                }
+            start = tensor.storage_offset() * tensor.element_size()
+            end = start + tensor.numel() * tensor.element_size()
+            if end > storage_sizes[key]:
+                raise ValueError("active state view exceeds its backing storage")
+            active_intervals[key].append((start, end))
+
+    active_bytes = 0
+    for intervals in active_intervals.values():
+        intervals.sort()
+        start, end = intervals[0]
+        for next_start, next_end in intervals[1:]:
+            if next_start <= end:
+                end = max(end, next_end)
+            else:
+                active_bytes += end - start
+                start, end = next_start, next_end
+        active_bytes += end - start
+    return {
+        "allocated_bytes": allocated_bytes,
+        "active_bytes": active_bytes,
+        "status": "exact union of module-declared active contiguous tensor regions",
+    }
+
+
+@torch.inference_mode()
+def _isolated_prefill(model: DecoderLanguageModel, input_ids: torch.Tensor) -> None:
+    model.eval()
+    logits, _ = model(input_ids, use_cache=True)
+    logits[:, -1, :].argmax(dim=-1)
+
+
+@torch.inference_mode()
+def _isolated_decode(
+    model: DecoderLanguageModel,
+    token: torch.Tensor,
+    cache: object,
+    decode_tokens: int,
+) -> None:
+    model.eval()
+    for _ in range(decode_tokens):
+        logits, cache = model(token, cache=cache, use_cache=True)
+        token = logits[:, -1, :].argmax(dim=-1, keepdim=True)
 
 
 def _timing_summary(values: list[float]) -> dict[str, float | list[float] | None]:
@@ -93,7 +213,7 @@ def profile_model(
         torch.cuda.reset_peak_memory_stats(device)
     precision_dtype = next(model.parameters()).dtype
     result: dict = {
-        "profile_schema_version": 3,
+        "profile_schema_version": 4,
         "parameter_count": model.parameter_count(),
         "trainable_parameter_count": model.parameter_count(trainable_only=True),
         "model_tensor_bytes": unique_tensor_storage_bytes(model),
@@ -133,9 +253,23 @@ def profile_model(
             del prefill_cache
         prefill_accelerator_memory = accelerator_memory(device)
 
+        prefill_cpu_memory = (
+            isolated_process_peak(_isolated_prefill, (model, ids))
+            if device.type == "cpu"
+            else {
+                "status": "unavailable",
+                "baseline_rss_bytes": None,
+                "peak_rss_bytes": None,
+                "peak_rss_increase_bytes": None,
+                "method": "CPU process high-water measurement applies only to CPU workloads",
+                "isolation": None,
+                "reason": f"model device is {device}",
+            }
+        )
+
         def decode_cached(
             prompt_ids: torch.Tensor = ids,
-        ) -> tuple[float, int, int | None, dict[str, int | None]]:
+        ) -> tuple[float, dict[str, int | str | None], int | None, dict[str, int | None]]:
             logits, cache = model(prompt_ids, use_cache=True)
             _sync(device)
             token = logits[:, -1, :].argmax(dim=-1, keepdim=True)
@@ -147,25 +281,49 @@ def profile_model(
                 logits, cache = model(token, cache=cache, use_cache=True)
                 token = logits[:, -1, :].argmax(dim=-1, keepdim=True)
             _sync(device)
-            cache_bytes = _state_storage_bytes(cache.states)
+            state_memory = _state_memory_accounting(
+                [block.sequence for block in model.blocks], cache.states
+            )
             decode_memory = accelerator_memory(device)
             state_position = getattr(cache, "position", None)
             if not isinstance(state_position, int):
                 state_position = None
-            return time.perf_counter() - decode_start, cache_bytes, state_position, decode_memory
+            return time.perf_counter() - decode_start, state_memory, state_position, decode_memory
 
         decode_memory_records = []
         for _ in range(settings.warmup_steps):
             _, _, _, phase_memory = decode_cached()
             decode_memory_records.append(phase_memory)
         decode_times = []
-        actual_cache_bytes = None
+        state_memory: dict[str, int | str | None] = {
+            "allocated_bytes": None,
+            "active_bytes": None,
+            "status": "decode workload did not run",
+        }
         state_position_tokens = None
         for _ in range(settings.repeats):
-            elapsed, actual_cache_bytes, state_position_tokens, phase_memory = decode_cached()
+            elapsed, state_memory, state_position_tokens, phase_memory = decode_cached()
             decode_times.append(elapsed)
             decode_memory_records.append(phase_memory)
         decode_accelerator_memory = _maximum_accelerator_memory(decode_memory_records)
+
+        if device.type == "cpu":
+            decode_logits, decode_cache = model(ids, use_cache=True)
+            decode_token = decode_logits[:, -1, :].argmax(dim=-1, keepdim=True)
+            decode_cpu_memory = isolated_process_peak(
+                _isolated_decode,
+                (model, decode_token, decode_cache, settings.decode_tokens),
+            )
+        else:
+            decode_cpu_memory = {
+                "status": "unavailable",
+                "baseline_rss_bytes": None,
+                "peak_rss_bytes": None,
+                "peak_rss_increase_bytes": None,
+                "method": "CPU process high-water measurement applies only to CPU workloads",
+                "isolation": None,
+                "reason": f"model device is {device}",
+            }
         prefill_summary = _timing_summary(prefill_times)
         decode_summary = _timing_summary(decode_times)
         prefill_median = float(prefill_summary["median_seconds"])
@@ -218,17 +376,22 @@ def profile_model(
                 "theoretical_kv_bytes_status": "all sequence blocks use standard attention"
                 if all_attention
                 else "not estimated for this sequence-module mix",
-                "actual_state_storage_bytes_after_decode": actual_cache_bytes,
-                "actual_kv_bytes_after_decode": actual_cache_bytes if all_attention else None,
-                "persistent_state_bytes_after_decode": actual_cache_bytes
-                if not all_attention
-                else None,
-                "active_state_bytes_after_decode": actual_cache_bytes if all_attention else None,
-                "active_state_bytes_status": "exact for dense attention cache"
+                "actual_state_storage_bytes_after_decode": state_memory["allocated_bytes"],
+                "allocated_state_bytes_after_decode": state_memory["allocated_bytes"],
+                "actual_kv_bytes_after_decode": state_memory["allocated_bytes"]
                 if all_attention
-                else "module does not expose active-versus-allocated state accounting",
+                else None,
+                "persistent_state_bytes_after_decode": state_memory["allocated_bytes"],
+                "active_state_bytes_after_decode": state_memory["active_bytes"],
+                "state_memory_accounting_status": state_memory["status"],
                 "kv_cache_accounting_dtype": str(precision_dtype),
                 "process_memory_snapshot_after_workload": process_memory_bytes(),
+                "prefill_cpu_memory": prefill_cpu_memory,
+                "prefill_cpu_memory_scope": "isolated CPU process high-water delta for prefill",
+                "decode_cpu_memory": decode_cpu_memory,
+                "decode_cpu_memory_scope": (
+                    "isolated CPU process high-water delta for cached decode after prefill"
+                ),
                 "prefill_accelerator_memory": prefill_accelerator_memory,
                 "prefill_accelerator_memory_scope": (
                     "prefill warmup and measured repetitions; peak reset per prompt workload"

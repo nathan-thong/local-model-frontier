@@ -31,10 +31,15 @@ def test_profile_records_actual_and_analytic_kv_bytes():
         workload["actual_state_storage_bytes_after_decode"]
         == workload["actual_kv_bytes_after_decode"]
     )
-    assert workload["persistent_state_bytes_after_decode"] is None
+    assert (
+        workload["persistent_state_bytes_after_decode"] == workload["actual_kv_bytes_after_decode"]
+    )
     assert workload["active_state_bytes_after_decode"] == workload["actual_kv_bytes_after_decode"]
+    assert workload["state_memory_accounting_status"].startswith("exact union")
     assert workload["prefill_accelerator_memory"]["peak_allocated_bytes"] is None
     assert workload["decode_accelerator_memory"]["peak_allocated_bytes"] is None
+    assert workload["prefill_cpu_memory"]["status"] == "measured"
+    assert workload["decode_cpu_memory"]["status"] == "measured"
     parameter_bytes = sum(
         parameter.untyped_storage().nbytes()
         for parameter in {id(p): p for p in model.parameters()}.values()
@@ -86,7 +91,7 @@ def test_decode_timing_counts_exactly_the_reported_incremental_forwards(decode_t
     assert len(workload["decode_latency"]["repetitions_seconds"]) == 2
     assert workload["prefill_to_first_token_latency"]["sample_stddev_seconds"] is not None
     assert workload["decode_latency"]["sample_stddev_seconds"] is not None
-    assert profile["profile_schema_version"] == 3
+    assert profile["profile_schema_version"] == 4
     assert workload["prefill_accelerator_memory_scope"].startswith("prefill warmup")
     assert "cached incremental decode" in workload["decode_accelerator_memory_scope"]
 

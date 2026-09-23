@@ -1,4 +1,5 @@
 import json
+import time
 from pathlib import Path
 
 import pytest
@@ -43,7 +44,7 @@ def _write_config(path, *, width=16, max_steps=2):
     path.write_text(json.dumps(config), encoding="utf-8")
 
 
-def _write_spec(tmp_path, *, cap=10**12):
+def _write_spec(tmp_path, *, cap=10**12, total_runtime_cap_seconds=None):
     tmp_path.mkdir(parents=True, exist_ok=True)
     _write_config(tmp_path / "base.json")
     _write_config(tmp_path / "candidate.json", width=16, max_steps=2)
@@ -56,6 +57,8 @@ def _write_spec(tmp_path, *, cap=10**12):
         "output_root": "runs",
         "total_compute_cap_flops": cap,
     }
+    if total_runtime_cap_seconds is not None:
+        spec["total_runtime_cap_seconds"] = total_runtime_cap_seconds
     path = tmp_path / "sweep.json"
     path.write_text(json.dumps(spec), encoding="utf-8")
     return path
@@ -77,6 +80,7 @@ def test_plan_resolves_seed_pairs_budgets_and_hash_without_training(tmp_path):
     assert all(job["planned_optimizer_steps"] == 2 for job in plan["jobs"])
     assert all(job["planned_tokens"] == 16 for job in plan["jobs"])
     assert plan["total_estimated_flops"] == sum(job["estimated_flops"] for job in plan["jobs"])
+    assert plan["total_runtime_cap_seconds"] is None
     assert plan["candidate_compute_deltas_vs_baseline"]["candidate"]["within_one_percent"]
     assert output_path.exists()
     assert verify_sweep_plan(json.loads(output_path.read_text(encoding="utf-8")))
@@ -90,6 +94,19 @@ def test_plan_rejects_compute_cap_before_writing(tmp_path):
         plan_sweep(spec_path, output_path)
 
     assert not output_path.exists()
+
+
+@pytest.mark.parametrize("invalid_cap", [0, -1, True, float("inf"), 10**1000, "10"])
+def test_plan_rejects_invalid_cumulative_runtime_cap(tmp_path, invalid_cap):
+    spec_path = _write_spec(tmp_path)
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    spec["total_runtime_cap_seconds"] = invalid_cap
+    spec_path.write_text(json.dumps(spec), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="total_runtime_cap_seconds"):
+        plan_sweep(spec_path, tmp_path / "plan.json")
+
+    assert not (tmp_path / "plan.json").exists()
 
 
 def test_plan_does_not_overwrite_existing_plan(tmp_path):
@@ -196,6 +213,7 @@ def test_execute_sweep_resumes_only_a_matching_running_checkpoint(tmp_path):
     assert status["status"] == "completed"
     assert status["jobs"][first_job["job_id"]]["status"] == "completed"
     assert status["jobs"][first_job["job_id"]]["attempt"] == 1
+    assert status["elapsed_seconds_total"] >= status["elapsed_seconds_this_invocation"]
 
 
 def test_execute_sweep_resumes_a_matching_external_interruption(tmp_path):
@@ -225,3 +243,78 @@ def test_execute_sweep_refuses_tampered_plan_and_nonempty_unknown_run(tmp_path):
     assert status["status"] == "failed"
     assert "non-empty run directory" in status["error"]
     assert (run_dir / "unexpected.txt").read_text(encoding="utf-8") == "keep"
+
+
+def test_execute_sweep_enforces_total_runtime_cap_across_resumes(tmp_path, monkeypatch):
+    import frontier.experiments.runner as runner_module
+
+    spec_path = _write_spec(tmp_path, total_runtime_cap_seconds=0.1)
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    spec["seeds"] = [31]
+    spec_path.write_text(json.dumps(spec), encoding="utf-8")
+    plan_path = tmp_path / "plan.json"
+    plan = plan_sweep(spec_path, plan_path)
+    training_calls = []
+
+    def overrun_then_pause(config, resume=False, stop_after_seconds=None):
+        training_calls.append(stop_after_seconds)
+        time.sleep(0.12)
+        run_dir = Path(config.output_dir)
+        (run_dir / "checkpoints").mkdir(parents=True, exist_ok=True)
+        (run_dir / "checkpoints" / "last.pt").touch()
+        (run_dir / "summary.json").write_text(
+            json.dumps(
+                {
+                    "status": "running",
+                    "resolved_config": config.to_dict(),
+                    "training": {
+                        "tokens_seen": 0,
+                        "estimated_flops": 0,
+                        "stop_reason": "runtime_budget",
+                    },
+                }
+            ),
+            encoding="utf-8",
+        )
+
+    monkeypatch.setattr(runner_module, "train", overrun_then_pause)
+
+    first = execute_sweep(plan_path)
+    second = execute_sweep(plan_path)
+
+    assert first["status"] == "paused"
+    assert first["pause_reason"] == "total_runtime_budget"
+    assert first["elapsed_seconds_total"] >= plan["total_runtime_cap_seconds"]
+    assert first["total_runtime_cap_exceeded_seconds"] > 0
+    assert second["status"] == "paused"
+    assert second["pause_reason"] == "total_runtime_budget"
+    assert len(training_calls) == 1
+    assert second["jobs"][plan["jobs"][0]["job_id"]]["attempt"] == 1
+
+
+def test_execute_sweep_recovers_an_interrupted_invocation_before_resuming(tmp_path, monkeypatch):
+    import frontier.experiments.runner as runner_module
+
+    spec_path = _write_spec(tmp_path, total_runtime_cap_seconds=0.02)
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    spec["seeds"] = [31]
+    spec_path.write_text(json.dumps(spec), encoding="utf-8")
+    plan_path = tmp_path / "plan.json"
+    plan_sweep(spec_path, plan_path)
+    training_calls = []
+
+    def interrupt_run(*args, **kwargs):
+        training_calls.append(True)
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr(runner_module, "train", interrupt_run)
+
+    with pytest.raises(KeyboardInterrupt):
+        execute_sweep(plan_path)
+    time.sleep(0.03)
+    resumed = execute_sweep(plan_path)
+
+    assert resumed["status"] == "paused"
+    assert resumed["pause_reason"] == "total_runtime_budget"
+    assert resumed["recovered_interrupted_invocation_seconds"] >= 0.02
+    assert len(training_calls) == 1

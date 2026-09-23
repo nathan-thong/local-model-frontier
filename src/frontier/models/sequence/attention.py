@@ -32,6 +32,15 @@ class CausalSelfAttention(nn.Module):
         )
         self.out_dropout = nn.Dropout(config.dropout)
 
+    @staticmethod
+    def state_tensors(state: KVCache) -> tuple[torch.Tensor, ...]:
+        return state
+
+    @staticmethod
+    def active_state_tensors(state: KVCache) -> tuple[torch.Tensor, ...]:
+        """Attention retains every key and value slot in its cache."""
+        return state
+
     def forward(
         self,
         hidden_states: torch.Tensor,

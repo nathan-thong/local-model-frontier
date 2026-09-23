@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import math
 import os
 import time
 import uuid
@@ -13,6 +12,7 @@ from typing import Any
 from frontier.config import RunConfig
 from frontier.experiments.planning import (
     _canonical_json,
+    _finite_number,
     _planned_budget,
     _sha256,
     verify_sweep_plan,
@@ -107,7 +107,7 @@ def execute_sweep(
 ) -> dict[str, Any]:
     """Run plan jobs serially, resuming only runs with matching saved state."""
     if max_runtime_seconds is not None and (
-        not math.isfinite(max_runtime_seconds) or max_runtime_seconds <= 0
+        not _finite_number(max_runtime_seconds) or max_runtime_seconds <= 0
     ):
         raise ValueError("max_runtime_seconds must be a finite positive duration")
     invocation_started = time.perf_counter()
@@ -138,6 +138,11 @@ def execute_sweep(
         raise ValueError("sweep plan total does not equal the sum of its job estimates")
     if plan["total_estimated_flops"] > plan["total_compute_cap_flops"]:
         raise ValueError("sweep plan exceeds its declared total-compute cap")
+    total_runtime_cap = plan.get("total_runtime_cap_seconds")
+    if total_runtime_cap is not None and (
+        not _finite_number(total_runtime_cap) or total_runtime_cap <= 0
+    ):
+        raise ValueError("sweep plan contains an invalid total runtime cap")
 
     destination = Path(status_path).resolve() if status_path else source.with_suffix(".status.json")
     if destination == source:
@@ -176,6 +181,22 @@ def execute_sweep(
                 raise ValueError("existing sweep status contains an unknown job state")
             status.pop("pause_reason", None)
 
+        elapsed_total = status.get("elapsed_seconds_total", 0.0)
+        if not _finite_number(elapsed_total) or elapsed_total < 0:
+            raise ValueError("existing sweep status has invalid cumulative runtime")
+        wall_started_at = time.time()
+        prior_active_start = status.pop("active_invocation_started_at_unix", None)
+        recovered_elapsed = 0.0
+        if prior_active_start is not None:
+            if not _finite_number(prior_active_start) or prior_active_start > wall_started_at:
+                raise ValueError("existing sweep status has an invalid active-invocation time")
+            recovered_elapsed = wall_started_at - prior_active_start
+            elapsed_total += recovered_elapsed
+        status["elapsed_seconds_total"] = elapsed_total
+        status["active_invocation_started_at_unix"] = wall_started_at
+        if recovered_elapsed:
+            status["recovered_interrupted_invocation_seconds"] = recovered_elapsed
+
         _atomic_json(destination, status)
         completed_compute = 0
         failure = None
@@ -194,6 +215,11 @@ def execute_sweep(
                 failure = job_status.get("error", "previous attempt failed")
                 break
             elapsed_before_job = time.perf_counter() - invocation_started
+            cumulative_before_job = elapsed_total + elapsed_before_job
+            if total_runtime_cap is not None and cumulative_before_job >= total_runtime_cap:
+                paused = True
+                status["pause_reason"] = "total_runtime_budget"
+                break
             if max_runtime_seconds is not None and elapsed_before_job >= max_runtime_seconds:
                 paused = True
                 status["pause_reason"] = "runtime_budget"
@@ -257,16 +283,36 @@ def execute_sweep(
             status["status"] = "running"
             _atomic_json(destination, status)
             try:
-                remaining_seconds = (
+                invocation_remaining = (
                     max_runtime_seconds - (time.perf_counter() - invocation_started)
                     if max_runtime_seconds is not None
                     else None
+                )
+                total_remaining = (
+                    total_runtime_cap - (elapsed_total + time.perf_counter() - invocation_started)
+                    if total_runtime_cap is not None
+                    else None
+                )
+                remaining_seconds = min(
+                    (
+                        value
+                        for value in (invocation_remaining, total_remaining)
+                        if value is not None
+                    ),
+                    default=None,
                 )
                 if remaining_seconds is not None and remaining_seconds <= 0:
                     job_status["status"] = "running"
                     _atomic_json(destination, status)
                     paused = True
-                    status["pause_reason"] = "runtime_budget"
+                    status["pause_reason"] = (
+                        "total_runtime_budget"
+                        if total_remaining is not None
+                        and (
+                            invocation_remaining is None or total_remaining <= invocation_remaining
+                        )
+                        else "runtime_budget"
+                    )
                     break
                 train(config, resume=resume, stop_after_seconds=remaining_seconds)
                 partial_summary = json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
@@ -284,6 +330,12 @@ def execute_sweep(
                     _atomic_json(destination, status)
                     paused = True
                     status["pause_reason"] = "runtime_budget"
+                    if total_runtime_cap is not None and (
+                        elapsed_total + time.perf_counter() - invocation_started
+                        >= total_runtime_cap
+                    ):
+                        job_status["pause_reason"] = "total_runtime_budget"
+                        status["pause_reason"] = "total_runtime_budget"
                     break
                 summary = _validate_completed_run(run_dir, config, job, plan)
             except Exception as error:  # noqa: BLE001 - persist any failed run before stopping.
@@ -313,8 +365,17 @@ def execute_sweep(
         if failure:
             status["error"] = failure
         status["completed_estimated_flops"] = completed_compute
-        status["elapsed_seconds_this_invocation"] = time.perf_counter() - invocation_started
+        elapsed_this_invocation = time.perf_counter() - invocation_started
+        status["elapsed_seconds_this_invocation"] = elapsed_this_invocation
+        status["elapsed_seconds_total"] = elapsed_total + elapsed_this_invocation
         status["runtime_budget_seconds"] = max_runtime_seconds
+        status["total_runtime_budget_seconds"] = total_runtime_cap
+        status["total_runtime_cap_exceeded_seconds"] = (
+            max(0.0, status["elapsed_seconds_total"] - total_runtime_cap)
+            if total_runtime_cap is not None
+            else None
+        )
+        status.pop("active_invocation_started_at_unix", None)
         _atomic_json(destination, status)
         return status
     finally:

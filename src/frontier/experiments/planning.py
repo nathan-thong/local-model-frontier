@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import platform
 import re
@@ -25,6 +26,15 @@ def _canonical_json(value: Any) -> bytes:
 
 def _sha256(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
+
+
+def _finite_number(value: Any) -> bool:
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return False
+    try:
+        return math.isfinite(float(value))
+    except OverflowError:
+        return False
 
 
 def _checked_id(value: Any, field: str) -> str:
@@ -94,8 +104,10 @@ def plan_sweep(spec_path: str | Path, output_path: str | Path) -> dict[str, Any]
         "output_root",
         "total_compute_cap_flops",
     }
-    if not isinstance(spec, dict) or set(spec) != required:
-        raise ValueError(f"sweep spec must contain exactly: {', '.join(sorted(required))}")
+    optional = {"total_runtime_cap_seconds"}
+    if not isinstance(spec, dict) or not required.issubset(spec) or set(spec) - required - optional:
+        allowed = ", ".join(sorted(required | optional))
+        raise ValueError(f"sweep spec must contain required fields ({allowed})")
     if spec["schema_version"] != 1:
         raise ValueError("unsupported sweep specification schema_version")
     name = _checked_id(spec["name"], "name")
@@ -113,6 +125,9 @@ def plan_sweep(spec_path: str | Path, output_path: str | Path) -> dict[str, Any]
     cap = spec["total_compute_cap_flops"]
     if not isinstance(cap, int) or isinstance(cap, bool) or cap <= 0:
         raise ValueError("total_compute_cap_flops must be a positive integer")
+    runtime_cap = spec.get("total_runtime_cap_seconds")
+    if runtime_cap is not None and (not _finite_number(runtime_cap) or runtime_cap <= 0):
+        raise ValueError("total_runtime_cap_seconds must be a finite positive duration")
 
     base_dir = source_path.parent
     baseline_id, baseline_path, baseline_raw, baseline_config = _read_arm(
@@ -206,6 +221,7 @@ def plan_sweep(spec_path: str | Path, output_path: str | Path) -> dict[str, Any]
         "seed_pairing": "same seed is paired across baseline and every candidate arm",
         "output_root": str(output_root),
         "total_compute_cap_flops": cap,
+        "total_runtime_cap_seconds": runtime_cap,
         "total_estimated_flops": total_flops,
         "candidate_compute_deltas_vs_baseline": candidate_compute_deltas,
         "hardware": _hardware_record(),

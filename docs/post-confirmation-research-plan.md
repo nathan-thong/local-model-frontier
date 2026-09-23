@@ -1,6 +1,6 @@
 # Post-confirmation research plan
 
-Status: conditional research execution plan, 23 September 2026. The first M2-GQA-001 full-budget attempt failed the comparator's warmup-fraction recipe gate and remains ineligible. The corrected M2-GQA-002 passed paired comparison eligibility on synthetic TinyStories: mean NLL delta -0.02307 nats/token, sample SD 0.02439, with exactly half the KV bytes and about 8.5% slower CPU decode. It is not a broad capability claim. Q08 is the next package. This plan defines future work and does not authorize paid compute or publication.
+Status: conditional research execution plan, 23 September 2026. The first M2-GQA-001 full-budget attempt failed the comparator's warmup-fraction recipe gate and remains ineligible. The corrected M2-GQA-002 passed paired comparison eligibility on synthetic TinyStories: mean NLL delta -0.02307 nats/token, sample SD 0.02439, with exactly half the KV bytes and about 8.5% slower CPU decode. It is not a broad capability claim. Q08 is complete; Q09 portable evidence export is next. This plan defines future work and does not authorize paid compute or publication.
 
 ## Objective and working rules
 
@@ -24,11 +24,11 @@ Use this budget ladder throughout: correctness tests; <=32-update smoke; one-see
 
 ## Gate 1 — make claims and future comparisons auditable
 
+**Q08. Runtime and memory accounting closure.** Implemented in profile schema 4: isolated CPU phase peaks; nested allocated/active state bytes by unique backing-store intervals; cumulative runtime across graceful resumes with interrupted-invocation recovery. Tests verify order isolation, aliases, opaque-state failure, and both resume paths. Remaining E08 items are CPU optimizer-step peak isolation and actual CUDA validation.
+
 **Q09. Portable evidence bundle.** Export a sanitized per-run summary, resolved config, protocol version, data/tokenizer/source digests, command, software/hardware fields, metric schema and artifact-availability map. Never export corpus text, checkpoints, usernames, absolute machine paths, or secrets. A clean clone must validate every included hash and reproduce the comparison metadata.
 
 **Q09b. Comparison failure matrix.** Add adversarial tests for missing versus null fields, non-finite/empty metrics, duplicated seeds, skipped failed seeds, differing tokenizers/splits, dirty revisions, invalid or unknown module compute, and corrupted/missing profiles. Every refusal must name its blocker. Keep metric comparability, claim eligibility and latency comparability as distinct outputs. This is a regression audit of completed Q03, not permission to weaken or re-open its gates casually.
-
-**Q08. Runtime and memory accounting closure.** Make cumulative time across resumes visible; separate optimizer-step peak from evaluation/profile peaks; avoid measuring one workload with memory left allocated by another. Count nested sequence state by unique backing storage, report allocated and active storage, and disclose process/runtime overhead. A measurement without backend/device/workload is null, not zero.
 
 **Q10. Corpus decision and benchmark freeze.** Audit candidate human-authored corpus terms at primary sources before acquiring it. If no suitable legal corpus is available, keep the TinyStories work explicitly diagnostic and do not use it for a general-capability claim. For an approved corpus: freeze revision, split by document before tokenizer fitting, normalize and audit duplicate/near-duplicate overlap, preserve a held-out set, hash all artifacts, and verify deterministic preparation.
 
