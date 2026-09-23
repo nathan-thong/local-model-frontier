@@ -26,6 +26,7 @@ from frontier.tokenization import (
     load_tokenizer_artifact,
     tokenizer_artifact,
 )
+from frontier.tokenization.bpe import fit_byte_bpe_from_file
 from frontier.training.checkpoint import load_checkpoint
 from frontier.training.runtime import resolve_device
 from frontier.training.trainer import train
@@ -216,6 +217,23 @@ def build_parser() -> argparse.ArgumentParser:
         help="verified origin of the corpus text; defaults to source metadata or unknown",
     )
 
+    tokenizer_parser = commands.add_parser(
+        "fit-tokenizer", help="fit byte-bpe-v1 from one explicit training-split file"
+    )
+    tokenizer_parser.add_argument("--train-file", required=True, type=Path)
+    tokenizer_parser.add_argument("--output", required=True, type=Path)
+    tokenizer_parser.add_argument("--target-vocab-size", type=int, default=512)
+    tokenizer_parser.add_argument("--minimum-pair-frequency", type=int, default=2)
+
+    pmc_parser = commands.add_parser(
+        "extract-pmc-corpus",
+        help="extract the preregistered rights-cleared PMC prose allowlist into data/",
+    )
+    pmc_parser.add_argument("--input-dir", required=True, type=Path)
+    pmc_parser.add_argument("--output-dir", required=True, type=Path)
+    pmc_parser.add_argument(
+        "--preparation-inventory", type=Path, default=Path("docs/q10h_pmc_corpus_preparation.json")
+    )
     compare_parser = commands.add_parser(
         "compare", help="compare runs and report whether controls are comparable"
     )
@@ -304,6 +322,29 @@ def main(argv: list[str] | None = None) -> int:
                 args.test_fraction,
             )
             print(json.dumps(manifest, indent=2))
+        elif args.command == "fit-tokenizer":
+            if args.train_file.name != "train.txt":
+                raise ValueError("fit-tokenizer accepts a train.txt file only")
+            if args.output.exists():
+                raise FileExistsError(f"refusing to overwrite tokenizer artifact: {args.output}")
+            tokenizer = fit_byte_bpe_from_file(
+                args.train_file,
+                target_vocab_size=args.target_vocab_size,
+                min_pair_frequency=args.minimum_pair_frequency,
+            )
+            record = tokenizer_artifact(tokenizer)
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_bytes((json.dumps(record, indent=2) + "\n").encode("utf-8"))
+            print(json.dumps(record, indent=2))
+        elif args.command == "extract-pmc-corpus":
+            from frontier.data.pmc import extract_preregistered_pmc_corpus
+
+            result = extract_preregistered_pmc_corpus(
+                args.input_dir,
+                args.output_dir,
+                preparation_inventory=args.preparation_inventory,
+            )
+            print(json.dumps(result, indent=2))
         elif args.command == "compare":
             report = compare_runs(args.baseline_run, args.candidate_runs, args.output)
             print(json.dumps(report, indent=2))

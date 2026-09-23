@@ -35,7 +35,7 @@ from frontier.profiling.memory import (
     maximum_accelerator_peaks,
     process_memory_bytes,
 )
-from frontier.tokenization import build_tokenizer, tokenizer_artifact
+from frontier.tokenization import build_tokenizer, load_tokenizer_artifact, tokenizer_artifact
 from frontier.training.checkpoint import load_checkpoint, save_checkpoint
 from frontier.training.runtime import (
     capture_rng_state,
@@ -175,7 +175,16 @@ def train(
     else:
         data_root = Path(config.data_dir).resolve()
         train_docs, valid_docs, manifest = load_split(data_root)
-    tokenizer = build_tokenizer(config.tokenizer)
+    data_tokenizer_path = data_root / "tokenizer.json"
+    tokenizer = (
+        load_tokenizer_artifact(data_tokenizer_path)
+        if data_tokenizer_path.is_file()
+        else build_tokenizer(config.tokenizer)
+    )
+    if tokenizer.name != config.tokenizer:
+        raise ValueError(
+            f"data tokenizer {tokenizer.name!r} differs from configured tokenizer {config.tokenizer!r}"
+        )
     tokenizer_record = tokenizer_artifact(tokenizer)
     tokenizer_hash = tokenizer_record["artifact_sha256"]
     train_tokens = encode_documents(train_docs, tokenizer)

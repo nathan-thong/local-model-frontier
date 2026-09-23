@@ -143,11 +143,11 @@ def prepare_split(
     _ensure_new_output_directory(output)
     train_path = output / "train.txt"
     valid_path = output / "validation.txt"
-    train_path.write_text("\n".join(train_docs) + "\n", encoding="utf-8")
-    valid_path.write_text("\n".join(valid_docs) + "\n", encoding="utf-8")
+    train_path.write_bytes(("\n".join(train_docs) + "\n").encode("utf-8"))
+    valid_path.write_bytes(("\n".join(valid_docs) + "\n").encode("utf-8"))
     if test_fraction:
         test_path = output / "test.txt"
-        test_path.write_text("\n".join(test_docs) + "\n", encoding="utf-8")
+        test_path.write_bytes(("\n".join(test_docs) + "\n").encode("utf-8"))
     identity_sets = {
         "train": train_set,
         "validation": valid_set,
@@ -468,8 +468,8 @@ def write_fixture(output_dir: str | Path) -> dict:
     train_docs, valid_docs = fixture_documents()
     train_path = root / "train.txt"
     valid_path = root / "validation.txt"
-    train_path.write_text("\n".join(train_docs) + "\n", encoding="utf-8")
-    valid_path.write_text("\n".join(valid_docs) + "\n", encoding="utf-8")
+    train_path.write_bytes(("\n".join(train_docs) + "\n").encode("utf-8"))
+    valid_path.write_bytes(("\n".join(valid_docs) + "\n").encode("utf-8"))
     manifest = {
         "schema_version": 3,
         "source": "frontier deterministic smoke fixture v1",
@@ -485,7 +485,7 @@ def write_fixture(output_dir: str | Path) -> dict:
         "validation_utf8_bytes": valid_path.stat().st_size,
         "split_unit": PREPROCESSING_CONTRACT["split_unit"],
     }
-    (root / "data_manifest.json").write_text(
-        json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
+    (root / "data_manifest.json").write_bytes(
+        (json.dumps(manifest, indent=2) + "\n").encode("utf-8")
     )
     return manifest

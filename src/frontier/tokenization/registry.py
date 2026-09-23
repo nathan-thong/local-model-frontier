@@ -17,11 +17,16 @@ _LOADERS: dict[str, TokenizerLoader] = {}
 
 
 def register_tokenizer(
-    name: str, factory: TokenizerFactory, artifact_loader: TokenizerLoader | None = None
+    name: str,
+    factory: TokenizerFactory | None,
+    artifact_loader: TokenizerLoader | None = None,
 ) -> None:
-    if not name or name in _REGISTRY:
+    if not name or name in _REGISTRY or name in _LOADERS:
         raise ValueError(f"tokenizer name is empty or already registered: {name!r}")
-    _REGISTRY[name] = factory
+    if factory is None and artifact_loader is None:
+        raise ValueError("a tokenizer requires a factory or an artifact loader")
+    if factory is not None:
+        _REGISTRY[name] = factory
     if artifact_loader is not None:
         _LOADERS[name] = artifact_loader
 
@@ -30,8 +35,13 @@ def build_tokenizer(name: str) -> Tokenizer:
     try:
         return _REGISTRY[name]()
     except KeyError as error:
+        if name in _LOADERS:
+            raise ValueError(
+                f"tokenizer {name!r} requires a fitted tokenizer artifact in the data directory"
+            ) from error
         raise ValueError(
-            f"tokenizer {name!r} is not registered (available: {', '.join(sorted(_REGISTRY))})"
+            f"tokenizer {name!r} is not registered (available: "
+            f"{', '.join(sorted(set(_REGISTRY) | set(_LOADERS)))})"
         ) from error
 
 

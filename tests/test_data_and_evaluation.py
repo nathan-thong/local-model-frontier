@@ -102,6 +102,10 @@ def test_document_split_is_repeatable_and_disjoint(tmp_path):
     assert one["source_metadata_sha256"] == two["source_metadata_sha256"]
     assert one["preprocessing"]["schema_version"] == 1
     assert one["train_utf8_bytes"] == (first / "train.txt").stat().st_size
+    assert b"\r" not in (first / "train.txt").read_bytes()
+    assert b"\r" not in (first / "validation.txt").read_bytes()
+    assert (first / "train.txt").read_bytes() == (second / "train.txt").read_bytes()
+    assert (first / "validation.txt").read_bytes() == (second / "validation.txt").read_bytes()
 
 
 def test_three_way_split_freezes_identities_and_duplicate_report(tmp_path):
@@ -136,6 +140,9 @@ def test_three_way_split_freezes_identities_and_duplicate_report(tmp_path):
     assert not (identity_sets[0] & identity_sets[1])
     assert not (identity_sets[0] & identity_sets[2])
     assert not (identity_sets[1] & identity_sets[2])
+    for split in ("train.txt", "validation.txt", "test.txt"):
+        assert b"\r" not in (first / split).read_bytes()
+        assert (first / split).read_bytes() == (second / split).read_bytes()
 
 
 def test_three_way_loader_detects_test_content_not_matching_frozen_identity(tmp_path):
