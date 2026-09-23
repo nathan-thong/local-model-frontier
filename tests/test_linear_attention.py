@@ -116,6 +116,27 @@ def test_linear_attention_forward_and_parameter_gradients_match_prefix_oracle():
 
 
 @pytest.mark.parametrize("position", ["rope", "learned"])
+def test_linear_attention_cpu_bfloat16_autocast_keeps_recurrent_state_fp32(position):
+    torch.manual_seed(211)
+    module = NormalizedCausalLinearAttention(make_config(position=position)).eval()
+    hidden = torch.randn(1, 7, 32, requires_grad=True)
+    positions = torch.arange(7)
+
+    reference = module(hidden, positions)[0]
+    with torch.autocast("cpu", dtype=torch.bfloat16):
+        actual, state = module(hidden, positions, use_cache=True)
+
+    assert state is not None
+    assert state.key_value_sum.dtype == torch.float32
+    assert state.key_feature_sum.dtype == torch.float32
+    assert torch.isfinite(actual).all()
+    torch.testing.assert_close(actual.float(), reference, atol=0.02, rtol=0.02)
+
+    actual_grads = torch.autograd.grad(actual.float().square().mean(), hidden)[0]
+    assert torch.isfinite(actual_grads).all()
+
+
+@pytest.mark.parametrize("position", ["rope", "learned"])
 def test_decoder_full_chunk_and_token_cache_logits_match(position):
     torch.manual_seed(103)
     config = make_config(

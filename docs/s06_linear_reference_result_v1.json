@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "experiment_id": "S06-LINEAR-001",
+  "preregistration_revision": "49c917125bb0d0e856c49fee59329b3833d7c67a",
+  "implementation_revision": "502014799903fc9500cebf109acc05eed8ba2e5c",
+  "profile_revision": "c92902346d1287cdd1f8e038e9d4ee6499a902ff",
+  "profile_worktree_clean": true,
+  "profile_config": {
+    "path": "configs/s06/s06_linear_attention_reference_profile.json",
+    "sha256": "277bcf01f0358cff1e7c7f16370df2aa819e2dd763046cd1430e925e33996610"
+  },
+  "full_profile_record": {
+    "local_ignored_path": "runs/s06-linear001/profile-v2.json",
+    "sha256": "55e54873eeb88b449b24ea11bcebc78b797de62e0a7351e4e08e452cf3ca0c25"
+  },
+  "preserved_initial_profile": {
+    "profile_revision": "502014799903fc9500cebf109acc05eed8ba2e5c",
+    "prompt_lengths": [32, 64, 96],
+    "config_sha256": "2454b5836b550a6d269d2233b0e5be54318f04016b5563d75e6bfbfd8cac7780",
+    "full_profile_sha256": "0d7544c68955387a5423ac1e7da8dcb18a5e7a49b5176c77231d79693774bb18"
+  },
+  "environment": {
+    "operating_system": "Windows 11 x64",
+    "processor_reported": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "logical_cpu_count": 16,
+    "torch_threads": 8,
+    "python": "3.12.14",
+    "torch": "2.14.0+cpu",
+    "device": "cpu",
+    "cuda_available": false,
+    "energy_measurement": "unavailable; no supported energy sensor configured"
+  },
+  "model": {
+    "initialization": "random initialized; seed 17; no checkpoint",
+    "width": 128,
+    "layers": 4,
+    "query_heads": 4,
+    "kv_heads": 2,
+    "head_dim": 32,
+    "ffn_width": 512,
+    "vocabulary_size": 512,
+    "position_mode": "rotary",
+    "dtype": "torch.float32",
+    "parameters": 787584,
+    "model_tensor_bytes": 3150592
+  },
+  "workload": {
+    "training_tokens": 0,
+    "optimizer_updates": 0,
+    "corpus_accesses": 0,
+    "batch_size": 1,
+    "prompt_lengths": [1, 32, 64, 96],
+    "cached_decode_forwards_per_repeat": 8,
+    "warmup_steps": 1,
+    "timing_repeats": 3,
+    "decode_latency_scope": "eight cached incremental forwards after prompt prefill, including greedy token selection",
+    "cpu_memory_scope": "Win32 process high-water delta in an independent spawned CPU process for each phase"
+  },
+  "measurements": [
+    {
+      "prompt_tokens": 1,
+      "state_position_after_decode": 9,
+      "prefill_to_first_token_seconds": {
+        "median": 0.00369660000433214,
+        "sample_stddev": 0.0007565378416779948,
+        "min": 0.0028935000009369105,
+        "max": 0.00440560000424739
+      },
+      "eight_decode_forwards_seconds": {
+        "median": 0.03057230000558775,
+        "sample_stddev": 0.0019083815087582586,
+        "min": 0.028802200002246536,
+        "max": 0.03261570000904612
+      },
+      "prefill_cpu_rss_high_water_delta_bytes": 6422528,
+      "decode_cpu_rss_high_water_delta_bytes": 6451200,
+      "active_state_bytes": 33792,
+      "actual_state_storage_bytes": 33792
+    },
+    {
+      "prompt_tokens": 32,
+      "state_position_after_decode": 40,
+      "prefill_to_first_token_seconds": {
+        "median": 0.028175400002510287,
+        "sample_stddev": 0.0037041440700644407,
+        "min": 0.026505500005441718,
+        "max": 0.033591100000194274
+      },
+      "eight_decode_forwards_seconds": {
+        "median": 0.024317100003827363,
+        "sample_stddev": 0.000720150464774125,
+        "min": 0.023741500001051463,
+        "max": 0.02517269999952987
+      },
+      "prefill_cpu_rss_high_water_delta_bytes": 7401472,
+      "decode_cpu_rss_high_water_delta_bytes": 6459392,
+      "active_state_bytes": 33792,
+      "actual_state_storage_bytes": 33792
+    },
+    {
+      "prompt_tokens": 64,
+      "state_position_after_decode": 72,
+      "prefill_to_first_token_seconds": {
+        "median": 0.034773899998981506,
+        "sample_stddev": 0.0017032919616017518,
+        "min": 0.0321232999995118,
+        "max": 0.03530180000234395
+      },
+      "eight_decode_forwards_seconds": {
+        "median": 0.025210199994035065,
+        "sample_stddev": 0.00071250651093558,
+        "min": 0.024211900003138,
+        "max": 0.025591700003133155
+      },
+      "prefill_cpu_rss_high_water_delta_bytes": 8048640,
+      "decode_cpu_rss_high_water_delta_bytes": 6496256,
+      "active_state_bytes": 33792,
+      "actual_state_storage_bytes": 33792
+    },
+    {
+      "prompt_tokens": 96,
+      "state_position_after_decode": 104,
+      "prefill_to_first_token_seconds": {
+        "median": 0.041790000002947636,
+        "sample_stddev": 0.0034270066517753032,
+        "min": 0.04132630000822246,
+        "max": 0.04748029999609571
+      },
+      "eight_decode_forwards_seconds": {
+        "median": 0.019390200002817437,
+        "sample_stddev": 0.001841167870915346,
+        "min": 0.0184638999926392,
+        "max": 0.022013499998138286
+      },
+      "prefill_cpu_rss_high_water_delta_bytes": 8622080,
+      "decode_cpu_rss_high_water_delta_bytes": 6627328,
+      "active_state_bytes": 33792,
+      "actual_state_storage_bytes": 33792
+    }
+  ],
+  "state_accounting": {
+    "status": "exact union of module-declared active contiguous tensor regions",
+    "bytes_after_prompt_plus_eight_decode_forwards": [33792, 33792, 33792, 33792],
+    "growth_over_measured_prompt_range": "none for batch 1 and fixed four-layer/head dimensions",
+    "profile_schema_version": 5,
+    "state_accounting_version": 2
+  },
+  "compute_estimator": {
+    "id": "decoder-module-mac-v1",
+    "recurrent_components": "key/value outer-product updates and query contractions are itemized separately from projections",
+    "exclusions": "feature-map, denominator epsilon, Python-loop, scalar and autograd-intermediate overhead are excluded; estimate is not an operation counter"
+  },
+  "validation": {
+    "code_revision": "502014799903fc9500cebf109acc05eed8ba2e5c",
+    "pytest": "169 passed in 31.47 seconds",
+    "pytest_command": ".\\.venv\\Scripts\\python.exe -m pytest",
+    "focused_linear_attention_tests": "18 passed",
+    "ruff_check": "passed: .\\.venv\\Scripts\\ruff.exe check src tests scripts",
+    "ruff_format": "passed: 59 files already formatted; .\\.venv\\Scripts\\ruff.exe format --check src tests scripts",
+    "profile_command": ".\\.venv\\Scripts\\python.exe scripts/profile_linear_attention_reference.py --config configs/s06/s06_linear_attention_reference_profile.json --output runs/s06-linear001/profile-v2.json",
+    "supplementary_mixed_precision_check": "CPU bfloat16 autocast tested for RoPE and learned-position configs; FP32 recurrent state and finite input gradients; outputs matched FP32 reference within declared tolerance",
+    "profile_status": "completed; four workloads; clean source worktree"
+  },
+  "limitations": [
+    "The profile is CPU-only; CUDA behavior and energy were unavailable.",
+    "The measured model is random initialized and was not trained or evaluated on a corpus.",
+    "The profile has three timing repeats per workload and one fixed small model shape.",
+    "The Python recurrence timing is implementation-specific and does not establish a fast-kernel result.",
+    "Process RSS deltas include runtime and allocator effects and are not a module-only allocation measure or an exact optimizer-step peak.",
+    "This package makes no capability claim and contains no matched GQA performance comparison.",
+    "The separate toy dependency-learning gate remains pending before any architecture-comparison training."
+  ]
+}
