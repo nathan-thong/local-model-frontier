@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "experiment_id": "Q11-BASELINE-001",
+  "status": "preregistered_pending_three_seed_runs",
+  "preregistered_parent_revision": "4fb40bfbef5ca2f9c4dfa2270d5e8c15aa62ac19",
+  "training_source_revision": "the clean commit that adds these configs and this preregistration",
+  "control": {
+    "architecture": "decoder-only dense full causal attention with grouped-query attention",
+    "layers": 4,
+    "width": 128,
+    "query_heads": 4,
+    "kv_heads": 2,
+    "head_dimension": 32,
+    "ffn": "GELU with width 512",
+    "normalization": "RMSNorm, pre-norm residual topology",
+    "position": "RoPE, theta 10000",
+    "parameter_dtype": "FP32",
+    "dropout": 0.0,
+    "bias": false,
+    "tied_embeddings": true
+  },
+  "data_and_evaluation": {
+    "data_protocol": "Q10-PREP-002",
+    "data_manifest_sha256": "d49a425f09b087c6b5a31b041349b470b1759701e4de0f21ee9b469f6a21b5d1",
+    "train_sha256": "e5aac508fb9c0cb6e78bdbed7a3453174000f0b630f4ba9d0c312d37fcea77a3",
+    "validation_sha256": "47faec7d07370d8148e4228351ff49e0136cfe02ecdb0ffe64412fd1c61293f5",
+    "test_sha256": "bfea9d78eb6b47e90ce9af367af62cac47f978e9d84a8f5b9ef16fc0147acdaa",
+    "tokenizer_sha256": "0570f7536d985403b6574b72f98355b1f12d0441641ff5e60cb1ede0eaa6bb33",
+    "task_artifact_sha256": "b00cf0f6e599d3bd54600d3568e196a2628194ed7b21afebff4ea50cdd08bf6d",
+    "primary_metric": "validation conditional bits per UTF-8 byte, lower is better",
+    "secondary_metrics": [
+      "per-example and aggregate synthetic-task exact match",
+      "per-example and aggregate synthetic-task conditional bits per UTF-8 byte"
+    ],
+    "test_rule": "Do not compute any model metric on Q10 test text until the one final preregistered evaluation after sequence systems and analysis are frozen. The Q11 contamination scan was the only test-text operation before this experiment."
+  },
+  "training_recipe": {
+    "tokenizer": "byte-bpe-v1, vocab 512, train-only fit",
+    "context_length": 128,
+    "batch_size": 4,
+    "gradient_accumulation": 1,
+    "max_tokens_per_seed": 131072,
+    "optimizer_updates_per_seed": 256,
+    "learning_rate": 0.0003,
+    "minimum_learning_rate": 0.00003,
+    "warmup_steps": 10,
+    "weight_decay": 0.1,
+    "gradient_clip": 1.0,
+    "optimizer": "AdamW as implemented by the pinned trainer",
+    "deterministic": true,
+    "evaluation_interval_steps": 256,
+    "checkpoint_interval_steps": 64,
+    "seeds": [17, 42, 123],
+    "config_paths": [
+      "configs/q11/q11_baseline_seed_17.json",
+      "configs/q11/q11_baseline_seed_42.json",
+      "configs/q11/q11_baseline_seed_123.json"
+    ],
+    "config_sha256_algorithm": "SHA-256 over parsed config JSON serialized with sorted keys and compact separators; insensitive to JSON whitespace and line endings.",
+    "config_sha256": {
+      "configs/q11/q11_baseline_seed_17.json": "c7b8ec1795c898c642ce1931c9c6621dd73a4465ccefbb932ad13a778a8b9198",
+      "configs/q11/q11_baseline_seed_42.json": "093de397349a9e0a1a2eee89a7bb3bf721dc6ef6c5785c5d6fbcc68b7112c3e6",
+      "configs/q11/q11_baseline_seed_123.json": "c645e05ff23de9b8509c49f647f38313c1b6e73c311b2d68e049119f448cc9f1"
+    },
+    "run_directories": [
+      "runs/q11-baseline-001/seed-17",
+      "runs/q11-baseline-001/seed-42",
+      "runs/q11-baseline-001/seed-123"
+    ]
+  },
+  "compute_budget": {
+    "estimator": "decoder-module-mac-v1",
+    "status": "estimated",
+    "estimated_flops_per_seed": 721554505728,
+    "total_estimated_training_flops": 2164663517184,
+    "total_compute_cap_flops": 2164663517184,
+    "total_training_tokens": 393216,
+    "assumptions": "The pinned estimator charges two FLOPs per MAC and a 3x forward MAC multiplier for forward plus backward, including dense causal attention at context 128. It excludes embeddings, softmax, normalization, activations, loss, optimizer, and scalar work. Validation, task scoring and inference profiling are not included in the training FLOP estimate."
+  },
+  "measured_workloads": {
+    "device_policy": "CPU on this host; CUDA was unavailable at preregistration",
+    "validation": "Full Q10 validation split, context 128, stride 128, document boundaries respected",
+    "task_generation": "Greedy, at most 8 new tokens; frozen Q11 v1 contract",
+    "inference_profile": "CPU prefill prompts of 32, 64 and 96 tokens; batch 1; 8 cached decode tokens; 1 warmup and 3 timing repeats; record isolated CPU peak RSS and cache bytes"
+  },
+  "preflight": {
+    "all_three_configs_parse_and_validate": true,
+    "all_three_seed_configs_have_identical_model_training_evaluation_and_profile_settings": true,
+    "all_three_compute_estimates_match": true,
+    "max_frozen_task_prompt_tokens": 79,
+    "max_prompt_plus_generation_tokens": 87,
+    "maximum_sequence_length": 128,
+    "frozen_task_prompts_fit_context": true,
+    "q10_a_manifest_split_and_tokenizer_hashes_match_contract": true,
+    "all_three_run_directories_were_absent_before_training": true
+  },
+  "failure_accounting": {
+    "run_order": [17, 42, 123],
+    "stop_on_first_failure": true,
+    "retry_policy": "No automatic retry. Preserve a failed run and its partial artifacts; any repair requires a new committed revision and fresh runs for all seeds.",
+    "required_per_seed_artifacts": [
+      "summary.json",
+      "metrics.jsonl",
+      "evaluation.json",
+      "profile.json",
+      "resolved_config.json",
+      "tokenizer.json",
+      "checkpoint metadata"
+    ]
+  },
+  "hypothesis": "A pinned conventional GQA recipe can complete the fixed 131072-token budget on each of three seeds and emit finite validation bits-per-byte and per-example task records with identical data, tokenizer, task, configuration family and source revision provenance.",
+  "change": "Establish the fresh Q10 conventional control with four dense GQA layers, width 128, context 128 and the frozen train-only byte-BPE tokenizer; change no architecture or data variable.",
+  "next_experiment": "After recording all seeds and measured CPU resource outcomes, begin only the sequence correctness campaign. A training comparison remains prohibited until its conventional control and candidate share this clean pinned revision, frozen inputs, equivalent disclosed compute and at least three paired seeds."
+}

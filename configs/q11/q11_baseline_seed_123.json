@@ -1,0 +1,54 @@
+{
+  "seed": 123,
+  "output_dir": "runs/q11-baseline-001/seed-123",
+  "data_dir": "data/q10-prep-002-a",
+  "tokenizer": "byte-bpe-v1",
+  "model": {
+    "vocab_size": 512,
+    "max_seq_len": 128,
+    "width": 128,
+    "layers": 4,
+    "query_heads": 4,
+    "kv_heads": 2,
+    "ffn_width": 512,
+    "normalization": "rmsnorm",
+    "ffn": "gelu",
+    "position": "rope",
+    "residual_topology": "pre_norm",
+    "sequence_types": ["attention", "attention", "attention", "attention"],
+    "dropout": 0.0,
+    "bias": false,
+    "tie_embeddings": true,
+    "rope_theta": 10000.0
+  },
+  "train": {
+    "batch_size": 4,
+    "context_length": 128,
+    "max_steps": null,
+    "max_tokens": 131072,
+    "learning_rate": 0.0003,
+    "min_learning_rate": 0.00003,
+    "warmup_steps": 10,
+    "weight_decay": 0.1,
+    "grad_clip": 1.0,
+    "gradient_accumulation": 1,
+    "eval_interval": 256,
+    "checkpoint_interval": 64,
+    "mixed_precision": "fp32",
+    "deterministic": true,
+    "resume": false
+  },
+  "evaluation": {
+    "stride": 128,
+    "max_validation_documents": null,
+    "tasks_path": "configs/tasks/q11_synthetic_v1.jsonl",
+    "generation_max_tokens": 8
+  },
+  "profiling": {
+    "batch_size": 1,
+    "prompt_lengths": [32, 64, 96],
+    "decode_tokens": 8,
+    "warmup_steps": 1,
+    "repeats": 3
+  }
+}
