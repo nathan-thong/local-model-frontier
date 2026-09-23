@@ -202,6 +202,12 @@ def build_parser() -> argparse.ArgumentParser:
     data_parser.add_argument("--input", required=True, type=Path)
     data_parser.add_argument("--output", required=True, type=Path)
     data_parser.add_argument("--validation-fraction", type=float, default=0.02)
+    data_parser.add_argument(
+        "--test-fraction",
+        type=float,
+        default=0.0,
+        help="held-out test fraction; zero keeps the legacy train/validation-only format",
+    )
     data_parser.add_argument("--seed", type=int, default=17)
     data_parser.add_argument("--source-metadata", type=Path)
     data_parser.add_argument(
@@ -295,6 +301,7 @@ def main(argv: list[str] | None = None) -> int:
                 args.seed,
                 source_metadata,
                 args.content_origin,
+                args.test_fraction,
             )
             print(json.dumps(manifest, indent=2))
         elif args.command == "compare":

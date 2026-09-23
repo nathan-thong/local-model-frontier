@@ -21,6 +21,14 @@ PREPROCESSING_CONTRACT = {
     "split_unit": "normalized document identity",
 }
 
+PREPROCESSING_CONTRACT_V2 = {
+    **PREPROCESSING_CONTRACT,
+    "schema_version": 2,
+    "duplicate_policy": "retain every source row; assign normalized duplicates to one split",
+    "identity_record": "SHA-256 of normalized UTF-8 document identity",
+    "split_allocation": "reserve one identity per split, then largest-remainder allocation",
+}
+
 
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
@@ -40,6 +48,26 @@ def _canonical_json_sha256(value: dict) -> str:
 def _document_identity(document: str) -> str:
     normalized = unicodedata.normalize("NFC", document)
     return " ".join(normalized.split())
+
+
+def _identity_sha256(identity: str) -> str:
+    return hashlib.sha256(identity.encode("utf-8")).hexdigest()
+
+
+def _allocate_three_way_counts(
+    unique_count: int, validation_fraction: float, test_fraction: float
+) -> tuple[int, int, int]:
+    if unique_count < 3:
+        raise ValueError("at least three unique documents are required for train/validation/test")
+    fractions = (1.0 - validation_fraction - test_fraction, validation_fraction, test_fraction)
+    remaining = unique_count - 3
+    exact = tuple(remaining * fraction for fraction in fractions)
+    counts = [1 + int(value) for value in exact]
+    unallocated = unique_count - sum(counts)
+    order = sorted(range(3), key=lambda index: (-(exact[index] % 1), index))
+    for index in order[:unallocated]:
+        counts[index] += 1
+    return counts[0], counts[1], counts[2]
 
 
 def _ensure_new_output_directory(path: Path) -> None:
@@ -63,10 +91,15 @@ def prepare_split(
     seed: int,
     source_metadata: dict | None = None,
     content_origin: str | None = None,
+    test_fraction: float = 0.0,
 ) -> dict:
     source = Path(input_path)
     if not 0.0 < validation_fraction < 1.0:
         raise ValueError("validation_fraction must be strictly between 0 and 1")
+    if not 0.0 <= test_fraction < 1.0:
+        raise ValueError("test_fraction must be zero or strictly between 0 and 1")
+    if test_fraction and validation_fraction + test_fraction >= 1.0:
+        raise ValueError("validation_fraction plus test_fraction must be less than 1")
     docs = read_documents(source)
     unique_docs = list(dict.fromkeys(_document_identity(doc) for doc in docs))
     if len(unique_docs) < 2:
@@ -83,11 +116,28 @@ def prepare_split(
     if provenance is not None:
         provenance.setdefault("content_origin", origin)
     random.Random(seed).shuffle(unique_docs)
-    valid_count = max(1, min(len(unique_docs) - 1, round(len(unique_docs) * validation_fraction)))
-    valid_set = set(unique_docs[:valid_count])
+    if test_fraction:
+        train_count, valid_count, test_count = _allocate_three_way_counts(
+            len(unique_docs), validation_fraction, test_fraction
+        )
+        train_set = set(unique_docs[:train_count])
+        valid_set = set(unique_docs[train_count : train_count + valid_count])
+        test_set = set(
+            unique_docs[train_count + valid_count : train_count + valid_count + test_count]
+        )
+        preprocessing = PREPROCESSING_CONTRACT_V2
+    else:
+        valid_count = max(
+            1, min(len(unique_docs) - 1, round(len(unique_docs) * validation_fraction))
+        )
+        valid_set = set(unique_docs[:valid_count])
+        train_set = set(unique_docs[valid_count:])
+        test_set = set()
+        preprocessing = PREPROCESSING_CONTRACT
     # Normalized duplicates stay together while retaining the source text verbatim.
-    train_docs = [doc for doc in docs if _document_identity(doc) not in valid_set]
+    train_docs = [doc for doc in docs if _document_identity(doc) in train_set]
     valid_docs = [doc for doc in docs if _document_identity(doc) in valid_set]
+    test_docs = [doc for doc in docs if _document_identity(doc) in test_set]
 
     output = Path(output_dir)
     _ensure_new_output_directory(output)
@@ -95,12 +145,39 @@ def prepare_split(
     valid_path = output / "validation.txt"
     train_path.write_text("\n".join(train_docs) + "\n", encoding="utf-8")
     valid_path.write_text("\n".join(valid_docs) + "\n", encoding="utf-8")
+    if test_fraction:
+        test_path = output / "test.txt"
+        test_path.write_text("\n".join(test_docs) + "\n", encoding="utf-8")
+    identity_sets = {
+        "train": train_set,
+        "validation": valid_set,
+        "test": test_set,
+    }
+    split_identity_sha256 = {
+        name: sorted(_identity_sha256(identity) for identity in identities)
+        for name, identities in identity_sets.items()
+    }
+    document_frequency: dict[str, int] = {}
+    for document in docs:
+        identity = _document_identity(document)
+        document_frequency[identity] = document_frequency.get(identity, 0) + 1
+    duplicate_groups = sorted(
+        (
+            {
+                "identity_sha256": _identity_sha256(identity),
+                "source_row_count": count,
+            }
+            for identity, count in document_frequency.items()
+            if count > 1
+        ),
+        key=lambda row: row["identity_sha256"],
+    )
     manifest = {
-        "schema_version": 3,
+        "schema_version": 4 if test_fraction else 3,
         "is_test_fixture": False,
         "content_origin": origin,
-        "preprocessing": PREPROCESSING_CONTRACT,
-        "preprocessing_sha256": _canonical_json_sha256(PREPROCESSING_CONTRACT),
+        "preprocessing": preprocessing,
+        "preprocessing_sha256": _canonical_json_sha256(preprocessing),
         "source_path_name": source.name,
         "source_sha256": sha256_file(source),
         "split_seed": seed,
@@ -113,8 +190,29 @@ def prepare_split(
         "validation_sha256": sha256_file(valid_path),
         "train_utf8_bytes": train_path.stat().st_size,
         "validation_utf8_bytes": valid_path.stat().st_size,
-        "split_unit": PREPROCESSING_CONTRACT["split_unit"],
+        "split_unit": preprocessing["split_unit"],
     }
+    if test_fraction:
+        manifest.update(
+            {
+                "test_fraction_requested": test_fraction,
+                "test_document_count": len(test_docs),
+                "test_unique_document_count": len(test_set),
+                "test_sha256": sha256_file(test_path),
+                "test_utf8_bytes": test_path.stat().st_size,
+                "train_unique_document_count": len(train_set),
+                "validation_unique_document_count": len(valid_set),
+                "split_identity_sha256": split_identity_sha256,
+                "duplicate_report": {
+                    "policy": PREPROCESSING_CONTRACT_V2["duplicate_policy"],
+                    "duplicate_group_count": len(duplicate_groups),
+                    "duplicate_row_count": sum(
+                        row["source_row_count"] - 1 for row in duplicate_groups
+                    ),
+                    "groups": duplicate_groups,
+                },
+            }
+        )
     if provenance is not None:
         manifest["source"] = provenance.get("dataset", source.name)
         manifest["source_metadata"] = provenance
@@ -175,8 +273,12 @@ def load_split(data_dir: str | Path) -> tuple[list[str], list[str], dict]:
         raise ValueError(f"source metadata hash is present without metadata in {root}")
     preprocessing = manifest.get("preprocessing")
     preprocessing_hash = manifest.get("preprocessing_sha256")
-    if manifest.get("schema_version", 1) >= 3 and (
-        preprocessing != PREPROCESSING_CONTRACT
+    schema_version = manifest.get("schema_version", 1)
+    expected_preprocessing = (
+        PREPROCESSING_CONTRACT_V2 if schema_version >= 4 else PREPROCESSING_CONTRACT
+    )
+    if schema_version >= 3 and (
+        preprocessing != expected_preprocessing
         or preprocessing_hash != _canonical_json_sha256(preprocessing)
     ):
         raise ValueError(
@@ -189,10 +291,122 @@ def load_split(data_dir: str | Path) -> tuple[list[str], list[str], dict]:
         raise ValueError(
             f"train/validation contain {len(normalized_overlap)} documents identical after normalization"
         )
+    if schema_version >= 4:
+        test_path = root / "test.txt"
+        if not test_path.is_file():
+            raise FileNotFoundError(f"expected test.txt for schema-4 data manifest in {root}")
+        test_hash = sha256_file(test_path)
+        if manifest.get("test_sha256") != test_hash:
+            raise ValueError(f"test.txt hash does not match the data manifest in {root}")
+        if manifest.get("test_utf8_bytes") != test_path.stat().st_size:
+            raise ValueError(f"test.txt byte count does not match the data manifest in {root}")
+        split_identities = manifest.get("split_identity_sha256")
+        if not isinstance(split_identities, dict) or set(split_identities) != {
+            "train",
+            "validation",
+            "test",
+        }:
+            raise ValueError(f"split identity hashes are missing or malformed in {root}")
+        for split_name, identity_hashes in split_identities.items():
+            if (
+                not isinstance(identity_hashes, list)
+                or any(
+                    not isinstance(digest, str)
+                    or len(digest) != 64
+                    or any(char not in "0123456789abcdef" for char in digest)
+                    for digest in identity_hashes
+                )
+                or len(identity_hashes) != len(set(identity_hashes))
+            ):
+                raise ValueError(f"invalid {split_name} identity hashes in {root}")
+        identity_sets = {
+            split_name: set(identity_hashes)
+            for split_name, identity_hashes in split_identities.items()
+        }
+        if (
+            identity_sets["train"].intersection(identity_sets["validation"])
+            or identity_sets["train"].intersection(identity_sets["test"])
+            or identity_sets["validation"].intersection(identity_sets["test"])
+        ):
+            raise ValueError(f"normalized duplicate identities cross splits in {root}")
+        for split_name, documents in (("train", train_docs), ("validation", valid_docs)):
+            actual_hashes = sorted(
+                {_identity_sha256(_document_identity(document)) for document in documents}
+            )
+            if actual_hashes != split_identities[split_name]:
+                raise ValueError(
+                    f"{split_name} identities do not match the data manifest in {root}"
+                )
+        for split_name, documents in (("train", train_docs), ("validation", valid_docs)):
+            if manifest.get(f"{split_name}_document_count") != len(documents):
+                raise ValueError(
+                    f"{split_name} document count does not match the data manifest in {root}"
+                )
+            if manifest.get(f"{split_name}_unique_document_count") != len(
+                identity_sets[split_name]
+            ):
+                raise ValueError(
+                    f"{split_name} unique document count does not match the data manifest in {root}"
+                )
+        test_doc_count = manifest.get("test_document_count")
+        test_unique_count = manifest.get("test_unique_document_count")
+        if not isinstance(test_doc_count, int) or test_doc_count < 1:
+            raise ValueError(f"invalid test document count in data manifest in {root}")
+        if test_unique_count != len(identity_sets["test"]) or test_unique_count < 1:
+            raise ValueError(f"invalid test unique document count in data manifest in {root}")
     manifest["train_sha256"] = train_hash
     manifest["validation_sha256"] = valid_hash
-    manifest.setdefault("preprocessing", PREPROCESSING_CONTRACT)
+    manifest.setdefault("preprocessing", expected_preprocessing)
     return train_docs, valid_docs, manifest
+
+
+def load_all_splits(
+    data_dir: str | Path,
+) -> tuple[list[str], list[str], list[str] | None, dict]:
+    """Load all splits, including the sealed test set when the manifest declares one."""
+    root = Path(data_dir)
+    train_docs, valid_docs, manifest = load_split(root)
+    if manifest.get("schema_version", 1) < 4:
+        return train_docs, valid_docs, None, manifest
+
+    test_docs = read_documents(root / "test.txt")
+    expected_hashes = manifest["split_identity_sha256"]["test"]
+    actual_hashes = sorted(
+        {_identity_sha256(_document_identity(document)) for document in test_docs}
+    )
+    if actual_hashes != expected_hashes:
+        raise ValueError(f"test identities do not match the data manifest in {root}")
+    if len(test_docs) != manifest["test_document_count"]:
+        raise ValueError(f"test document count does not match the data manifest in {root}")
+    all_docs = train_docs + valid_docs + test_docs
+    if len(all_docs) != manifest.get("document_count"):
+        raise ValueError(f"total document count does not match the data manifest in {root}")
+    document_frequency: dict[str, int] = {}
+    for document in all_docs:
+        identity = _document_identity(document)
+        document_frequency[identity] = document_frequency.get(identity, 0) + 1
+    duplicate_groups = sorted(
+        (
+            {
+                "identity_sha256": _identity_sha256(identity),
+                "source_row_count": count,
+            }
+            for identity, count in document_frequency.items()
+            if count > 1
+        ),
+        key=lambda row: row["identity_sha256"],
+    )
+    if len(document_frequency) != manifest.get("unique_document_count"):
+        raise ValueError(f"total unique document count does not match the data manifest in {root}")
+    expected_duplicate_report = manifest.get("duplicate_report")
+    if not isinstance(expected_duplicate_report, dict) or expected_duplicate_report != {
+        "policy": PREPROCESSING_CONTRACT_V2["duplicate_policy"],
+        "duplicate_group_count": len(duplicate_groups),
+        "duplicate_row_count": sum(row["source_row_count"] - 1 for row in duplicate_groups),
+        "groups": duplicate_groups,
+    }:
+        raise ValueError(f"duplicate report does not match the data splits in {root}")
+    return train_docs, valid_docs, test_docs, manifest
 
 
 def encode_documents(docs: Sequence[str], tokenizer: Tokenizer) -> list[torch.Tensor]:

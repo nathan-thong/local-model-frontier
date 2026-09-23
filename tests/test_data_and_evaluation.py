@@ -1,3 +1,4 @@
+import hashlib
 import json
 import unicodedata
 
@@ -9,6 +10,7 @@ from frontier.cli import main
 from frontier.config import ModelConfig
 from frontier.data.corpus import (
     encode_documents,
+    load_all_splits,
     load_split,
     prepare_split,
     read_documents,
@@ -38,6 +40,10 @@ def test_prepare_data_cli_records_verified_content_origin(tmp_path, capsys):
             str(source),
             "--output",
             str(output),
+            "--validation-fraction",
+            "0.2",
+            "--test-fraction",
+            "0.2",
             "--content-origin",
             "human",
         ]
@@ -46,6 +52,8 @@ def test_prepare_data_cli_records_verified_content_origin(tmp_path, capsys):
     manifest = json.loads((output / "data_manifest.json").read_text(encoding="utf-8"))
     assert status == 0
     assert manifest["content_origin"] == "human"
+    assert manifest["schema_version"] == 4
+    assert (output / "test.txt").is_file()
     assert json.loads(capsys.readouterr().out)["content_origin"] == "human"
 
 
@@ -94,6 +102,69 @@ def test_document_split_is_repeatable_and_disjoint(tmp_path):
     assert one["source_metadata_sha256"] == two["source_metadata_sha256"]
     assert one["preprocessing"]["schema_version"] == 1
     assert one["train_utf8_bytes"] == (first / "train.txt").stat().st_size
+
+
+def test_three_way_split_freezes_identities_and_duplicate_report(tmp_path):
+    source = tmp_path / "corpus.txt"
+    source.write_text(
+        "café\ttext\ncafe\u0301 text\nother one\nthird row\nfourth row\nfifth row\nsixth row\nseventh row\n",
+        encoding="utf-8",
+    )
+    first = tmp_path / "first-three-way"
+    second = tmp_path / "second-three-way"
+    metadata = {"dataset": "bounded-fixture", "license": "test-only"}
+
+    one = prepare_split(source, first, 0.2, 29, metadata, test_fraction=0.2)
+    two = prepare_split(source, second, 0.2, 29, metadata, test_fraction=0.2)
+    train, valid, test, loaded = load_all_splits(first)
+
+    assert one == two
+    assert one["schema_version"] == 4
+    assert one["train_unique_document_count"] == 3
+    assert one["validation_unique_document_count"] == 2
+    assert one["test_unique_document_count"] == 2
+    assert one["duplicate_report"]["duplicate_group_count"] == 1
+    assert one["duplicate_report"]["duplicate_row_count"] == 1
+    assert one["duplicate_report"]["groups"][0]["source_row_count"] == 2
+    assert train == read_documents(first / "train.txt")
+    assert valid == read_documents(first / "validation.txt")
+    assert test == read_documents(first / "test.txt")
+    assert loaded["split_identity_sha256"] == one["split_identity_sha256"]
+    identity_sets = [
+        set(one["split_identity_sha256"][key]) for key in ("train", "validation", "test")
+    ]
+    assert not (identity_sets[0] & identity_sets[1])
+    assert not (identity_sets[0] & identity_sets[2])
+    assert not (identity_sets[1] & identity_sets[2])
+
+
+def test_three_way_loader_detects_test_content_not_matching_frozen_identity(tmp_path):
+    source = tmp_path / "corpus.txt"
+    source.write_text("alpha\nbeta\ngamma\ndelta\nepsilon\nzeta\n", encoding="utf-8")
+    output = tmp_path / "prepared"
+    prepare_split(source, output, 0.2, 7, test_fraction=0.2)
+    test_path = output / "test.txt"
+    test_path.write_text("altered held out content\n", encoding="utf-8")
+    manifest_path = output / "data_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["test_sha256"] = hashlib.sha256(test_path.read_bytes()).hexdigest()
+    manifest["test_utf8_bytes"] = test_path.stat().st_size
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="test identities do not match"):
+        load_all_splits(output)
+
+
+def test_three_way_split_requires_room_for_each_split(tmp_path):
+    source = tmp_path / "corpus.txt"
+    source.write_text("alpha\nbeta\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="at least three unique documents"):
+        prepare_split(source, tmp_path / "too-small", 0.2, 1, test_fraction=0.2)
+
+    source.write_text("alpha\nbeta\ngamma\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="must be less than 1"):
+        prepare_split(source, tmp_path / "invalid-fractions", 0.5, 1, test_fraction=0.5)
 
 
 def test_normalized_duplicate_documents_cannot_cross_splits(tmp_path):
