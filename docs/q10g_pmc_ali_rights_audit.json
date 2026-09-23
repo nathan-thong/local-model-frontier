@@ -4,6 +4,7 @@
   "title": "PMC rights re-audit with NISO ALI license_ref support",
   "status": "preregistered_pending_full_rights_review",
   "preregistered_at_utc": "2026-09-23T11:34:51Z",
+  "preregistered_commit": "0f2389bb1771c18f714d9256b292579699cf7c3b",
   "preregistered_parent_revision": "e3506d99ac653e4315f8ed0130f9458ad395c832",
   "source5_inventory_path": "docs/q10f_pmc_article_rights_inventory.json",
   "source5_inventory_sha256": "f3ae804a450e285ef14e04fe8ba56ef80a99bdd0a493ea8a7af906202ed3697d",
