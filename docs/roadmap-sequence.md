@@ -1,6 +1,6 @@
 # Sequence-module experiment plan
 
-Status: S01 correctness/config work, S02 explicit-state work, and S03 dense local-attention correctness are implemented and tested. M2-GQA-002 is a completed, eligible synthetic TinyStories comparison with a qualified cache/NLL tradeoff; it does not support a general capability claim. The Q10 split/tokenizer and Q11 task/baseline protocol are frozen, and the historical schema-1 data remains unchanged. Each numbered item is a small change or a bounded experiment; implement in order and preserve negative results. Use the experiment template in `EXPERIMENTS.md` before launching a run.
+Status: S01 correctness/config work, S02 explicit-state work, and S03 dense local-attention correctness are implemented and tested. Q09-REPRO-004 independently reproduced all seven aggregate M2-GQA-002 comparator metrics at clean revision `dbab90d`; its result remains limited to synthetic TinyStories and a workload-specific CPU resource tradeoff. Q10 data/tokenizer and Q11 task/baseline gates are complete. The current execution order is Q11 conventional baseline, S03 local reference, then an S06 correctness/resource reference before considering any architecture-comparison training. The Q11 baseline is from an earlier revision, so any future paired comparison still needs a fresh same-revision control. Each package remains a small change or bounded experiment; preserve negative results and use the experiment template.
 
 ## What the code currently supports
 
@@ -30,11 +30,13 @@ All performance claims below require the shared accounting and comparison work i
 - **Change and code:** Implemented in commit `e6d77c65fd3571d02fc6844ad026ae5ba3d406c2`. Tests ran against a dirty working tree based on `fd3f2c462877d6a6c82d2207644a0ca007b7b06f`; the tested source changes were committed unchanged. `models/sequence/local_attention.py` registers `local_attention_reference`, reuses GQA projections/RoPE, validates a module-specific positive `window_size`, and constructs the window from absolute positions. The combined prefix and current chunk remain intact until every query is evaluated; only the final W-1 prior keys are copied into the next contiguous cache.
 - **Tests:** Complete. Fixed-weight outputs and gradients match a slow explicit per-query-slice oracle; a covering window matches conventional attention. W=1, W larger than input, W-1/W/W+1/2W+1 lengths, exact W-sized prefill boundary, odd chunk partitions, full/cache parity, future/exclusion checks, nonzero absolute offsets, MQA/GQA/MHA, RoPE/learned positions, RMSNorm/LayerNorm and pre/post norm pass. The actual cache storage matches the bound, including a zero-byte cache at W=1. See [`s03_local_attention_result_v1.json`](s03_local_attention_result_v1.json).
 - **Experiment:** Fixed-weight correctness and state accounting only; no learning fixture or training was run. The descriptor labels the implementation `dense_masked_local_attention`; the estimator charges full dense attention work. CUDA, latency and prefill savings were not measured.
-- **Gate:** Passed for fixed-weight semantics and bounded retained state. No prefill speed or FLOP-saving claim follows. Before S04, freeze its pilot plan and a fresh same-revision GQA control under Q10/Q11's frozen data/evaluation protocol.
+- **Gate:** Passed for fixed-weight semantics and bounded retained state. No prefill speed or FLOP-saving claim follows. S06 correctness and CPU resource behavior are the next reference gate. Defer S04 training until S06 passes; when S04 is considered, freeze its pilot plan and a fresh same-revision GQA control under Q10/Q11's frozen train/validation evaluation protocol.
 
 ## S04 — Test the local-attention capability tradeoff cheaply
 
-- **Prerequisites:** S03 plus accounting that prices the actual dense implementation. Use the frozen corpus and GQA control.
+- **Execution order:** Consider after the S06 C0 correctness/resource reference has passed. This ordering is a research-sequence decision; S04 still tests the dense local block independently.
+
+- **Prerequisites:** S03 and the S06 C0 correctness/resource gate; accounting that prices the actual dense implementation; frozen corpus and evaluation. For any comparison, train a fresh conventional GQA control and the local candidate at the same clean revision.
 - **Change and code:** Add a single local-attention pilot config and planned `EXPERIMENTS.md` entry. Preserve heads, width, FFN, depth, tokenizer, and data.
 - **Tests:** Run S03 invariants and deterministic resume on this module before training. Ensure evaluation and generation use the same window semantics as training.
 - **Experiment:** One seed at a small predeclared fraction of baseline compute; record validation loss over consumed compute and simple position/distance-stratified retrieval diagnostics. This asks whether local attention is stable and whether obvious quality collapse occurs; it does not establish a frontier result. If stable, run three paired seeds against full GQA at equivalent compute under the actual implementation.
@@ -50,10 +52,12 @@ All performance claims below require the shared accounting and comparison work i
 
 ## S06 — Implement normalized causal linear attention as a reference
 
+- **Current priority:** This is the next bounded package after Q09 closeout. Keep it at C0: implement the reference, validate invariants, check the toy dependency, and measure CPU state and timing. Do not begin architecture-comparison training until this gate passes.
+
 - **Prerequisites:** S02 and recurrent-state compute accounting. Read and cite the linear-attention paper already linked in `RESEARCH.md` before implementation; use its established formulation rather than claiming a new block.
 - **Change and code:** Add `models/sequence/linear_attention.py` with positive feature map `phi(x)=ELU(x)+1`, state `S=sum(phi(k) outer v)` and `z=sum(phi(k))`, and output `phi(q)^T S / (phi(q)^T z + epsilon)`. Make head dimensions and accumulation dtype explicit. Use a token loop first as the correctness oracle, with state reset at document boundaries. Persist S and z during decoding; do not carry graphs across independent training batches. Specify the position treatment explicitly. If attention uses RoPE while this reference does not, record this as part of the module intervention and include a position-matched ablation before attributing the effect solely to recurrence.
 - **Tests:** Sequential versus vectorized/chunked outputs and gradients; finite values for near-zero denominators; no future leakage; exact state reset; bounded state bytes independent of context; FP32 reference comparisons for mixed precision; long synthetic prefixes to reveal accumulation drift. Include a tiny autograd gradcheck on the mathematical reference where practical.
-- **Experiment:** Learning fixture and one seed pilot at equivalent disclosed compute against full GQA. Record retrieval accuracy as a function of distractor count/distance, loss, gradient norm, state norms, and actual time.
+- **Experiment:** First run only the minimal dependency-learning fixture as a correctness/stability screen and record retrieval accuracy by distractor count/distance, loss, gradient norm, state norms, and time. Any subsequent one-seed pilot at equivalent disclosed compute against full GQA needs a preregistered budget and a fresh same-revision GQA control.
 - **Gate:** Stop if numerically unstable or unable to learn the fixture. Retain an honest slow reference if correct. A Python recurrence is not evidence for or against optimized recurrent latency.
 
 ## S07 — Decide whether a recurrent implementation deserves optimization
@@ -66,7 +70,7 @@ All performance claims below require the shared accounting and comparison work i
 
 ## S08 — Test one hybrid schedule
 
-- **Prerequisites:** Correct full attention and one cheap module, valid per-layer state accounting, and a frozen baseline on the target corpus.
+- **Prerequisites:** Correct full attention and one cheap module, valid per-layer state accounting, and a frozen baseline on the target corpus. Train fresh all-attention, all-cheap, and hybrid controls/candidates on one clean revision before comparison.
 - **Change and code:** Use existing `sequence_types` to define a four-layer schedule `[cheap, cheap, cheap, attention]`; compare with all-attention and all-cheap. Add per-module config only where the global config cannot express the intended block. Do not add a schedule searcher.
 - **Tests:** Mixed state dataclasses in a single `DecoderCache`; independent layer offsets; full/chunk/token parity; attention layers grow their state while recurrent layers remain bounded; actual aggregate state bytes equal the sum of unique layer storages. Test checkpoint/resume and generation for the mixed schedule.
 - **Experiment:** One seed pilot, then three paired seeds at equivalent training compute. Keep an additional equal-token diagnostic if useful, labeled separately. Include long-distance retrieval to test whether the occasional full-attention layer repairs the cheap module's observed failure. Report the attention fraction and per-layer cost breakdown.

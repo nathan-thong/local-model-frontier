@@ -1,0 +1,39 @@
+{
+  "file_count": 8,
+  "files": {
+    "bundle.json": {
+      "bytes": 143817,
+      "sha256": "688aefa96abe1082dbe280fd832c746939c766808f58f7e17dbff28a374e6579"
+    },
+    "configs/q09-repro004-m2-gqa-002-gqa-seed-123-64f5575794.json": {
+      "bytes": 1483,
+      "sha256": "faaf5681de1ece8ba019b778b9f22b512a6a9f34bdef9b1b3d9b42375af6fb9e"
+    },
+    "configs/q09-repro004-m2-gqa-002-gqa-seed-17-64f5575794.json": {
+      "bytes": 1481,
+      "sha256": "cd39ad81493cb08c1ad9d38478b8b4691ee43cde130b6979a27caa6d70cbaa2b"
+    },
+    "configs/q09-repro004-m2-gqa-002-gqa-seed-42-64f5575794.json": {
+      "bytes": 1481,
+      "sha256": "1230ffacb7c33b0ebc00be75a73a4947dfb7f64de06328d1f682a08f7f67570b"
+    },
+    "configs/q09-repro004-m2-gqa-002-mha-seed-123-d099c52708.json": {
+      "bytes": 1483,
+      "sha256": "dc12daf86466b958e639f292dba190c6094f72d4ca398f185e3efcd2f09d39ae"
+    },
+    "configs/q09-repro004-m2-gqa-002-mha-seed-17-d099c52708.json": {
+      "bytes": 1481,
+      "sha256": "1fc4fed31ec87d797f93893b1771cbc00769cef2fd225f3d32301ec14a282759"
+    },
+    "configs/q09-repro004-m2-gqa-002-mha-seed-42-d099c52708.json": {
+      "bytes": 1481,
+      "sha256": "1abe5692f6f73134acd0b447f1b4942c84dc8d6b9a3af4a9be0e02706718561e"
+    },
+    "data-manifests/a49bcc046dc69aff.json": {
+      "bytes": 2109,
+      "sha256": "e7b2fca170979a7a0a72b656563539c2712b3918c9a55960330b0ecd4b5b5a9c"
+    }
+  },
+  "manifest_type": "frontier-evidence-manifest-v1",
+  "schema_version": 1
+}

@@ -1,0 +1,775 @@
+{
+  "comparison": {
+    "aggregate_metric_keys_checked": [
+      "baseline_mean_nll",
+      "baseline_perplexity",
+      "candidate_mean_nll",
+      "candidate_perplexity",
+      "estimated_training_flop_relative_delta",
+      "paired_mean_nll_delta_candidate_minus_baseline",
+      "paired_perplexity_delta_candidate_minus_baseline"
+    ],
+    "bundle_file_count": 8,
+    "claim_blockers": [],
+    "claim_scope": "synthetic corpus metric",
+    "comparable_for_human_corpus_claim": false,
+    "comparable_for_improvement_claim_within_declared_synthetic_scope": true,
+    "comparable_for_metric_comparison": true,
+    "comparator_metrics": {
+      "baseline_mean_nll": {
+        "mean": 1.5192847615606582,
+        "sample_std": 0.01920109539175372,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "baseline_perplexity": {
+        "mean": 4.569519148651687,
+        "sample_std": 0.08808674440059122,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "candidate_mean_nll": {
+        "mean": 1.4962110723964794,
+        "sample_std": 0.005208935750392503,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "candidate_perplexity": {
+        "mean": 4.464780763912512,
+        "sample_std": 0.023238859445986238,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "estimated_training_flop_relative_delta": {
+        "mean": 3.628453733286002e-05,
+        "sample_std": 0.0,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "paired_mean_nll_delta_candidate_minus_baseline": {
+        "mean": -0.023073689164178884,
+        "sample_std": 0.024392919766719208,
+        "total_n": 3,
+        "valid_n": 3
+      },
+      "paired_perplexity_delta_candidate_minus_baseline": {
+        "mean": -0.10473838473917556,
+        "sample_std": 0.11123999663265946,
+        "total_n": 3,
+        "valid_n": 3
+      }
+    },
+    "group_checks": {
+      "all_run_artifacts_valid": true,
+      "all_source_worktrees_clean": true,
+      "baseline_architecture_fixed_across_seeds": true,
+      "baseline_recipe_fixed_across_seeds": true,
+      "candidate_architecture_fixed_across_seeds": true,
+      "candidate_recipe_fixed_across_seeds": true,
+      "same_corpus_origin_across_all_runs": true,
+      "same_environment_across_all_runs": true,
+      "same_evaluation_protocol_across_all_runs": true,
+      "same_tokenizer_across_all_runs": true,
+      "same_training_data_across_all_runs": true,
+      "same_validation_data_across_all_runs": true
+    },
+    "new_bundle_sha256": "688aefa96abe1082dbe280fd832c746939c766808f58f7e17dbff28a374e6579",
+    "original_bundle_sha256": "df79b3578c70c6fa7c3a0d0a2d34e02f257cec16c14295287d73912d2b9bef3a",
+    "paired_metric_delta_candidate_minus_baseline": {
+      "bits_per_byte": {
+        "mean": -0.033595029442990455,
+        "n": 3,
+        "sample_sd": 0.03490482631832447,
+        "values": [
+          -0.004459755740322535,
+          -0.07228109845761743,
+          -0.024044234131031406
+        ]
+      },
+      "mean_nll_nats_per_token": {
+        "mean": -0.023073689164178884,
+        "n": 3,
+        "sample_sd": 0.024392919766719208,
+        "values": [
+          -0.0029241839469280606,
+          -0.05019287236964698,
+          -0.016104011175961608
+        ]
+      },
+      "perplexity": {
+        "mean": -0.10473838473917556,
+        "n": 3,
+        "sample_sd": 0.11123999663265946,
+        "values": [
+          -0.013135028724108544,
+          -0.2285205457274957,
+          -0.07255957976592242
+        ]
+      }
+    },
+    "per_seed_results": [
+      {
+        "gqa": {
+          "cache_parity_max_abs_logit_error": 1.6987323760986328e-06,
+          "checkpoint_artifact_bytes": 9124139,
+          "estimated_training_flops": 13610794352640,
+          "model_tensor_bytes": 3021056,
+          "model_weights_artifact_bytes": 3035253,
+          "optimizer_updates": 1090,
+          "parameters": 755200,
+          "process_lifetime_peak_rss_bytes": 670760960,
+          "run_id": "q09-repro004-m2-gqa-002-gqa-seed-17-64f5575794",
+          "status": "completed",
+          "tokens_per_second": 29349.573279794913,
+          "tokens_seen": 2232320,
+          "validation": {
+            "bits_per_byte": 2.150601484161745,
+            "mean_nll_nats_per_token": 1.5008047124586084,
+            "perplexity": 4.485296992843974
+          },
+          "wall_time_seconds": 309.63200500000676
+        },
+        "gqa_minus_mha": {
+          "bits_per_byte": -0.004459755740322535,
+          "mean_nll_nats_per_token": -0.0029241839469280606,
+          "perplexity": -0.013135028724108544
+        },
+        "mha": {
+          "cache_parity_max_abs_logit_error": 3.337860107421875e-06,
+          "checkpoint_artifact_bytes": 9910571,
+          "estimated_training_flops": 13611288231936,
+          "model_tensor_bytes": 3283200,
+          "model_weights_artifact_bytes": 3297397,
+          "optimizer_updates": 1024,
+          "parameters": 820736,
+          "process_lifetime_peak_rss_bytes": 660750336,
+          "run_id": "q09-repro004-m2-gqa-002-mha-seed-17-d099c52708",
+          "status": "completed",
+          "tokens_per_second": 28473.33409599885,
+          "tokens_seen": 2097152,
+          "validation": {
+            "bits_per_byte": 2.1550612399020674,
+            "mean_nll_nats_per_token": 1.5037288964055364,
+            "perplexity": 4.498432021568083
+          },
+          "wall_time_seconds": 307.8286036000063
+        },
+        "seed": 17
+      },
+      {
+        "gqa": {
+          "cache_parity_max_abs_logit_error": 4.291534423828125e-06,
+          "checkpoint_artifact_bytes": 9124075,
+          "estimated_training_flops": 13610794352640,
+          "model_tensor_bytes": 3021056,
+          "model_weights_artifact_bytes": 3035253,
+          "optimizer_updates": 1090,
+          "parameters": 755200,
+          "process_lifetime_peak_rss_bytes": 670760960,
+          "run_id": "q09-repro004-m2-gqa-002-gqa-seed-42-64f5575794",
+          "status": "completed",
+          "tokens_per_second": 28844.240130345835,
+          "tokens_seen": 2232320,
+          "validation": {
+            "bits_per_byte": 2.134563228654305,
+            "mean_nll_nats_per_token": 1.4905516841673823,
+            "perplexity": 4.439544069701886
+          },
+          "wall_time_seconds": 312.3500021
+        },
+        "gqa_minus_mha": {
+          "bits_per_byte": -0.07228109845761743,
+          "mean_nll_nats_per_token": -0.05019287236964698,
+          "perplexity": -0.2285205457274957
+        },
+        "mha": {
+          "cache_parity_max_abs_logit_error": 3.0994415283203125e-06,
+          "checkpoint_artifact_bytes": 9910507,
+          "estimated_training_flops": 13611288231936,
+          "model_tensor_bytes": 3283200,
+          "model_weights_artifact_bytes": 3297397,
+          "optimizer_updates": 1024,
+          "parameters": 820736,
+          "process_lifetime_peak_rss_bytes": 670760960,
+          "run_id": "q09-repro004-m2-gqa-002-mha-seed-42-d099c52708",
+          "status": "completed",
+          "tokens_per_second": 28645.982538155913,
+          "tokens_seen": 2097152,
+          "validation": {
+            "bits_per_byte": 2.2068443271119222,
+            "mean_nll_nats_per_token": 1.5407445565370292,
+            "perplexity": 4.6680646154293814
+          },
+          "wall_time_seconds": 306.3759348999956
+        },
+        "seed": 42
+      },
+      {
+        "gqa": {
+          "cache_parity_max_abs_logit_error": 3.337860107421875e-06,
+          "checkpoint_artifact_bytes": 9124139,
+          "estimated_training_flops": 13610794352640,
+          "model_tensor_bytes": 3021056,
+          "model_weights_artifact_bytes": 3035253,
+          "optimizer_updates": 1090,
+          "parameters": 755200,
+          "process_lifetime_peak_rss_bytes": 670777344,
+          "run_id": "q09-repro004-m2-gqa-002-gqa-seed-123-64f5575794",
+          "status": "completed",
+          "tokens_per_second": 28824.166030445787,
+          "tokens_seen": 2232320,
+          "validation": {
+            "bits_per_byte": 2.14155178896197,
+            "mean_nll_nats_per_token": 1.497276820563447,
+            "perplexity": 4.469501229191676
+          },
+          "wall_time_seconds": 312.54229540000233
+        },
+        "gqa_minus_mha": {
+          "bits_per_byte": -0.024044234131031406,
+          "mean_nll_nats_per_token": -0.016104011175961608,
+          "perplexity": -0.07255957976592242
+        },
+        "mha": {
+          "cache_parity_max_abs_logit_error": 4.291534423828125e-06,
+          "checkpoint_artifact_bytes": 9910571,
+          "estimated_training_flops": 13611288231936,
+          "model_tensor_bytes": 3283200,
+          "model_weights_artifact_bytes": 3297397,
+          "optimizer_updates": 1024,
+          "parameters": 820736,
+          "process_lifetime_peak_rss_bytes": 670760960,
+          "run_id": "q09-repro004-m2-gqa-002-mha-seed-123-d099c52708",
+          "status": "completed",
+          "tokens_per_second": 29166.6464194077,
+          "tokens_seen": 2097152,
+          "validation": {
+            "bits_per_byte": 2.1655960230930016,
+            "mean_nll_nats_per_token": 1.5133808317394086,
+            "perplexity": 4.542060808957598
+          },
+          "wall_time_seconds": 305.4967545000036
+        },
+        "seed": 123
+      }
+    ],
+    "scope_limitation": "synthetic-domain result; does not establish human-authored or broad language capability",
+    "seven_original_comparator_aggregate_metric_objects_match_exactly": true
+  },
+  "environment": {
+    "cpu_count": 16,
+    "cuda_available": false,
+    "device": "cpu",
+    "energy_measurement": "unavailable; no supported energy sensor configured",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "python": "3.12.14",
+    "torch": "2.14.0+cpu"
+  },
+  "evidence_bundle": {
+    "directory": "results/q09-repro004-m2-gqa-002",
+    "file_count": 8,
+    "sha256": "688aefa96abe1082dbe280fd832c746939c766808f58f7e17dbff28a374e6579",
+    "verification_status": "verified",
+    "verifier_recomputes_comparison_eligibility": true
+  },
+  "execution": {
+    "completed_jobs": 6,
+    "estimated_training_flops": 81666247753728,
+    "estimated_training_flops_cap": 85000000000000,
+    "estimated_training_flops_overshoot": 0,
+    "executor_elapsed_seconds": 1864.8497210999922,
+    "executor_runtime_cap_overshoot_seconds": 0.0,
+    "executor_runtime_cap_seconds": 3600,
+    "failed_jobs": 0,
+    "omitted_jobs": 0,
+    "profile_phase": {
+      "completion_count": 6,
+      "per_run_elapsed_seconds": [
+        {
+          "elapsed_seconds": 13.21,
+          "run_id": "q09-repro004-m2-gqa-002-mha-seed-17-d099c52708"
+        },
+        {
+          "elapsed_seconds": 13.085,
+          "run_id": "q09-repro004-m2-gqa-002-mha-seed-42-d099c52708"
+        },
+        {
+          "elapsed_seconds": 13.281,
+          "run_id": "q09-repro004-m2-gqa-002-mha-seed-123-d099c52708"
+        },
+        {
+          "elapsed_seconds": 13.175,
+          "run_id": "q09-repro004-m2-gqa-002-gqa-seed-17-64f5575794"
+        },
+        {
+          "elapsed_seconds": 13.328,
+          "run_id": "q09-repro004-m2-gqa-002-gqa-seed-42-64f5575794"
+        },
+        {
+          "elapsed_seconds": 13.269,
+          "run_id": "q09-repro004-m2-gqa-002-gqa-seed-123-64f5575794"
+        }
+      ],
+      "separate_from_executor_runtime_cap": true,
+      "total_elapsed_seconds": 79.348
+    },
+    "sweep_status": "completed",
+    "total_jobs": 6,
+    "total_optimizer_updates": 6342,
+    "total_tokens_seen": 12988416
+  },
+  "experiment_id": "Q09-REPRO-004",
+  "interpretation": {
+    "limits": [
+      "Three paired seeds give a small uncertainty sample.",
+      "Synthetic TinyStories does not establish human-authored or broad language capability.",
+      "Only CPU measurements were available; CUDA and energy were unavailable.",
+      "The process lifetime training RSS is not an isolated optimizer-step peak; Q08 exact transient CPU peak and CUDA behavior remain open.",
+      "This replay verifies bounded repeatability of M2-GQA-002; it does not select an architecture for the Q10/Q11 corpus."
+    ],
+    "summary": "The independent replay reproduces all seven original comparator aggregate metric objects exactly. On this synthetic TinyStories comparison, the paired GQA-minus-MHA mean NLL point estimate is -0.023073689 nats/token (sample SD 0.024392920 across three seeds). The preregistered +0.02 threshold is a practical decision rule, not a significance test. GQA uses half the persistent KV bytes in the measured cache workloads while decoding more slowly on this CPU."
+  },
+  "preregistered_budget": {
+    "cumulative_executor_runtime_cap_seconds": 3600,
+    "paired_seeds": [
+      17,
+      42,
+      123
+    ],
+    "practical_decision_threshold_nats_per_token": 0.02,
+    "primary_metric": "full validation mean NLL in nats per token",
+    "secondary_decode_workloads": {
+      "incremental_decode_forwards": 32,
+      "profile_repeats_per_seed": 5,
+      "prompt_tokens": [
+        32,
+        128,
+        224
+      ]
+    },
+    "total_estimated_training_flops_cap": 85000000000000
+  },
+  "resource_measurements": {
+    "cache_parity_tokens_per_run": 8,
+    "cpu_decode_workloads_by_prompt_tokens": {
+      "128": {
+        "gqa": {
+          "decode_tokens_per_second": {
+            "mean": 486.5471129756502,
+            "n": 3,
+            "sample_sd": 2.0164570623136164,
+            "values": [
+              485.9315231960322,
+              484.91020068915304,
+              488.79961504176543
+            ]
+          },
+          "isolated_decode_process_peak_rss_increase_bytes": {
+            "mean": 7494314.666666667,
+            "n": 3,
+            "sample_sd": 61621.7755451215,
+            "values": [
+              7454720.0,
+              7462912.0,
+              7565312.0
+            ]
+          },
+          "isolated_prefill_process_peak_rss_increase_bytes": {
+            "mean": 9011200.0,
+            "n": 3,
+            "sample_sd": 127174.03911176212,
+            "values": [
+              9019392.0,
+              9134080.0,
+              8880128.0
+            ]
+          },
+          "memory_method": "Win32 process RSS high-water delta measured in a fresh spawned CPU process per phase",
+          "persistent_state_bytes_after_prompt_plus_decode": 327680,
+          "profile_repeats_per_seed": 5,
+          "prompt_tokens": 128,
+          "timed_incremental_decode_tokens": 32
+        },
+        "mha": {
+          "decode_tokens_per_second": {
+            "mean": 555.0090249459325,
+            "n": 3,
+            "sample_sd": 60.39775704135296,
+            "values": [
+              513.1272378975934,
+              624.2440795131773,
+              527.655757427027
+            ]
+          },
+          "isolated_decode_process_peak_rss_increase_bytes": {
+            "mean": 9083562.666666666,
+            "n": 3,
+            "sample_sd": 6256.743348846373,
+            "values": [
+              9076736.0,
+              9089024.0,
+              9084928.0
+            ]
+          },
+          "isolated_prefill_process_peak_rss_increase_bytes": {
+            "mean": 9531392.0,
+            "n": 3,
+            "sample_sd": 54184.986850602814,
+            "values": [
+              9469952.0,
+              9551872.0,
+              9572352.0
+            ]
+          },
+          "memory_method": "Win32 process RSS high-water delta measured in a fresh spawned CPU process per phase",
+          "persistent_state_bytes_after_prompt_plus_decode": 655360,
+          "profile_repeats_per_seed": 5,
+          "prompt_tokens": 128,
+          "timed_incremental_decode_tokens": 32
+        }
+      },
+      "224": {
+        "gqa": {
+          "decode_tokens_per_second": {
+            "mean": 516.724045912321,
+            "n": 3,
+            "sample_sd": 31.868899123176618,
+            "values": [
+              535.7450790316424,
+              479.9320895880792,
+              534.4949691172413
+            ]
+          },
+          "isolated_decode_process_peak_rss_increase_bytes": {
+            "mean": 8050005.333333333,
+            "n": 3,
+            "sample_sd": 91252.8988105766,
+            "values": [
+              7991296.0,
+              8155136.0,
+              8003584.0
+            ]
+          },
+          "isolated_prefill_process_peak_rss_increase_bytes": {
+            "mean": 12012202.666666666,
+            "n": 3,
+            "sample_sd": 123175.46699458189,
+            "values": [
+              11923456.0,
+              11960320.0,
+              12152832.0
+            ]
+          },
+          "memory_method": "Win32 process RSS high-water delta measured in a fresh spawned CPU process per phase",
+          "persistent_state_bytes_after_prompt_plus_decode": 524288,
+          "profile_repeats_per_seed": 5,
+          "prompt_tokens": 224,
+          "timed_incremental_decode_tokens": 32
+        },
+        "mha": {
+          "decode_tokens_per_second": {
+            "mean": 546.8582124615876,
+            "n": 3,
+            "sample_sd": 58.93115374415278,
+            "values": [
+              613.536925221505,
+              501.75693318920645,
+              525.2807789740514
+            ]
+          },
+          "isolated_decode_process_peak_rss_increase_bytes": {
+            "mean": 9667925.333333334,
+            "n": 3,
+            "sample_sd": 8526.50393381328,
+            "values": [
+              9674752.0,
+              9670656.0,
+              9658368.0
+            ]
+          },
+          "isolated_prefill_process_peak_rss_increase_bytes": {
+            "mean": 12334421.333333334,
+            "n": 3,
+            "sample_sd": 13166.797839009048,
+            "values": [
+              12324864.0,
+              12328960.0,
+              12349440.0
+            ]
+          },
+          "memory_method": "Win32 process RSS high-water delta measured in a fresh spawned CPU process per phase",
+          "persistent_state_bytes_after_prompt_plus_decode": 1048576,
+          "profile_repeats_per_seed": 5,
+          "prompt_tokens": 224,
+          "timed_incremental_decode_tokens": 32
+        }
+      },
+      "32": {
+        "gqa": {
+          "decode_tokens_per_second": {
+            "mean": 500.07435263628275,
+            "n": 3,
+            "sample_sd": 8.583541238851973,
+            "values": [
+              495.5432082609279,
+              509.9739753992668,
+              494.70587424865346
+            ]
+          },
+          "isolated_decode_process_peak_rss_increase_bytes": {
+            "mean": 7249920.0,
+            "n": 3,
+            "sample_sd": 14768.3380243005,
+            "values": [
+              7245824.0,
+              7237632.0,
+              7266304.0
+            ]
+          },
+          "isolated_prefill_process_peak_rss_increase_bytes": {
+            "mean": 7516160.0,
+            "n": 3,
+            "sample_sd": 28672.0,
+            "values": [
+              7503872.0,
+              7495680.0,
+              7548928.0
+            ]
+          },
+          "memory_method": "Win32 process RSS high-water delta measured in a fresh spawned CPU process per phase",
+          "persistent_state_bytes_after_prompt_plus_decode": 131072,
+          "profile_repeats_per_seed": 5,
+          "prompt_tokens": 32,
+          "timed_incremental_decode_tokens": 32
+        },
+        "mha": {
+          "decode_tokens_per_second": {
+            "mean": 566.8826653145435,
+            "n": 3,
+            "sample_sd": 51.02436777843422,
+            "values": [
+              620.1850864667667,
+              561.9713956691746,
+              518.4915138076891
+            ]
+          },
+          "isolated_decode_process_peak_rss_increase_bytes": {
+            "mean": 7996757.333333333,
+            "n": 3,
+            "sample_sd": 48866.72771255851,
+            "values": [
+              7942144.0,
+              8036352.0,
+              8011776.0
+            ]
+          },
+          "isolated_prefill_process_peak_rss_increase_bytes": {
+            "mean": 7737344.0,
+            "n": 3,
+            "sample_sd": 81817.53591987478,
+            "values": [
+              7778304.0,
+              7790592.0,
+              7643136.0
+            ]
+          },
+          "memory_method": "Win32 process RSS high-water delta measured in a fresh spawned CPU process per phase",
+          "persistent_state_bytes_after_prompt_plus_decode": 262144,
+          "profile_repeats_per_seed": 5,
+          "prompt_tokens": 32,
+          "timed_incremental_decode_tokens": 32
+        }
+      }
+    },
+    "maximum_abs_logit_error_in_cache_parity_checks": 4.291534423828125e-06,
+    "model_storage_by_arm": {
+      "gqa": {
+        "checkpoint_artifact_bytes": {
+          "mean": 9124117.666666666,
+          "n": 3,
+          "sample_sd": 36.950417228136054,
+          "values": [
+            9124139.0,
+            9124075.0,
+            9124139.0
+          ]
+        },
+        "model_tensor_bytes": {
+          "mean": 3021056.0,
+          "n": 3,
+          "sample_sd": 0.0,
+          "values": [
+            3021056.0,
+            3021056.0,
+            3021056.0
+          ]
+        },
+        "model_weights_artifact_bytes": {
+          "mean": 3035253.0,
+          "n": 3,
+          "sample_sd": 0.0,
+          "values": [
+            3035253.0,
+            3035253.0,
+            3035253.0
+          ]
+        },
+        "parameter_count": {
+          "mean": 755200.0,
+          "n": 3,
+          "sample_sd": 0.0,
+          "values": [
+            755200.0,
+            755200.0,
+            755200.0
+          ]
+        }
+      },
+      "mha": {
+        "checkpoint_artifact_bytes": {
+          "mean": 9910549.666666666,
+          "n": 3,
+          "sample_sd": 36.950417228136054,
+          "values": [
+            9910571.0,
+            9910507.0,
+            9910571.0
+          ]
+        },
+        "model_tensor_bytes": {
+          "mean": 3283200.0,
+          "n": 3,
+          "sample_sd": 0.0,
+          "values": [
+            3283200.0,
+            3283200.0,
+            3283200.0
+          ]
+        },
+        "model_weights_artifact_bytes": {
+          "mean": 3297397.0,
+          "n": 3,
+          "sample_sd": 0.0,
+          "values": [
+            3297397.0,
+            3297397.0,
+            3297397.0
+          ]
+        },
+        "parameter_count": {
+          "mean": 820736.0,
+          "n": 3,
+          "sample_sd": 0.0,
+          "values": [
+            820736.0,
+            820736.0,
+            820736.0
+          ]
+        }
+      }
+    },
+    "resource_scope_notes": [
+      "Estimated FLOPs use decoder-module-mac-v1 assumptions, not hardware FLOP counters.",
+      "Process lifetime peak RSS is not an isolated CPU training-phase or optimizer-step peak.",
+      "Profiles ran after training; profile time is separate from the executor runtime cap.",
+      "CPU decode rate is workload-specific and includes greedy selection.",
+      "Checkpoint artifact bytes, weights artifact bytes, parameter count, tensor bytes, KV state bytes and process RSS are distinct quantities."
+    ],
+    "training_by_arm": {
+      "gqa": {
+        "process_lifetime_peak_rss_bytes": {
+          "mean": 670766421.3333334,
+          "n": 3,
+          "sample_sd": 9459.306810402828,
+          "values": [
+            670760960.0,
+            670760960.0,
+            670777344.0
+          ]
+        },
+        "rss_scope": "process lifetime high-water mark; not an isolated training-phase or optimizer-step peak",
+        "training_tokens_per_second": {
+          "mean": 29005.99314686218,
+          "n": 3,
+          "sample_sd": 297.7183621835507,
+          "values": [
+            29349.573279794913,
+            28844.240130345835,
+            28824.166030445787
+          ]
+        },
+        "wall_time_seconds": {
+          "mean": 311.50810083333636,
+          "n": 3,
+          "sample_sd": 1.6275889715109166,
+          "values": [
+            309.63200500000676,
+            312.3500021,
+            312.54229540000233
+          ]
+        }
+      },
+      "mha": {
+        "process_lifetime_peak_rss_bytes": {
+          "mean": 667424085.3333334,
+          "n": 3,
+          "sample_sd": 5779636.461156128,
+          "values": [
+            660750336.0,
+            670760960.0,
+            670760960.0
+          ]
+        },
+        "rss_scope": "process lifetime high-water mark; not an isolated training-phase or optimizer-step peak",
+        "training_tokens_per_second": {
+          "mean": 28761.98768452082,
+          "n": 3,
+          "sample_sd": 360.92019884595425,
+          "values": [
+            28473.33409599885,
+            28645.982538155913,
+            29166.6464194077
+          ]
+        },
+        "wall_time_seconds": {
+          "mean": 306.56709766666853,
+          "n": 3,
+          "sample_sd": 1.17761940321031,
+          "values": [
+            307.8286036000063,
+            306.3759348999956,
+            305.4967545000036
+          ]
+        }
+      }
+    }
+  },
+  "schema_version": 1,
+  "source": {
+    "frozen_data": {
+      "content_origin": "synthetic",
+      "dataset": "roneneldan/TinyStories",
+      "dataset_revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+      "prepared_manifest_sha256": "5bac1fc6d9ab7af5ed4c9a61d3a5ccbd2426faebb75acf2b605b013e146841ac",
+      "run_manifest_sha256": "6ad63d98d5fb05682bb1cb929d8224b298a792ab418852a3e851c4d8d4a98870",
+      "tokenizer": "utf8-byte-v1",
+      "tokenizer_artifact_sha256": "7372690364e84d8c248945180d3c440742725dd79ac27f8f6bada3b7fd912687",
+      "train_sha256": "87ac33a8f47aeefdf772bd813472976eede4543d98d2c4122a1b07271163b44e",
+      "validation_sha256": "0ad8843aee6aff10a8bfc58fdfd80e26b261d061f341dffb12894a538f18a935"
+    },
+    "original_config_sha256": {
+      "gqa": "43fb5ed8fc10c63f7dcec1e92cda61df02419c5d2360de59110c417a0293081c",
+      "mha": "3bfbf0c64c8443afc105e3e327f3c430d8e7274c53faee372ecdd105e001d5dd"
+    },
+    "source_revision": "dbab90d512d2b34e9738a6f6f8b62f33bd7c0eeb",
+    "source_worktrees_clean": true,
+    "sweep_plan_sha256": "44b0d1306e06572df1fc40eb6b249982558ab4f215afc70521589f952621e498",
+    "sweep_spec": {
+      "path": "configs/m2/q09_repro004_m2_gqa002_sweep.json",
+      "sha256": "de1bf75b4165d1b72b74a1d21e1812873eddeddbe2d5b6802094873df41fc003"
+    }
+  },
+  "status": "completed",
+  "title": "Independent full M2-GQA-002 replay"
+}
