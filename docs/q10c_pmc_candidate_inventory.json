@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "preregistered_metadata_only",
+  "protocol_base_revision": "9e412f98017b7752bf6a4e98d3ed5c95eaa9aec1",
+  "as_of_date": "2026-09-23",
+  "source": {
+    "dataset": "NIH NLM NCBI PubMed Central Article Datasets — Open Access Subset",
+    "dataset_documentation": "https://pmc-oa-opendata.s3.amazonaws.com/README.txt",
+    "open_access_subset": "https://pmc.ncbi.nlm.nih.gov/tools/openftlist/",
+    "cloud_versioning": "https://pmc.ncbi.nlm.nih.gov/tools/pmcaws/",
+    "copyright_notice": "https://pmc.ncbi.nlm.nih.gov/about/copyright/",
+    "oai_metadata_api": "https://pmc.ncbi.nlm.nih.gov/tools/oai/",
+    "search_syntax": "https://pmc.ncbi.nlm.nih.gov/about/userguide/",
+    "license_uri": "https://creativecommons.org/licenses/by/4.0/",
+    "source_scope": "English MEDLINE-indexed biomedical and life-sciences research article versions; any resulting claim is restricted to this domain"
+  },
+  "amendment_reason": "Q10-SOURCE-001 retained its frozen English Wikipedia inventory and stop result: zero of 24 pages had complete history and attribution evidence, so no page cleared the text gate. This PMC candidate protocol offers per-version machine-readable license and checksum metadata. It is a source amendment, not a finding that the Wikipedia candidates could never pass.",
+  "query_protocol": {
+    "metadata_only": true,
+    "base_query": "open access[filter] AND cc by license[filter] AND english[la] AND 2018:2025[dp]",
+    "topic_field_note": "The frozen [mh] MeSH topic terms restrict retrieval to the MEDLINE-indexed subset of PMC.",
+    "topic_strata_in_priority_order": [
+      {"name": "neurosciences", "mesh_descriptor_ui": "D009488", "mesh_term": "neurosciences[MeSH Terms]", "target": 4},
+      {"name": "microbiology", "mesh_descriptor_ui": "D008829", "mesh_term": "microbiology[MeSH Terms]", "target": 4},
+      {"name": "plants", "mesh_descriptor_ui": "D010944", "mesh_term": "plants[MeSH Terms]", "target": 4},
+      {"name": "ecology", "mesh_descriptor_ui": "D004463", "mesh_term": "ecology[MeSH Terms]", "target": 4},
+      {"name": "computational biology", "mesh_descriptor_ui": "D019295", "mesh_term": "computational biology[MeSH Terms]", "target": 4},
+      {"name": "public health", "mesh_descriptor_ui": "D011634", "mesh_term": "public health[MeSH Terms]", "target": 4}
+    ],
+    "esearch_max_ids_per_stratum": 1000,
+    "ordering": "Run each frozen query once with retmax=1000. Sort the returned numeric PMCID IDs ascending; process strata in the listed order; take the first four globally unique PMCID IDs for each stratum before inspecting per-version eligibility metadata. Skip IDs already assigned to an earlier stratum and continue through that stratum's frozen result list. Do not replace a metadata-ineligible candidate. If fewer than 24 unique candidates are available within the six 1000-ID result pools, the metadata gate fails.",
+    "version_source": "For the frozen 24 PMCID candidates only, inspect PMC Cloud per-version JSON metadata, the S3 object listing, and OAI-PMH compact Dublin Core metadata (metadataPrefix=oai_dc). Do not request full-text or pmc_fm records. Process only identifier, title, creator, date, subject/citation and rights fields; discard any dc:description containing abstract text. Require exactly one available Cloud article version for the PMCID so the PMCID-level rights value can be associated without version ambiguity.",
+    "version_eligibility": [
+      "is_pmc_openaccess is true",
+      "the raw license_code maps to the CC BY family and agrees with the PMC cc by license search filter",
+      "the OAI-PMH oai_dc dc:rights value is exactly https://creativecommons.org/licenses/by/4.0/",
+      "is_manuscript is false",
+      "is_historical_ocr is false",
+      "is_retracted is false",
+      "the exact XML object is present and its MD5, S3 LastModifiedDate, version and byte size are recorded"
+    ],
+    "article_metadata_exclusions": [
+      "records with a missing or ambiguous version, rights statement, title, author list, DOI, or source citation"
+    ]
+  },
+  "bounds": {
+    "candidate_pmcids": 24,
+    "minimum_metadata_eligible_before_body_request": 20,
+    "maximum_xml_bytes_per_article": 1048576,
+    "maximum_combined_xml_bytes": 4194304,
+    "maximum_metadata_candidates_per_stratum": 1000,
+    "combined_xml_size_applies_to": "all metadata-eligible versions in the frozen 24-PMCID set; if their sum exceeds the cap, do not request any article XML"
+  },
+  "acquisition_gate": {
+    "article_xml_requested": false,
+    "article_text_saved": false,
+    "figures_or_supplements_requested": false,
+    "request_body_only_after_minimum_metadata_eligible_count": 20,
+    "approved_retrieval_methods_after_gate": ["PMC Cloud Service", "PMC OAI-PMH", "NCBI E-Utilities", "BioC API"],
+    "post_request_rights_review": "Inspect each selected XML license statement and notices for separately licensed text or media. Exclude non-CC-BY material, figures, captions, and supplements unless their individual rights are verified. Require at least 20 documents to remain before preparation.",
+    "attribution_record": "Retain author names, title, journal, publication year, DOI, PMCID and version, article URL, raw Cloud license_code, OAI dc:rights value, source XML SHA-256, and modifications; cite and acknowledge the PMC Article Datasets as specified in the dataset terms."
+  },
+  "query_result_records": [],
+  "query_result_record_fields": [
+    "stratum_name_and_descriptor_ui",
+    "query_timestamp_utc",
+    "full_query_string",
+    "esearch_count",
+    "retstart_and_retmax",
+    "returned_numeric_pmcid_list_in_original_api_order",
+    "sha256_of_returned_pmcid_list",
+    "pmc_cloud_inventory_snapshot_and_manifest_identity"
+  ],
+  "metadata_query_results": [],
+  "eligible_version_count": 0,
+  "combined_xml_bytes": null,
+  "selection_inventory_sha256": null
+}
