@@ -1,6 +1,6 @@
 # Sequence-module experiment plan
 
-Status: S01 correctness/config work is implemented and tested; no GQA experiment or improvement has been completed. The local TinyStories directory still has a schema-1 manifest, so new training is blocked until its pinned source is reprepared with schema-3 provenance. Each numbered item is a small change or a bounded experiment; implement in order and preserve negative results. Use the experiment template in `EXPERIMENTS.md` before launching a run.
+Status: S01 correctness/config work is implemented and tested; no GQA experiment or improvement has been completed. A separately prepared schema-3 TinyStories split now has explicit synthetic origin and verified source/split hashes; the historical schema-1 data remains unchanged. New training is still blocked until the MHA/GQA copies, scoped evaluation margin, and dry-run plan are frozen on a clean commit. Each numbered item is a small change or a bounded experiment; implement in order and preserve negative results. Use the experiment template in `EXPERIMENTS.md` before launching a run.
 
 ## What the code currently supports
 

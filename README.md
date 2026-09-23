@@ -72,11 +72,12 @@ For the Milestone 1 corpus check, the repository uses a 20 MiB prefix of the pin
 From the repository root on Windows, fetch the pinned range, convert complete story records to one document per line, and split deterministically:
 
 ```powershell
+New-Item -ItemType Directory -Force data | Out-Null
 curl.exe --fail --location --range 0-20971519 --max-filesize 20971520 --output data\tinystories-train-prefix.raw.txt https://huggingface.co/datasets/roneneldan/TinyStories/resolve/f54c09fd23315a6f9c86f9dc80f725de7d8f9c64/TinyStories-train.txt
-python scripts\prepare_tinystories_prefix.py --input data\tinystories-train-prefix.raw.txt --output data\tinystories-documents.txt --revision f54c09fd23315a6f9c86f9dc80f725de7d8f9c64 --upstream-size-bytes 1924281556
-frontier prepare-data --input data\tinystories-documents.txt --output data\tinystories-v3 --validation-fraction 0.02 --seed 17 --source-metadata data\tinystories-documents.txt.source.json
+python scripts\prepare_tinystories_prefix.py --input data\tinystories-train-prefix.raw.txt --output data\tinystories-v3-documents.txt --revision f54c09fd23315a6f9c86f9dc80f725de7d8f9c64 --upstream-size-bytes 1924281556
+frontier prepare-data --input data\tinystories-v3-documents.txt --output data\tinystories-v3 --validation-fraction 0.02 --seed 17 --source-metadata data\tinystories-v3-documents.txt.source.json --content-origin synthetic
 ```
 
-The converter discards a partial trailing story and records the source revision, selected byte range, hashes, license, synthetic content origin and normalization. Use a new output directory so the schema-1 M1 files remain untouched; point a copied run config at `data/tinystories-v3` when using this split. The M1 validation split is held out from this training-file prefix; it is not the dataset's separate validation file.
+The converter discards a partial trailing story and records the source revision, selected byte range, hashes, license, synthetic content origin and normalization. Use a new output directory so the schema-1 M1 files remain untouched; point a copied run config at `data/tinystories-v3` when using this split. The M1 validation split is held out from this training-file prefix; it is not the dataset's separate validation file. Preparation refuses to overwrite existing outputs, so choose a fresh name when repeating the commands.
 
 Use `frontier compare-seeds --baseline-runs ... --candidate-runs ... --output runs\seeded-comparison.json` for repeated-seed aggregation. A scoped improvement requires at least three matched seeds, known non-fixture corpus origin, the same pinned Git revision, and clean Git worktrees recorded for every run. The report marks synthetic-domain results separately from human-corpus results; a fixture or unknown origin cannot support a research claim. Pairwise comparisons are metric-only.
