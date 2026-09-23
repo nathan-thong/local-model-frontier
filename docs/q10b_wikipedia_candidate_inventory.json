@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "dataset": "English Wikipedia",
+  "project": "local-model-frontier Q10.b",
+  "status": "candidate_titles_frozen_revision_metadata_pending",
+  "frozen_date": "2026-09-23",
+  "purpose": "Bounded general-encyclopedia language-modeling diagnostic; not a broad capability benchmark.",
+  "selection_rule": "Use every eligible title in the fixed candidate list. Do not select or remove pages based on model scores or body text. If fewer than 20 pages pass the predeclared metadata, size, licensing, and attribution rules, stop and record a new candidate-set decision before fetching any article body.",
+  "revision_rule": "For each exact title, pin the latest revision returned in one metadata-only query. Store its revision ID, timestamp, byte size, SHA-1, content model, canonical title, and oldid permalink. Do not request revision content in this query.",
+  "metadata_query": {
+    "endpoint": "https://en.wikipedia.org/w/api.php",
+    "action": "query",
+    "properties": ["info", "revisions"],
+    "revision_properties": ["ids", "timestamp", "size", "sha1", "contentmodel", "comment"],
+    "revision_slots": ["main"],
+    "revision_limit_per_title": 1,
+    "format": "json",
+    "formatversion": 2,
+    "maxlag": 5,
+    "request_policy": "One request for all 24 titles where supported; otherwise serial batches. Use a descriptive User-Agent with repository/contact information. Never request rvprop=content during this stage."
+  },
+  "eligibility_rules": {
+    "namespace": 0,
+    "redirects": "exclude and record; do not follow silently",
+    "content_model": "wikitext",
+    "maximum_revision_bytes_each": 1048576,
+    "maximum_combined_revision_bytes": 4194304,
+    "minimum_pages_after_all_checks": 20,
+    "license_and_attribution": "Before body acquisition, inspect the exact oldid page footer, its history through the pinned revision, and its discussion page for applicable text license, imported-content notices, extra attribution requirements, fair-use or third-party text, and unresolved licensing concerns. Exclude and record any page that fails or remains uncertain.",
+    "content_scope": "Article text only; exclude templates, references, navigation, categories, tables, and non-text media through a deterministic extractor."
+  },
+  "preparation_rule": {
+    "split_unit": "complete article revision, then normalized document identity",
+    "validation_fraction": 0.1,
+    "test_fraction": 0.1,
+    "seed": 17,
+    "duplicate_policy": "Retain rows but assign normalized duplicates to one split; report duplicate groups and hashed identities.",
+    "tokenizer_fit_split": "training only"
+  },
+  "candidates": [
+    {"title": "Algorithm", "stratum": "mathematics"},
+    {"title": "Prime number", "stratum": "mathematics"},
+    {"title": "Probability", "stratum": "mathematics"},
+    {"title": "Geometry", "stratum": "mathematics"},
+    {"title": "Water", "stratum": "physical-science"},
+    {"title": "Gravity", "stratum": "physical-science"},
+    {"title": "Energy", "stratum": "physical-science"},
+    {"title": "Moon", "stratum": "physical-science"},
+    {"title": "Photosynthesis", "stratum": "life-environment"},
+    {"title": "Ecosystem", "stratum": "life-environment"},
+    {"title": "Cell (biology)", "stratum": "life-environment"},
+    {"title": "Climate change", "stratum": "life-environment"},
+    {"title": "Computer", "stratum": "computing"},
+    {"title": "Internet", "stratum": "computing"},
+    {"title": "World Wide Web", "stratum": "computing"},
+    {"title": "Encryption", "stratum": "computing"},
+    {"title": "Democracy", "stratum": "society"},
+    {"title": "Education", "stratum": "society"},
+    {"title": "Agriculture", "stratum": "society"},
+    {"title": "Language", "stratum": "society"},
+    {"title": "Music", "stratum": "culture"},
+    {"title": "Printing press", "stratum": "culture"},
+    {"title": "Book", "stratum": "culture"},
+    {"title": "Geography", "stratum": "culture"}
+  ],
+  "revisions": [],
+  "excluded_pages": [],
+  "audit": {
+    "body_content_fetched": false,
+    "rights_review_complete": false,
+    "revision_inventory_sha256": null
+  }
+}
